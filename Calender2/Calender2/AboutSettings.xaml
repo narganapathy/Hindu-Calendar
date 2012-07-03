@@ -1,0 +1,59 @@
+﻿<UserControl
+    x:Class="Calender2.AboutSettings"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Calender2"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+
+    <Border BorderBrush="Black" BorderThickness="1,0,0,0">
+        <Grid Background="White" VerticalAlignment="Stretch">
+            <!-- Root grid definition -->
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <!-- Header area for panel -->
+            <Grid Background="Orange" Grid.Row="0">
+                <Grid Margin="40,32,17,13">
+
+                    <!--<Grid.Transitions>
+                        <TransitionCollection>
+                            <EntranceThemeTransition FromHorizontalOffset="50" />
+                        </TransitionCollection>
+                    </Grid.Transitions>-->
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <!--<Button Click="MySettingsBackClicked" Margin="0,3,0,0" Grid.Column="0" Content="Back" HorizontalAlignment="Left" />-->
+
+                    <TextBlock x:Uid="Credits" Margin="10,0,0,0" Grid.Column="1" FontFamily="Segoe UI" FontWeight="SemiLight" FontSize="24.6667" Text="About" HorizontalAlignment="Left" />
+                </Grid>
+            </Grid>
+
+            <!-- Settings Panel Content -->
+            <Grid Grid.Row="1" Margin="40,24,23,0" VerticalAlignment="Top">
+                <!--<Grid.Transitions>
+                    <TransitionCollection>
+                        <EntranceThemeTransition FromHorizontalOffset="120" />
+                    </TransitionCollection>
+                </Grid.Transitions>-->
+                <StackPanel>
+                    <TextBlock Margin="10,0,0,0" FontFamily="Segoe UI" FontWeight="Bold" Foreground="Black" FontSize="24.6667" Text="Hindu Calendar v1.0" HorizontalAlignment="Left" />
+                    <TextBlock Margin="10,0,0,0" FontFamily="Segoe UI" FontWeight="SemiLight" Foreground="Black" FontSize="24.6667" Text="By Nar Ganapathy" HorizontalAlignment="Left" />
+                    <TextBlock Margin="10,0,0,0" FontFamily="Segoe UI" FontWeight="SemiLight" Foreground="Black" FontSize="20" Text="Data courtesy of" HorizontalAlignment="Left" />
+                    <TextBlock Margin="10,0,0,0" FontFamily="Segoe UI" FontWeight="SemiLight" Foreground="Black" FontSize="20" Text="mypanchang.com" HorizontalAlignment="Left" />
+                </StackPanel>
+            </Grid>
+
+        </Grid>
+    </Border>
+</UserControl>

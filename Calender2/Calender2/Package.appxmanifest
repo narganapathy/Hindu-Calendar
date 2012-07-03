@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Package xmlns="http://schemas.microsoft.com/appx/2010/manifest">
+  <Identity Name="10139JyotishGuy.IndianCalendar-2012" Publisher="CN=8E74BF70-7F39-4BE9-8382-205E6DAE839D" Version="1.0.0.28" />
+  <Properties>
+    <DisplayName>Hindu Calendar - 2012</DisplayName>
+    <PublisherDisplayName>Jyotish Guy</PublisherDisplayName>
+    <Logo>OhmSymbol-StoreLogo.png</Logo>
+    <Description>Calender2</Description>
+  </Properties>
+  <Prerequisites>
+    <OSMinVersion>6.2.1</OSMinVersion>
+    <OSMaxVersionTested>6.2.1</OSMaxVersionTested>
+  </Prerequisites>
+  <Resources>
+    <Resource Language="x-generate" />
+  </Resources>
+  <Applications>
+    <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="Calender2.App">
+      <VisualElements DisplayName="Hindu Calendar-2012" Logo="OhmSymbol-Logo.png" SmallLogo="OhmSymbol-SmallLogo.png" Description="This application shows the Hindu Calendar for 2012." ForegroundText="light" BackgroundColor="#222222">
+        <DefaultTile ShowName="allLogos" WideLogo="OhmSymbol-widelogo.png" />
+        <SplashScreen Image="ohm sign - splash screen.png" />
+        <InitialRotationPreference>
+          <Rotation Preference="landscape" />
+          <Rotation Preference="landscapeFlipped" />
+        </InitialRotationPreference>
+      </VisualElements>
+    </Application>
+  </Applications>
+  <Capabilities>
+    <Capability Name="internetClient" />
+  </Capabilities>
+</Package>

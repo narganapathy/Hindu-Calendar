@@ -1,0 +1,268 @@
+﻿<common:LayoutAwarePage
+    x:Name="pageRoot"
+    x:Class="Calender2.ItemDetailPage"  
+    DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Self}}"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Calender2"
+    xmlns:data="using:Calender2.Data"
+    xmlns:common="using:Calender2.Common"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    NavigationCacheMode="Enabled"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <!-- Collection of items displayed by this page -->
+        <CollectionViewSource
+            x:Name="itemsViewSource"
+            Source="{Binding Items}"
+            d:Source="{Binding ItemGroups[0].Items, Source={d:DesignInstance Type=data:SampleDataSource, IsDesignTimeCreatable=True}}"/>
+    </Page.Resources>
+
+    <Page.BottomAppBar>
+        <AppBar Padding="10,0,10,0">
+            <Grid>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                    <!--<Button Click="GoHome" HorizontalAlignment="Left" IsEnabled="{Binding Frame.CanGoBack, ElementName=pageRoot}" Style="{StaticResource HomeAppBarButtonStyle}"/>-->
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button IsEnabled="{Binding CanFlipPrevious}" Click="PreviousButton_Click" Style="{StaticResource PreviousAppBarButtonStyle}"/>
+                    <Button IsEnabled="{Binding CanFlipNext}" Click="NextButton_Click" Style="{StaticResource NextAppBarButtonStyle}"/>
+                </StackPanel>
+            </Grid>
+        </AppBar>
+    </Page.BottomAppBar>
+
+    <!--
+        This grid acts as a root panel for the page that defines two rows:
+        * Row 0 contains the back button and page title
+        * Row 1 contains the rest of the page layout
+    
+    -->
+    <Grid
+        Background="{StaticResource MonthBackgroundColor}"
+        DataContext="{Binding Group}"
+        d:DataContext="{Binding ItemGroups[0], Source={d:DesignInstance Type=data:SampleDataSource, IsDesignTimeCreatable=True}}">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="120"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <!-- Back button and page title -->
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Row="0" x:Name="pageTitle" Text="{Binding Title}" Style="{StaticResource PageHeaderTextStyle}" Grid.Column="1" Foreground="{StaticResource TitleTextColor}"/>
+            <TextBlock Grid.Row="0" x:Name="cityTitle" Text="{Binding Title}" Style="{StaticResource PageHeaderTextStyle}" Grid.Column="2" Foreground="{StaticResource TitleTextColor}"/>
+            <TextBlock Grid.Row="1" x:Name="tamilMonthTitle" Style="{StaticResource TamilMonthStyle}" Grid.Column="2" Foreground="{StaticResource TitleTextColor}"/>
+            <TextBlock Grid.Row="1" x:Name="sanskritMonthTitle" Style="{StaticResource TamilMonthStyle}" Grid.Column="1" Foreground="{StaticResource TitleTextColor}"/>
+        </Grid>
+        <Grid Grid.Row="2">
+            <Grid.Triggers>
+                <EventTrigger RoutedEvent="Grid.Loaded">
+                <BeginStoryboard>
+                    <Storyboard x:Name="DayViewGridStoryboard">
+                        <DoubleAnimation
+                           EnableDependentAnimation="True"
+                           Storyboard.TargetName="DayViewGridBorder"
+                           Storyboard.TargetProperty="Width"
+                           Duration="0:0:1"
+                           From="5"
+                           To="300"
+                           >
+                           <DoubleAnimation.EasingFunction>
+                               <BackEase EasingMode="EaseOut"></BackEase>
+                           </DoubleAnimation.EasingFunction>
+                        </DoubleAnimation>
+                        <!--<DoubleAnimation
+                           EnableDependentAnimation="True"
+                           Storyboard.TargetName="flipView"
+                           Storyboard.TargetProperty="Width"
+                           Duration="0:0:1"
+                           From="30"
+                           To="1000"
+                           >
+                           <DoubleAnimation.EasingFunction>
+                               <BackEase EasingMode="EaseOut"></BackEase>
+                           </DoubleAnimation.EasingFunction>
+                        </DoubleAnimation>-->
+                    </Storyboard>
+                </BeginStoryboard>
+                </EventTrigger>
+            </Grid.Triggers>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+
+            <!--
+                The remainder of the page is one large FlipView that displays details for
+                one item at a time, allowing the user to flip through all items in the chosen
+                group
+            -->
+            <FlipView
+                x:Name="flipView"
+                AutomationProperties.AutomationId="ItemsFlipView"
+                AutomationProperties.Name="Item Details"
+                ItemsSource="{Binding Source={StaticResource itemsViewSource}}"
+                Grid.Column="0"
+                Loaded="flipView_Loaded"
+                SelectionChanged="FlipView_SelectionChanged">
+
+                <FlipView.ItemTemplate>
+                    <DataTemplate>
+
+                        <!--
+                            UserControl chosen as the templated item because it supports visual state management
+                            Loaded/unloaded events explicitly subscribe to view state updates from the page
+                            <Grid x:Name="monthView" Margin="20,20,10,10">
+                        -->
+                        <UserControl  Loaded="StartLayoutUpdates" Unloaded="StopLayoutUpdates">
+                            <Grid x:Name="monthView" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="{StaticResource DayPixelHeight}"/>
+                                    <RowDefinition Height="{StaticResource ItemPixelHeight}"/>
+                                    <RowDefinition Height="{StaticResource ItemPixelHeight}"/>
+                                    <RowDefinition Height="{StaticResource ItemPixelHeight}"/>
+                                    <RowDefinition Height="{StaticResource ItemPixelHeight}"/>
+                                    <RowDefinition Height="{StaticResource ItemPixelHeight}"/>
+                                    <RowDefinition Height="{StaticResource ItemPixelHeight}"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="{StaticResource ItemPixelWidth}"/>
+                                    <ColumnDefinition Width="{StaticResource ItemPixelWidth}"/>
+                                    <ColumnDefinition Width="{StaticResource ItemPixelWidth}"/>
+                                    <ColumnDefinition Width="{StaticResource ItemPixelWidth}"/>
+                                    <ColumnDefinition Width="{StaticResource ItemPixelWidth}"/>  
+                                    <ColumnDefinition Width="{StaticResource ItemPixelWidth}"/>  
+                                    <ColumnDefinition Width="{StaticResource ItemPixelWidth}"/>  
+                                </Grid.ColumnDefinitions>
+                           </Grid>
+                        </UserControl>
+                    </DataTemplate>
+                </FlipView.ItemTemplate>
+            </FlipView>
+            <Border Name="DayViewGridBorder" BorderThickness="5" BorderBrush="{StaticResource DateItemBorderColor}" Grid.Column="1">
+            <Grid Name="DayViewGrid" Background="{StaticResource DayItemBackGroundColor}" >
+                <Grid.RowDefinitions>
+                    <RowDefinition ></RowDefinition>
+                    <RowDefinition ></RowDefinition>
+                    <RowDefinition ></RowDefinition>
+                    <RowDefinition ></RowDefinition>
+                    <RowDefinition ></RowDefinition>
+                    <RowDefinition ></RowDefinition>
+                    <RowDefinition ></RowDefinition>
+                    <RowDefinition ></RowDefinition>
+                    <RowDefinition ></RowDefinition>
+                    <RowDefinition ></RowDefinition>
+                    <RowDefinition ></RowDefinition>
+                    <RowDefinition ></RowDefinition>
+                    <RowDefinition ></RowDefinition>
+                    <RowDefinition ></RowDefinition>
+                    <RowDefinition ></RowDefinition>
+                    <RowDefinition ></RowDefinition>
+                    <RowDefinition ></RowDefinition>
+                    <RowDefinition ></RowDefinition>
+                    <RowDefinition ></RowDefinition>
+                    <RowDefinition ></RowDefinition>
+                    <RowDefinition ></RowDefinition>
+                    <RowDefinition ></RowDefinition>
+                    <RowDefinition ></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition Width="5"></ColumnDefinition>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Row="0" Grid.Column="0"  Style="{StaticResource PanchangKeyStyle}">Date</TextBlock>
+                <TextBlock Grid.Row="0" Grid.Column="2"  Style="{StaticResource PanchangValueStyle}" Name="DateTextBlock"></TextBlock>
+                <TextBlock Grid.Row="1" Grid.Column="0"  Style="{StaticResource PanchangKeyStyle}">Sunrise</TextBlock>
+                <TextBlock Grid.Row="1" Grid.Column="2"  Style="{StaticResource PanchangValueStyle}" Name="SunriseTextBlock"></TextBlock>
+                <TextBlock Grid.Row="2" Grid.Column="0"  Style="{StaticResource PanchangKeyStyle}">Sunset</TextBlock>
+                <TextBlock Grid.Row="2" Grid.Column="2"  Style="{StaticResource PanchangValueStyle}" Name="SunsetTextBlock"></TextBlock>
+                <TextBlock Grid.Row="3" Grid.Column="0"  Style="{StaticResource PanchangKeyStyle}">Moonrise</TextBlock>
+                <TextBlock Grid.Row="3" Grid.Column="2"  Style="{StaticResource PanchangValueStyle}" Name="MoonRiseTextBlock"></TextBlock>
+                <TextBlock Grid.Row="4" Grid.Column="0"  Style="{StaticResource PanchangKeyStyle}">Tamil Year</TextBlock>
+                <TextBlock Grid.Row="4" Grid.Column="2"  Style="{StaticResource PanchangValueStyle}" Name="TamilYearTextBlock"></TextBlock>
+                <TextBlock Grid.Row="5" Grid.Column="0"  Style="{StaticResource PanchangKeyStyle}">North Year</TextBlock>
+                <TextBlock Grid.Row="5" Grid.Column="2"  Style="{StaticResource PanchangValueStyle}" Name="NorthYearTextBlock"></TextBlock>
+                <TextBlock Grid.Row="6" Grid.Column="0"  Style="{StaticResource PanchangKeyStyle}">Gujarat Year</TextBlock>
+                <TextBlock Grid.Row="6" Grid.Column="2"  Style="{StaticResource PanchangValueStyle}" Name="GujaratYearTextBlock"></TextBlock>
+                <TextBlock Grid.Row="7" Grid.Column="0"  Style="{StaticResource PanchangKeyStyle}">Ayana</TextBlock>
+                <TextBlock Grid.Row="7" Grid.Column="2"  Style="{StaticResource PanchangValueStyle}" Name="AyanaTextBlock"></TextBlock>
+                <TextBlock Grid.Row="8" Grid.Column="0"  Style="{StaticResource PanchangKeyStyle}">Ritu</TextBlock>
+                <TextBlock Grid.Row="8" Grid.Column="2"  Style="{StaticResource PanchangValueStyle}" Name="RituTextBlock"></TextBlock>
+                <TextBlock Grid.Row="9" Grid.Column="0"  Style="{StaticResource PanchangKeyStyle}">VedicRitu</TextBlock>
+                <TextBlock Grid.Row="9" Grid.Column="2"  Style="{StaticResource PanchangValueStyle}" Name="VedicRituTextBlock"></TextBlock>
+                <TextBlock Grid.Row="10" Grid.Column="0"  Style="{StaticResource PanchangKeyStyle}">Tamil Month</TextBlock>
+                <TextBlock Grid.Row="10" Grid.Column="2"  Style="{StaticResource PanchangValueStyle}" Name="TamilMonthTextBlock"></TextBlock>
+                <TextBlock Grid.Row="11" Grid.Column="0"  Style="{StaticResource PanchangKeyStyle}">Festival</TextBlock>
+                <TextBlock Grid.Row="11" Grid.Column="2"  Style="{StaticResource PanchangValueStyle}" Name="FestivalTextBlock"></TextBlock>
+                <TextBlock Grid.Row="12" Grid.Column="0"  Style="{StaticResource PanchangKeyStyle}">Sanskrit Month</TextBlock>
+                <TextBlock Grid.Row="12" Grid.Column="2"  Style="{StaticResource PanchangValueStyle}" Name="SanskritMonthTextBlock"></TextBlock>
+                <TextBlock Grid.Row="13" Grid.Column="0"  Style="{StaticResource PanchangKeyStyle}">Paksha</TextBlock>
+                <TextBlock Grid.Row="13" Grid.Column="2"  Style="{StaticResource PanchangValueStyle}" Name="PakshaTextBlock"></TextBlock>
+                <TextBlock Grid.Row="14" Grid.Column="0"  Style="{StaticResource PanchangKeyStyle}">Tithi</TextBlock>
+                <TextBlock Grid.Row="14" Grid.Column="2"  Style="{StaticResource PanchangValueStyle}" Name="TithiTextBlock"></TextBlock>
+                <TextBlock Grid.Row="15" Grid.Column="0"  Style="{StaticResource PanchangKeyStyle}">Nakshatra</TextBlock>
+                <TextBlock Grid.Row="15" Grid.Column="2"  Style="{StaticResource PanchangValueStyle}" Name="NakshatraTextBlock"></TextBlock>
+                <TextBlock Grid.Row="16" Grid.Column="0"  Style="{StaticResource PanchangKeyStyle}">Yoga</TextBlock>
+                <TextBlock Grid.Row="16" Grid.Column="2"  Style="{StaticResource PanchangValueStyle}" Name="YogaTextBlock"></TextBlock>
+                <TextBlock Grid.Row="17" Grid.Column="0"  Style="{StaticResource PanchangKeyStyle}">Karana</TextBlock>
+                <TextBlock Grid.Row="17" Grid.Column="2"  Style="{StaticResource PanchangValueStyle}" Name="KaranaTextBlock"></TextBlock>
+                <TextBlock Grid.Row="18" Grid.Column="0"  Style="{StaticResource PanchangKeyStyle}">Sun Rasi</TextBlock>
+                <TextBlock Grid.Row="18" Grid.Column="2"  Style="{StaticResource PanchangValueStyle}" Name="SunRasiTextBlock"></TextBlock>
+                <TextBlock Grid.Row="19" Grid.Column="0"  Style="{StaticResource PanchangKeyStyle}">Moon Rasi</TextBlock>
+                <TextBlock Grid.Row="19" Grid.Column="2"  Style="{StaticResource PanchangValueStyle}" Name="MoonRasiTextBlock"></TextBlock>
+                <TextBlock Grid.Row="20" Grid.Column="0"  Style="{StaticResource PanchangKeyStyle}">Rahu Kalam</TextBlock>
+                <TextBlock Grid.Row="20" Grid.Column="2"  Style="{StaticResource PanchangValueStyle}" Name="RahuKalamTextBlock"></TextBlock>
+                <TextBlock Grid.Row="21" Grid.Column="0"  Style="{StaticResource PanchangKeyStyle}">Yama Kandam</TextBlock>
+                <TextBlock Grid.Row="21" Grid.Column="2"  Style="{StaticResource PanchangValueStyle}" Name="YamaKandamTextBlock"></TextBlock>
+                <TextBlock Grid.Row="22" Grid.Column="0"  Style="{StaticResource PanchangKeyStyle}">Gulikai</TextBlock>
+                <TextBlock Grid.Row="22" Grid.Column="2"  Style="{StaticResource PanchangValueStyle}" Name="GulikaiTextBlock"></TextBlock>
+            </Grid>
+            </Border>
+        </Grid>
+
+        <VisualStateManager.VisualStateGroups>
+
+            <!-- Visual states reflect the application's view state -->
+            <VisualStateGroup x:Name="ApplicationViewStates">
+                <VisualState x:Name="FullScreenLandscape"/>
+                <VisualState x:Name="Filled"/>
+
+                <!-- The back button respects the narrower 100-pixel margin convention for portrait -->
+                <VisualState x:Name="FullScreenPortrait">
+                    <Storyboard>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="backButton" Storyboard.TargetProperty="Style">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource PortraitBackButtonStyle}"/>
+                        </ObjectAnimationUsingKeyFrames>
+                    </Storyboard>
+                </VisualState>
+
+                <!-- The back button and title have different styles when snapped -->
+                <VisualState x:Name="Snapped">
+                    <Storyboard>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="backButton" Storyboard.TargetProperty="Style">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource SnappedBackButtonStyle}"/>
+                        </ObjectAnimationUsingKeyFrames>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="pageTitle" Storyboard.TargetProperty="Style">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource SnappedPageHeaderTextStyle}"/>
+                        </ObjectAnimationUsingKeyFrames>
+                    </Storyboard>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+    </Grid>
+</common:LayoutAwarePage>
