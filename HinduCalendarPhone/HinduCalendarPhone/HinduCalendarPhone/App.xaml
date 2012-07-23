@@ -1,0 +1,48 @@
+﻿<Application 
+    x:Class="HinduCalendarPhone.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"       
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone">
+
+    <!--Application Resources-->
+    <Application.Resources>
+        <GridLength x:Key="ItemPixelWidth">60</GridLength>
+        <GridLength x:Key="DayPixelHeight">50</GridLength>
+        <GridLength x:Key="ItemPixelHeight">80</GridLength>
+        <SolidColorBrush x:Key="DateItemBorderHighlightColor" Color="Green"></SolidColorBrush>
+        <SolidColorBrush x:Key="DateItemTextColor" Color="White"></SolidColorBrush>
+        <SolidColorBrush x:Key="DayItemBackGroundColor" Color="Black"></SolidColorBrush>
+        <SolidColorBrush x:Key="MonthBackgroundColor" Color="#FFE6C7AE"/>
+        <Style x:Key="DateItemStyle" TargetType="TextBlock">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="25"/>
+            <Setter Property="Foreground" Value="{StaticResource DateItemTextColor}"/>
+        </Style>
+        <Style x:Key="PanchangValueStyle" TargetType="TextBlock">
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="Foreground" Value="{StaticResource DateItemTextColor}"/>
+        </Style>
+        <Style x:Key="PanchangKeyStyle" TargetType="TextBlock">
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="{StaticResource DateItemTextColor}"/>
+        </Style>
+        <Style x:Key="TamilMonthStyle" TargetType="TextBlock">
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="FontSize" Value="30"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="{StaticResource DateItemTextColor}"/>
+        </Style>
+    </Application.Resources>
+
+    <Application.ApplicationLifetimeObjects>
+        <!--Required object that handles lifetime events for the application-->
+        <shell:PhoneApplicationService 
+            Launching="Application_Launching" Closing="Application_Closing" 
+            Activated="Application_Activated" Deactivated="Application_Deactivated"/>
+    </Application.ApplicationLifetimeObjects>
+
+</Application>
