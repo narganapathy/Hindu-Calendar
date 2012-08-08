@@ -10,31 +10,33 @@
         <GridLength x:Key="ItemPixelWidth">60</GridLength>
         <GridLength x:Key="DayPixelHeight">50</GridLength>
         <GridLength x:Key="ItemPixelHeight">80</GridLength>
-        <SolidColorBrush x:Key="DateItemBorderHighlightColor" Color="Green"></SolidColorBrush>
+        <SolidColorBrush x:Key="DateItemBorderColor" Color="Black" />
+        <SolidColorBrush x:Key="DateItemBorderHighlightColor" Color="CornflowerBlue"></SolidColorBrush>
         <SolidColorBrush x:Key="DateItemTextColor" Color="White"></SolidColorBrush>
         <SolidColorBrush x:Key="DayItemBackGroundColor" Color="Black"></SolidColorBrush>
+        <SolidColorBrush x:Key="DateItemBackgroundColor" Color="Chocolate"></SolidColorBrush>
         <SolidColorBrush x:Key="MonthBackgroundColor" Color="#FFE6C7AE"/>
         <Style x:Key="DateItemStyle" TargetType="TextBlock">
             <Setter Property="HorizontalAlignment" Value="Center"/>
             <Setter Property="FontSize" Value="25"/>
-            <Setter Property="Foreground" Value="{StaticResource DateItemTextColor}"/>
+            <Setter Property="Foreground" Value="{StaticResource PhoneForegroundBrush}"/>
         </Style>
         <Style x:Key="PanchangValueStyle" TargetType="TextBlock">
             <Setter Property="HorizontalAlignment" Value="Left"/>
             <Setter Property="FontSize" Value="20"/>
-            <Setter Property="Foreground" Value="{StaticResource DateItemTextColor}"/>
+            <Setter Property="Foreground" Value="{StaticResource PhoneForegroundBrush}"/>
         </Style>
         <Style x:Key="PanchangKeyStyle" TargetType="TextBlock">
             <Setter Property="HorizontalAlignment" Value="Right"/>
             <Setter Property="FontSize" Value="20"/>
             <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="Foreground" Value="{StaticResource DateItemTextColor}"/>
+            <Setter Property="Foreground" Value="{StaticResource PhoneForegroundBrush}"/>
         </Style>
         <Style x:Key="TamilMonthStyle" TargetType="TextBlock">
             <Setter Property="HorizontalAlignment" Value="Left"/>
             <Setter Property="FontSize" Value="30"/>
             <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="Foreground" Value="{StaticResource DateItemTextColor}"/>
+            <Setter Property="Foreground" Value="{StaticResource PhoneForegroundBrush}"/>
         </Style>
     </Application.Resources>
 
