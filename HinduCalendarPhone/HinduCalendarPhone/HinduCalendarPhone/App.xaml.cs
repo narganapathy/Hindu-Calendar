@@ -22,8 +22,8 @@ namespace HinduCalendarPhone
         /// </summary>
         /// <returns>The root frame of the Phone Application.</returns>
         public PhoneApplicationFrame RootFrame { get; private set; }
-        CalendarData _calendarData;
         public CalendarData Calendar { get {return _calendardata;}}
+        public MainPage MainPage { get {return _mainPage;} set { _mainPage = value;}}
         
         /// <summary>
         /// Constructor for the Application object.
@@ -111,7 +111,8 @@ namespace HinduCalendarPhone
 
         // Avoid double-initialization
         private bool phoneApplicationInitialized = false;
-private  CalendarData _calendardata;
+        private  CalendarData _calendardata;
+        private MainPage _mainPage;
 
         // Do not add any additional code to this method
         private void InitializePhoneApplication()

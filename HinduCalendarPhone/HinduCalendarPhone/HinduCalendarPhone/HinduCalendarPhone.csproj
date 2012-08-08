@@ -60,10 +60,19 @@
     <Reference Include="mscorlib.extensions" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\..\Calender2\Calender2\DataModel\CityData.cs">
+      <Link>CityData.cs</Link>
+    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="CalendarData.cs" />
+    <Compile Include="ChangeCity.xaml.cs">
+      <DependentUpon>ChangeCity.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CityStateList.xaml.cs">
+      <DependentUpon>CityStateList.xaml</DependentUpon>
+    </Compile>
     <Compile Include="DateItem.xaml.cs">
       <DependentUpon>DateItem.xaml</DependentUpon>
     </Compile>
@@ -76,13 +85,27 @@
     <Compile Include="MonthView.xaml.cs">
       <DependentUpon>MonthView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PivotItemHeader.xaml.cs">
+      <DependentUpon>PivotItemHeader.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StatePage.xaml.cs">
+      <DependentUpon>StatePage.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
+    <Page Include="ChangeCity.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CityStateList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="DateItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -99,11 +122,1081 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="PivotItemHeader.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="StatePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\IndianCalendar-Seattle-WA-USA-2012.dat">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\IndianCalendar-Aberdeen-Scotland-UK-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-AbuDhabi-UAE-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Adelaide-Australia-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Agra-UP-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Ahemadabad-Gujarat-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Ajmer-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Albany-NY-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Albuquerque-NewMexico-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Aligarh-UP-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Allahabad-UP-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Amaravati-Maharastra-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Amritsar-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Amsterdam-Netherlands-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Anand-Gujarat-India-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Anchorage-AK-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Antipolo-Philippines-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Arlington-Virginia-USA-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Ashburn-VA-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Asheville-NorthCarolina-USA-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Ashland-MA-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Atlanta-Georgia-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Auckland-NZ-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Augusta-ME-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Aurangabad-Maharastra-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Austin-TX-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Badrinath-Uttarakhand-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Bali-Indonesia-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Baltimore-MD-USA-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Bangalore-India-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Bangkok-Thailand-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Baroda-India-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-BatonRouge-Louisiana-USA-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Beaumont-TX%28US%29-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Bedford-IN-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Belgaum-India-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Bellingham-WA-USA-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Berlin-Germany-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Bharuch-India-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Bhatinda-India-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Bhavnagar-Gujarat-India-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Bhopal-India-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Bhubaneswar-India-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Bhuj-India-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Bikaner-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Bilaspur-Chhattisgarh-India-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Birmingham-AL-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Birmingham-England-UK-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Bogota-Columbia-SouthAmerica-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Boise-Idaho-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Bonn-Germany-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Boston-MA-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Brandon-MS-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Bremen-Germany-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Bridgetown-Barbados-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Brisbane-Australia-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Budapest-Hungary-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-BuenosAires-Argentina-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Buffalo-NY%28US%29-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Cairo-Egypt-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Calgary-AB-Canada-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Canberra-Australia-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-CapeTown-SouthAfrica-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Cary-NC-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Chandigarh-India-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Chandler-AZ-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Charleston-WV-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Charlotte-NC-USA-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Chatham-NJ-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Chattanooga-TN%28US%29-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Chennai-India-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Chicago-IL-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Cincinnati-OH-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Cleveland-OH-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Coimbatore-India-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Colombo-Srilanka-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Columbus-OH-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Concord-CA-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Copenhagen-Denmark-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Coralville-Iowa-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Corvalis-OR-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Covina-California-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Cupertino-CA-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Czarnow-Poland-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Dakor-Kheda-Gujarat-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Dallas-Texas-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Dar-es-salam,Tanzania-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Darjiling-WestBengal-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Darwin-Australia-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Dayton-OH-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-DehraDun-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Denver-CO-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Deoria-UP-India-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-DesMoines-Iowa-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Detroit-MI-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Dhaka-Bangladesh-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Dharmapuri-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Dharwar-India-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-DiamondBar-CA-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Doha-Qatar-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Dubai-UAE-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Dublin-Ireland-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Durban-SouthAfrica-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Dwarka-India-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Edinburgh-Scotland-UK-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Edison-NJ-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Edmonton-Alberta-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-ElPaso-TX-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Ernakulam-India-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Evansville-Indiana-USA-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Fargo-ND-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Fayetville-AR-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Fort-de-France-Martinique-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-FortLauderdale-FL-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-FortWayne-IN-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-FrankfurtamMain-Germany-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Fremont-CA-USA-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Gallup-NewMexico-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Gangotri-Uttarakhand-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Gauhati-India-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Gaya%28HolyGayaJi%29-Bihar-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Geneva-Switzerland-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Georgetown-Guyana-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Ghaziabad-UP-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Glasgow-Scotland-UK-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Godhra-Gujarat-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Greensboro-NC-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Greenville-NorthCarolina-USA-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Greenville-SC-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Guntur-AndraPradesh-India-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Gurgaon-Haryana-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Halifax-NovaScotia-Canada-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Hamburg-Germany-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Hamilton-NZ-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Hannover-Germany-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Hanoi-Vietnam-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Haridwar-Uttarakhand-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Hartford-CT-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Hayward-California-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Helena-MT-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Helsinki-Finland-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Himatnagar-Gujarat-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Homburg-Saarland-Germany-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-HongKong-China-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Honolulu-Hawai-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Houston-Texas-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Hubli-India-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Hyderabad-AP-India-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Idar-Gujarat-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Imphal-Manipur-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Indianapolis-IN-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Indore-India-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Ipswich-UK-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Irvine-California-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Irving-TX-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Irvington-TX-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Islamabad-Pakistan-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Istanbul-Turkey-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Jacksonville-FL-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Jaffna-Srilanka-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Jaipur-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Jaisalmer-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Jakarta-Indonesia-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Jammu-Kashmir-India-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Jamnagar-India-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Jamshedpur-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Jhansi-UP-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Jodhpur-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Johannesburg-SouthAfrica-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Jonesboro-AR-USA-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Jullundhur-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Kakinada-AP-India-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Kalamazoo-MI-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Kallakkurichchi-India-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Kalyan-India-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Kanchipuram-India-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Kandy-SriLanka-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Kanpur-UP-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-KansasCity-KS-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Karachi-Pakistan-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Kedarnath-Uttarakhand-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Khedabrahma-Sabarkantha-Gujarat-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Kiev-Ukraine-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Kingston-Jamaica-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Kinshasa-Congo-Zaire-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Knoxville-TN-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Kolhapur-Maharastra-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Kolkata-India-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Kota-Rajasthan-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-KualaLumpur-Malaysia-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Kumbakonam-India-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Kurukshetra-India-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-KuwaitCity-Kuwait-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Lahore-Pakistan-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Lancaster-PA-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Lanham-MD-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Lansing-Michigan-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Laramie-Wyoming-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-LasVegas-Nevada-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Leicester-England-UK-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Lexington-KY-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-LittleRock-AR-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Livermore-CA-USA-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-London-UnitedKingdom-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-LosAngeles-CA-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Louisville-KY-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Lubbock-TX-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Lucknow-India-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Ludhiana-India-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Lusaka-Zambia-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Maastricht-Netherlands-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Machilipatnam-AP-India-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Madison-WI-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Madrid-Iowa-USA-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Madrid-Spain-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Madurai-India-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Malaga-Spain-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Malibu-CA-USA-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Manali-HimachalPradesh-India-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Manama-Bahrain-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Manchester-UK-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Mandi-HimachalPradesh-India-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Mangalore-Karnataka-India-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Marlborough-MA%28US%29-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Mason-OH-USA-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Mathura-UP-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Meerut-UP-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Mehsana-India-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Melbourne-Australia-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Memphis-TN-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Miami-FL-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Midland-Texas-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Milano-Italy-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Milpitas-CA-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Milwaukee-WI-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Minneapolis-MN-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Minnesota-MN-USA-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Mishawaka-SouthBend-Notredame-IN-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Montclair-CA-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Montpelier-VT-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Montreal-Quebec-Canada-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-MountainView-CA-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-MountShasta-CA-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Mumbai-Maharastra-India-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Munich-Germany-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Muscat-Oman-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Mysore-Karnataka-India-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Nadi-Fiji-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Nagpur-Maharastra-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Nainital-Uttarakhand-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Nairobi-Kenya-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Napa-CA-USA-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Nashua-NH-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Nashville-TN-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Nasik-Maharastra-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Nassau-Bahamas-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Nathdwara%28LordSrinathjiTemple%29-India-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Navasota-TX-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Nellore-India-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-NewCumberland-PA-USA-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-NewDelhi-India-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-NewJersey-NJ-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-NewOrleans-Louisiana-USA-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-NewYork-NY-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Noida-UP-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Novi-MI-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Nuremberg-Germany-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Ocala-FL-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Odense-Denmark-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Omaha-NE-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Orlando-FL-USA-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Oslo-Norway-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Ottawa-ON-Canada-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Palakkad%28Palghat%29-Kerala-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Panaji%28Panjim%29-Goa-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Pandharpur-Maharastra-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Paramaribo-Surinam-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Paris-France-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Patan-Gujarat-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Patiala-Punjab-India-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Patna-Bihar-India-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Pearland-TX-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Peoria-IL-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Perth-Australia-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Pewaukee-Wisconsin-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Philadelphia-PA-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Phoenix-AZ-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Pierre-SD-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Pittsburgh-PA-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Plano-TX-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Plovdiv-Bulgaria-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Pondicherry-India-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Portland-OR-USA-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-PortLouis-Mauritius-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-PortofSpain-TrinidadandTobago-WestIndies-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Pretoria-SouthAfrica-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Proddatur-AndhraPradesh-India-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Providence-RI-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Pune-Maharastra-India-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Puri%28CityofLordJaggnath%29-India-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-PutturnearMangalore-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Raipur-Chhattisgarh-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Rajahmundry-India-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Rajkot-India-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Raleigh-NC-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Ranchi-Jharkhand-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Regensburg-Germany-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Reno-NV-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Richmond-Indiana-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Richmond-VA-USA-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Rishikesh-Uttarakhand-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Riverside-California-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Riyadh-SaudiArabia-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Rochester-NY-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Rohtak-Hariyana-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Rome-Italy-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Roorkee-India-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Roseville%28PlacerCounty%29-CA-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Rotterdam-Netherlands-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Sacramento-CA%28US%29-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Saharanpur-UP-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-SanAntonio-TX-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-SanAYemen-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-SanDiego-CA-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-SanFrancisco-CA-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Sangli-Maharastra-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-SanJose-CA-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-SanJuan-PuertoRico-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-SanMateo-CA-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-SanRamon-CA-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-SantaClara-CA-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Saskatoon-Saskatchewan-Canada-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Satara-Maharastra-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Scarborough-OntarioCanada-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Scottsdale-AZ-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="Assets\IndianCalendar-Secunderabad-AndraPradesh-India-2012.dat" />
+    <None Include="Assets\IndianCalendar-Shanghai-China-2012.dat" />
+    <None Include="Assets\IndianCalendar-Sharjah-UAE-2012.dat" />
+    <None Include="Assets\IndianCalendar-Shimla-HimachalPradesh-2012.dat" />
+    <None Include="Assets\IndianCalendar-Shiradi%28SaibabaTemple%29-Maharastra-2012.dat" />
+    <None Include="Assets\IndianCalendar-Singapore-2012.dat" />
+    <None Include="Assets\IndianCalendar-SouthJordan-UT-USA-2012.dat" />
+    <None Include="Assets\IndianCalendar-Spokane-WA-2012.dat" />
+    <None Include="Assets\IndianCalendar-Springfield-IL-2012.dat" />
+    <None Include="Assets\IndianCalendar-Springfield-MA-2012.dat" />
+    <None Include="Assets\IndianCalendar-Srirangam%28Thiruvarangam%29-India-2012.dat" />
+    <None Include="Assets\IndianCalendar-St.Johns-Newfoundland-Canada-2012.dat" />
+    <None Include="Assets\IndianCalendar-St.Louis-Missouri-2012.dat" />
+    <None Include="Assets\IndianCalendar-Stamford-CT-2012.dat" />
+    <None Include="Assets\IndianCalendar-Stillwater-OK%28US%29-2012.dat" />
+    <None Include="Assets\IndianCalendar-Stockholm-Sweden-2012.dat" />
+    <None Include="Assets\IndianCalendar-Stockton-CA-2012.dat" />
+    <None Include="Assets\IndianCalendar-StPaul-MN-2012.dat" />
+    <None Include="Assets\IndianCalendar-Stuart-FL-2012.dat" />
+    <None Include="Assets\IndianCalendar-Summerville-SouthCarolina-2012.dat" />
+    <None Include="Assets\IndianCalendar-Sumter-SC-2012.dat" />
+    <None Include="Assets\IndianCalendar-Sunnyvale-CA-2012.dat" />
+    <None Include="Assets\IndianCalendar-Surat-India-2012.dat" />
+    <None Include="Assets\IndianCalendar-Suva-Fiji-2012.dat" />
+    <None Include="Assets\IndianCalendar-Sydney-Australia-2012.dat" />
+    <None Include="Assets\IndianCalendar-Tampa-FL-2012.dat" />
+    <None Include="Assets\IndianCalendar-Tehran-Iran-2012.dat" />
+    <None Include="Assets\IndianCalendar-Temple-TX-2012.dat" />
+    <None Include="Assets\IndianCalendar-Thiruvananthapuram-Kerala-2012.dat" />
+    <None Include="Assets\IndianCalendar-Tirumala-AP-India-2012.dat" />
+    <None Include="Assets\IndianCalendar-Titusville-FL-2012.dat" />
+    <None Include="Assets\IndianCalendar-Tokyo-Japan-2012.dat" />
+    <None Include="Assets\IndianCalendar-Toledo-OH-2012.dat" />
+    <None Include="Assets\IndianCalendar-Toronto-ON-Canada-2012.dat" />
+    <None Include="Assets\IndianCalendar-Troy-Alabama-2012.dat" />
+    <None Include="Assets\IndianCalendar-Tulsa-Oklahoma-2012.dat" />
+    <None Include="Assets\IndianCalendar-Tuscon-AZ-2012.dat" />
+    <None Include="Assets\IndianCalendar-Udaipur-2012.dat" />
+    <None Include="Assets\IndianCalendar-Udipi-Karnataka-India-2012.dat" />
+    <None Include="Assets\IndianCalendar-Ujjain-India-2012.dat" />
+    <None Include="Assets\IndianCalendar-Ulaanbaatar-Mongolia-2012.dat" />
+    <None Include="Assets\IndianCalendar-Uttarkashi-Uttarakhand-2012.dat" />
+    <None Include="Assets\IndianCalendar-Vancouver-BC-Canada-2012.dat" />
+    <None Include="Assets\IndianCalendar-Varanasi-India-2012.dat" />
+    <None Include="Assets\IndianCalendar-Victoria-BC-Canada-2012.dat" />
+    <None Include="Assets\IndianCalendar-Victoria-Mahe-Seychelles-2012.dat" />
+    <None Include="Assets\IndianCalendar-Vienna-VA-2012.dat" />
+    <None Include="Assets\IndianCalendar-Vijayawada-India-2012.dat" />
+    <None Include="Assets\IndianCalendar-Vishakhapatnam-India-2012.dat" />
+    <None Include="Assets\IndianCalendar-Warsaw-Poland-2012.dat" />
+    <None Include="Assets\IndianCalendar-Washington-DC-2012.dat" />
+    <None Include="Assets\IndianCalendar-Waterford-CA-2012.dat" />
+    <None Include="Assets\IndianCalendar-Wichita-Kansas-USA-2012.dat" />
+    <None Include="Assets\IndianCalendar-Wilmington-DE-2012.dat" />
+    <None Include="Assets\IndianCalendar-Winnipeg-MB-Canada-2012.dat" />
+    <None Include="Assets\IndianCalendar-Winston-Salem-NC-2012.dat" />
+    <None Include="Assets\IndianCalendar-Yakima-WA-2012.dat" />
+    <None Include="Assets\IndianCalendar-Yiwu%28Zhejiang%29-China-2012.dat" />
+    <None Include="Assets\IndianCalendar-Zirapur-Rajgarh-MP-2012.dat" />
+    <None Include="Assets\IndianCalendar-Zurich-Switzerland-2012.dat" />
     <None Include="Properties\AppManifest.xml">
       <SubType>Designer</SubType>
     </None>
@@ -114,6 +1207,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Background.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\appbar_calendarview.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\appbar_changecity.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="SplashScreenImage.jpg" />

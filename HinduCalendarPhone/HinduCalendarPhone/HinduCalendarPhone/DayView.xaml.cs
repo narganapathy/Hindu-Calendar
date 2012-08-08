@@ -41,6 +41,8 @@ namespace HinduCalendarPhone
             }
             
             ShowDetail();
+            App app = Application.Current as App; ;
+            app.MainPage.DayViewLoaded();
         }
 
         public void ShowDetail()
@@ -79,5 +81,14 @@ namespace HinduCalendarPhone
             FestivalTextBlock.Text = festival;
         }
 
+        private void ApplicationBarIconButton_Click(object sender, EventArgs e)
+        {
+            NavigationService.GoBack();
+        }
+
+        private void ApplicationBarChangeCityButton_Click(object sender, EventArgs e)
+        {
+            NavigationService.Navigate(new Uri("/ChangeCity.xaml", UriKind.Relative));
+        }
     }
 }

@@ -84,7 +84,6 @@ namespace HinduCalendarPhone
         
         public void GetCalendarData()
         {
-
             String fileName = String.Format("Assets\\IndianCalendar-{0}-{1}.dat", _cityToken, _year);
             var streamResourceInfo = App.GetResourceStream(new Uri(fileName, UriKind.Relative));
             using (var stream = streamResourceInfo.Stream)
@@ -96,6 +95,14 @@ namespace HinduCalendarPhone
 
                 }
             }
+        }
+
+        public void UpdateCityToken(String token, String name)
+        {
+            _cityToken = token;
+            GetCalendarData();
+            App app = Application.Current as App;
+            app.MainPage.CityName.Text = name;
         }
 
         public String CityToken

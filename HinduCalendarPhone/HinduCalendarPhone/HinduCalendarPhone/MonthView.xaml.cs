@@ -17,6 +17,8 @@ namespace HinduCalendarPhone
     {
         MainPage _mainPage;
         int _month;
+        String _tamilMonth;
+        String _sanskritMonth;
 
         public MonthView(int month, MainPage mainPage)
         {
@@ -83,6 +85,13 @@ namespace HinduCalendarPhone
             }
 
             DateItem currentDateItem = null;
+            String previousTamilMonth, tamilMonth;
+            String previousSanskritMonth, sanskritMonth;
+            
+            previousTamilMonth = null;
+            previousSanskritMonth = null;
+            _mainPage.TamilMonth.Text = "";
+            _mainPage.SanskritMonth.Text = "";
 
             row = 1;
 
@@ -94,13 +103,29 @@ namespace HinduCalendarPhone
                     dateTime = new DateTime(_year, month, day);
                     col = (int)dateTime.DayOfWeek;
 
-                    
+                    HinduCalendarPhone.App app = Application.Current as HinduCalendarPhone.App;
+                    PanchangData pdata = app.Calendar.GetPanchangDataForDay(_year, month, day);
+
+                    tamilMonth = pdata._fieldValues[(int)FieldType.TamilMonth];
+                    sanskritMonth = pdata._fieldValues[(int)FieldType.SanskritMonth];
+
                     currentDateItem = dateItems[row, col];
                     currentDateItem.SetDay(day, day.ToString());
                     currentDateItem.MouseLeftButtonDown += new MouseButtonEventHandler(dateItem_MouseLeftButtonDown);
 
                     currentDateItem.Visibility = Visibility.Visible;
-                    
+                    if (String.Equals(previousTamilMonth, tamilMonth, StringComparison.OrdinalIgnoreCase) == false)
+                    {
+                        _tamilMonth += (previousTamilMonth == null) ? tamilMonth : ("-" + tamilMonth);
+                        previousTamilMonth = tamilMonth;
+                    }
+
+                    if (String.Equals(previousSanskritMonth, sanskritMonth, StringComparison.OrdinalIgnoreCase) == false)
+                    {
+                        _sanskritMonth += ((previousSanskritMonth == null) ? sanskritMonth : ("-" + sanskritMonth.Trim()));
+                        previousSanskritMonth = sanskritMonth;
+                    }
+
                     bool highlight = false;
                     // If its the curent month then highlight the current day
                     if (month == DateTime.Today.Month)
@@ -136,6 +161,12 @@ namespace HinduCalendarPhone
                 {
                 }
             }
+        }
+
+        public void UpdateMonthText()
+        {
+            _mainPage.TamilMonth.Text = _tamilMonth.Trim(); ;
+            _mainPage.SanskritMonth.Text = _sanskritMonth.Trim();
         }
     }
 }

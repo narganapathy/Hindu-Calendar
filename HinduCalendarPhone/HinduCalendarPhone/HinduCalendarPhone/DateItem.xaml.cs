@@ -38,12 +38,13 @@ namespace HinduCalendarPhone
             SolidColorBrush brush;
             if (hl)
             {
-                brush = (SolidColorBrush)app.Resources["DateItemBorderHighlightColor"];
+                brush = (SolidColorBrush)app.Resources["PhoneAccentBrush"];
             }
             else
             {
-                brush = (SolidColorBrush)app.Resources["DateItemBorderColor"];
+                brush = (SolidColorBrush)app.Resources["PhoneForegroundBrush"];
             }
+            DayTextBlock.Foreground = brush;
         }
     }
 }

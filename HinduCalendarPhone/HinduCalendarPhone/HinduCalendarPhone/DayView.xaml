@@ -10,7 +10,7 @@
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="Portrait" Orientation="Portrait"
-    mc:Ignorable="d" d:DesignHeight="768" d:DesignWidth="480"
+    mc:Ignorable="d" d:DesignHeight="696" d:DesignWidth="480"
     shell:SystemTray.IsVisible="True">
 
     <!--LayoutRoot is the root grid where all page content is placed-->
@@ -21,14 +21,15 @@
         </Grid.RowDefinitions>
 
         <!--TitlePanel contains the name of the application and page title-->
-        <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
-            <TextBlock x:Name="ApplicationTitle" Text="Hindu Calendar" Style="{StaticResource PhoneTextNormalStyle}"/>
-            <TextBlock x:Name="PageTitle" Text="page name" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+        <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,10">
+            <TextBlock x:Name="ApplicationTitle" Text="Hindu Calendar 2012" Style="{StaticResource PhoneTextNormalStyle}"/>
+            <TextBlock x:Name="PageTitle" Text="page name" Margin="9,-7,0,0" Style="{StaticResource PhoneTextExtraLargeStyle}"/>
         </StackPanel>
 
+
         <!--ContentPanel - place additional content here-->
-        
-        <Grid Name="DayViewGrid" Grid.Row="1" Margin="12,0,12,0" Background="{StaticResource DayItemBackGroundColor}" >
+
+        <Grid Name="DayViewGrid" Grid.Row="1" Margin="12,0,12,0" Background="{StaticResource PhoneBackgroundBrush}" >
             <Grid.RowDefinitions>
                 <RowDefinition ></RowDefinition>
                 <RowDefinition ></RowDefinition>
@@ -107,7 +108,14 @@
             <TextBlock Grid.Row="22" Grid.Column="2"  Style="{StaticResource PanchangValueStyle}" Name="GulikaiTextBlock"></TextBlock>
         </Grid>
     </Grid>
- 
+
+    <!--Sample code showing usage of ApplicationBar-->
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
+            <shell:ApplicationBarIconButton Click="ApplicationBarIconButton_Click"  IconUri="/Images/appbar_calenderview.png" Text="Change day"/>
+            <shell:ApplicationBarIconButton Click="ApplicationBarChangeCityButton_Click"  IconUri="/Images/appbar_changecity.png" Text="Change City"/>
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
     <!--Sample code showing usage of ApplicationBar-->
     <!--<phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
