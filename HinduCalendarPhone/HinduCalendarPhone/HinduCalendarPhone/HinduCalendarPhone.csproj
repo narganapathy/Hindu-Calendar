@@ -50,6 +50,7 @@
   <ItemGroup>
     <Reference Include="Microsoft.Phone" />
     <Reference Include="Microsoft.Phone.Controls, Version=7.0.0.0, Culture=neutral, PublicKeyToken=24eec0d8c86cda1e, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Phone.Controls.Toolkit, Version=7.0.0.0, Culture=neutral, PublicKeyToken=b772ad94eb9ca604, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Phone.Interop" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Windows" />
@@ -73,20 +74,11 @@
     <Compile Include="CityStateList.xaml.cs">
       <DependentUpon>CityStateList.xaml</DependentUpon>
     </Compile>
-    <Compile Include="DateItem.xaml.cs">
-      <DependentUpon>DateItem.xaml</DependentUpon>
-    </Compile>
     <Compile Include="DayView.xaml.cs">
       <DependentUpon>DayView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MainPage.xaml.cs">
-      <DependentUpon>MainPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MonthView.xaml.cs">
-      <DependentUpon>MonthView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="PivotItemHeader.xaml.cs">
-      <DependentUpon>PivotItemHeader.xaml</DependentUpon>
+    <Compile Include="Help.xaml.cs">
+      <DependentUpon>Help.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StatePage.xaml.cs">
@@ -106,23 +98,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="DateItem.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="DayView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="MonthView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="PivotItemHeader.xaml">
+    <Page Include="Help.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -1137,66 +1117,186 @@
     <Content Include="Assets\IndianCalendar-Scottsdale-AZ-2012.dat">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="Assets\IndianCalendar-Secunderabad-AndraPradesh-India-2012.dat" />
-    <None Include="Assets\IndianCalendar-Shanghai-China-2012.dat" />
-    <None Include="Assets\IndianCalendar-Sharjah-UAE-2012.dat" />
-    <None Include="Assets\IndianCalendar-Shimla-HimachalPradesh-2012.dat" />
-    <None Include="Assets\IndianCalendar-Shiradi%28SaibabaTemple%29-Maharastra-2012.dat" />
-    <None Include="Assets\IndianCalendar-Singapore-2012.dat" />
-    <None Include="Assets\IndianCalendar-SouthJordan-UT-USA-2012.dat" />
-    <None Include="Assets\IndianCalendar-Spokane-WA-2012.dat" />
-    <None Include="Assets\IndianCalendar-Springfield-IL-2012.dat" />
-    <None Include="Assets\IndianCalendar-Springfield-MA-2012.dat" />
-    <None Include="Assets\IndianCalendar-Srirangam%28Thiruvarangam%29-India-2012.dat" />
-    <None Include="Assets\IndianCalendar-St.Johns-Newfoundland-Canada-2012.dat" />
-    <None Include="Assets\IndianCalendar-St.Louis-Missouri-2012.dat" />
-    <None Include="Assets\IndianCalendar-Stamford-CT-2012.dat" />
-    <None Include="Assets\IndianCalendar-Stillwater-OK%28US%29-2012.dat" />
-    <None Include="Assets\IndianCalendar-Stockholm-Sweden-2012.dat" />
-    <None Include="Assets\IndianCalendar-Stockton-CA-2012.dat" />
-    <None Include="Assets\IndianCalendar-StPaul-MN-2012.dat" />
-    <None Include="Assets\IndianCalendar-Stuart-FL-2012.dat" />
-    <None Include="Assets\IndianCalendar-Summerville-SouthCarolina-2012.dat" />
-    <None Include="Assets\IndianCalendar-Sumter-SC-2012.dat" />
-    <None Include="Assets\IndianCalendar-Sunnyvale-CA-2012.dat" />
-    <None Include="Assets\IndianCalendar-Surat-India-2012.dat" />
-    <None Include="Assets\IndianCalendar-Suva-Fiji-2012.dat" />
-    <None Include="Assets\IndianCalendar-Sydney-Australia-2012.dat" />
-    <None Include="Assets\IndianCalendar-Tampa-FL-2012.dat" />
-    <None Include="Assets\IndianCalendar-Tehran-Iran-2012.dat" />
-    <None Include="Assets\IndianCalendar-Temple-TX-2012.dat" />
-    <None Include="Assets\IndianCalendar-Thiruvananthapuram-Kerala-2012.dat" />
-    <None Include="Assets\IndianCalendar-Tirumala-AP-India-2012.dat" />
-    <None Include="Assets\IndianCalendar-Titusville-FL-2012.dat" />
-    <None Include="Assets\IndianCalendar-Tokyo-Japan-2012.dat" />
-    <None Include="Assets\IndianCalendar-Toledo-OH-2012.dat" />
-    <None Include="Assets\IndianCalendar-Toronto-ON-Canada-2012.dat" />
-    <None Include="Assets\IndianCalendar-Troy-Alabama-2012.dat" />
-    <None Include="Assets\IndianCalendar-Tulsa-Oklahoma-2012.dat" />
-    <None Include="Assets\IndianCalendar-Tuscon-AZ-2012.dat" />
-    <None Include="Assets\IndianCalendar-Udaipur-2012.dat" />
-    <None Include="Assets\IndianCalendar-Udipi-Karnataka-India-2012.dat" />
-    <None Include="Assets\IndianCalendar-Ujjain-India-2012.dat" />
-    <None Include="Assets\IndianCalendar-Ulaanbaatar-Mongolia-2012.dat" />
-    <None Include="Assets\IndianCalendar-Uttarkashi-Uttarakhand-2012.dat" />
-    <None Include="Assets\IndianCalendar-Vancouver-BC-Canada-2012.dat" />
-    <None Include="Assets\IndianCalendar-Varanasi-India-2012.dat" />
-    <None Include="Assets\IndianCalendar-Victoria-BC-Canada-2012.dat" />
-    <None Include="Assets\IndianCalendar-Victoria-Mahe-Seychelles-2012.dat" />
-    <None Include="Assets\IndianCalendar-Vienna-VA-2012.dat" />
-    <None Include="Assets\IndianCalendar-Vijayawada-India-2012.dat" />
-    <None Include="Assets\IndianCalendar-Vishakhapatnam-India-2012.dat" />
-    <None Include="Assets\IndianCalendar-Warsaw-Poland-2012.dat" />
-    <None Include="Assets\IndianCalendar-Washington-DC-2012.dat" />
-    <None Include="Assets\IndianCalendar-Waterford-CA-2012.dat" />
-    <None Include="Assets\IndianCalendar-Wichita-Kansas-USA-2012.dat" />
-    <None Include="Assets\IndianCalendar-Wilmington-DE-2012.dat" />
-    <None Include="Assets\IndianCalendar-Winnipeg-MB-Canada-2012.dat" />
-    <None Include="Assets\IndianCalendar-Winston-Salem-NC-2012.dat" />
-    <None Include="Assets\IndianCalendar-Yakima-WA-2012.dat" />
-    <None Include="Assets\IndianCalendar-Yiwu%28Zhejiang%29-China-2012.dat" />
-    <None Include="Assets\IndianCalendar-Zirapur-Rajgarh-MP-2012.dat" />
-    <None Include="Assets\IndianCalendar-Zurich-Switzerland-2012.dat" />
+    <Content Include="Assets\IndianCalendar-Secunderabad-AndraPradesh-India-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Shanghai-China-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Sharjah-UAE-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Shimla-HimachalPradesh-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Shiradi%28SaibabaTemple%29-Maharastra-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Singapore-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-SouthJordan-UT-USA-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Spokane-WA-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Springfield-IL-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Springfield-MA-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Srirangam%28Thiruvarangam%29-India-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-St.Johns-Newfoundland-Canada-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-St.Louis-Missouri-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Stamford-CT-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Stillwater-OK%28US%29-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Stockholm-Sweden-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Stockton-CA-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-StPaul-MN-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Stuart-FL-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Summerville-SouthCarolina-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Sumter-SC-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Sunnyvale-CA-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Surat-India-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Suva-Fiji-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Sydney-Australia-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Tampa-FL-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Tehran-Iran-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Temple-TX-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Thiruvananthapuram-Kerala-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Tirumala-AP-India-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Titusville-FL-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Tokyo-Japan-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Toledo-OH-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Toronto-ON-Canada-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Troy-Alabama-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Tulsa-Oklahoma-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Tuscon-AZ-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Udaipur-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Udipi-Karnataka-India-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Ujjain-India-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Ulaanbaatar-Mongolia-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Uttarkashi-Uttarakhand-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Vancouver-BC-Canada-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Varanasi-India-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Victoria-BC-Canada-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Victoria-Mahe-Seychelles-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Vienna-VA-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Vijayawada-India-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Vishakhapatnam-India-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Warsaw-Poland-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Washington-DC-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Waterford-CA-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Wichita-Kansas-USA-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Wilmington-DE-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Winnipeg-MB-Canada-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Winston-Salem-NC-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Yakima-WA-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Yiwu%28Zhejiang%29-China-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Zirapur-Rajgarh-MP-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\IndianCalendar-Zurich-Switzerland-2012.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="Properties\AppManifest.xml">
       <SubType>Designer</SubType>
     </None>
@@ -1209,12 +1309,25 @@
     <Content Include="Background.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Images\appbar_calendarview.png">
+    <Content Include="Toolkit.Content\ApplicationBar.Check.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Toolkit.Content\ApplicationBar.Cancel.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\appbar_help.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\appbar_changecity.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Images\Calendar-dark.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Calendar-white.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Resource Include="Images\ohm sign.jpg" />
     <Content Include="SplashScreenImage.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />

@@ -1,5 +1,5 @@
 ﻿<phone:PhoneApplicationPage 
-    x:Class="HinduCalendarPhone.StatePage"
+    x:Class="HinduCalendarPhone.Help"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
@@ -23,15 +23,15 @@
         <!--TitlePanel contains the name of the application and page title-->
         <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
             <TextBlock x:Name="ApplicationTitle" Text="{StaticResource AppName}" Style="{StaticResource PhoneTextNormalStyle}"/>
-            <TextBlock x:Name="PageTitle" Text="page name" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+            <TextBlock x:Name="PageTitle" Text="About" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
         </StackPanel>
 
         <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-            <ScrollViewer Height="400" Background="Transparent" VerticalScrollBarVisibility="Visible" >
-                <ListBox Height="400" x:Name="CityStateListBox" SelectionChanged="CityStateListBox_SelectionChanged"></ListBox>
-            </ScrollViewer>
+            <TextBlock TextWrapping="Wrap" Style="{StaticResource PhoneTextLargeStyle}">Data Courtesy of mypanchang.com.
+            Contact nk_studios@hotmail.com for support and feedback. Click the settings button to change city</TextBlock>
         </Grid>
+        
     </Grid>
  
     <!--Sample code showing usage of ApplicationBar-->

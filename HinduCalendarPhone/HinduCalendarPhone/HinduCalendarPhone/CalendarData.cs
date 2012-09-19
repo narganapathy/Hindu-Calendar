@@ -79,6 +79,7 @@ namespace HinduCalendarPhone
         }
 
         String _cityToken = "Seattle-WA-USA";
+        String _cityName = "Seattle, WA";
         int _year = 2012;
         YearlyPanchangData _calendarYearData;
         
@@ -100,19 +101,48 @@ namespace HinduCalendarPhone
         public void UpdateCityToken(String token, String name)
         {
             _cityToken = token;
+            _cityName = name;
             GetCalendarData();
             App app = Application.Current as App;
-            app.MainPage.CityName.Text = name;
         }
 
         public String CityToken
         {
             get { return _cityToken; }
         }
+
+        public String CityName
+        {
+            get { return _cityName; }
+        }
+
         public PanchangData GetPanchangDataForDay(int year, int month, int day)
         {
              return _calendarYearData._panchangData[(month - 1) * 31 + day - 1];
         }
     
     }
+
+    [DataContract(Name = "PersistedData", Namespace = "http://www.jyotishcalendar.com")]
+    public class PersistedData
+    {
+        [DataMember(Name = "Year")]
+        public int Year;
+        [DataMember(Name = "Month")]
+        public int Month;
+        [DataMember(Name = "Day")]
+        public int Day;
+        [DataMember(Name = "CityToken")]
+        public string CityToken;
+        [DataMember(Name = "CityName")]
+        public string CityName;
+        public PersistedData(int year, int month, int day, String cityToken, String cityName)
+        {
+            Year = year;
+            Day = day;
+            Month = month;
+            CityToken = cityToken;
+            CityName = cityName;
+        }
+    };
 }

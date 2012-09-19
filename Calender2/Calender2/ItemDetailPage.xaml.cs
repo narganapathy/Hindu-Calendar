@@ -16,11 +16,25 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Windows.UI.ApplicationSettings;
+using Windows.Storage;
+using System.Runtime.Serialization;
 
 // The Item Detail Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234232
 
 namespace Calender2
 {
+    [DataContract(Name = "PrivateEvents", Namespace = "http://www.jyotishcalendar.com")]
+    [KnownType(typeof(PrivateEvents))]
+    public class PrivateEvents
+    {
+        [DataMember(Name = "PrivateEventList")]
+        public List<String> _privateEventList;
+        public PrivateEvents()
+        {
+            _privateEventList = new List<String>();
+        }
+    }
+
     /// <summary>
     /// A page that displays details for a single item within a group while allowing gestures to
     /// flip through other items belonging to the same group.
@@ -34,6 +48,9 @@ namespace Calender2
         double _settingsWidth = 346;
         Popup _settingsPopup;
         DateItem _currentHighlightedDateItem;
+        List<ListBoxItem> _personalEventList;
+        ListBoxItem _currentEventItem;
+        PrivateEvents _privateEvents;
 
         public ItemDetailPage()
         {
@@ -45,7 +62,9 @@ namespace Calender2
             Window.Current.SizeChanged += OnWindowSizeChanged;
             SettingsPane.GetForCurrentView().CommandsRequested += SettingsPane_CommandsRequested;
             cityTitle.PointerReleased +=cityTitle_PointerReleased;
+            _personalEventList = new List<ListBoxItem>();
 
+            
             // This is necessary to ensure that we set the right month.
             // flipview_selectionchagned gets invoked before the page is loaded. This results in a null selected item. 
             // however we now call this event handler from the loaded handler for the page so that 
@@ -138,7 +157,7 @@ namespace Calender2
         /// </param>
         /// <param name="pageState">A dictionary of state preserved by this page during an earlier
         /// session.  This will be null the first time a page is visited.</param>
-        protected override void LoadState(Object navigationParameter, Dictionary<String, Object> pageState)
+        protected async override void LoadState(Object navigationParameter, Dictionary<String, Object> pageState)
         {
             // Allow saved page state to override the initial item to display
             if (pageState != null && pageState.ContainsKey("SelectedItem"))
@@ -154,6 +173,29 @@ namespace Calender2
             this.cityTitle.Text = currentItem.Group.city._Name;
             this.flipView.SelectedItem = currentItem;
             UpdateTile(currentItem);
+
+            StorageFile privateEventFile = await ApplicationData.Current.RoamingFolder.CreateFileAsync("PrivateEvents.txt", CreationCollisionOption.OpenIfExists);
+            Windows.Storage.FileProperties.BasicProperties prop = await privateEventFile.GetBasicPropertiesAsync();
+            if (prop.Size != 0)
+            {
+                Stream stream = await privateEventFile.OpenStreamForReadAsync();
+                DataContractSerializer ser = new DataContractSerializer(typeof(PrivateEvents));
+                _privateEvents = (PrivateEvents)ser.ReadObject(stream);
+                // If we have a zero size file or no events, we can get this too
+                if (_privateEvents != null)
+                {
+                    foreach (String str in _privateEvents._privateEventList)
+                    {
+                        AddPrivateEvent(str, false);
+                    }
+                }
+                stream.Dispose();
+            }
+
+            if (_privateEvents == null)
+            {
+                    _privateEvents = new PrivateEvents();
+            }
         }
 
         /// <summary>
@@ -162,10 +204,16 @@ namespace Calender2
         /// requirements of <see cref="SuspensionManager.SessionState"/>.
         /// </summary>
         /// <param name="pageState">An empty dictionary to be populated with serializable state.</param>
-        protected override void SaveState(Dictionary<String, Object> pageState)
+        protected async override void SaveState(Dictionary<String, Object> pageState)
         {
             var item = (SampleDataItem)this.flipView.SelectedItem;
             pageState["SelectedItem"] = item.UniqueId;
+            StorageFile privateEventFile = await ApplicationData.Current.RoamingFolder.CreateFileAsync("PrivateEvents.txt", CreationCollisionOption.ReplaceExisting);
+            Stream stream = await privateEventFile.OpenStreamForWriteAsync();
+            stream.Position = 0;
+            DataContractSerializer ser = new DataContractSerializer(typeof(PrivateEvents));
+            ser.WriteObject(stream, _privateEvents);
+            stream.Dispose();
         }
 
         #region Support for the Previous and Next App Bar Buttons
@@ -510,9 +558,55 @@ namespace Calender2
             this.cityTitle.Text = item.Group.city._Name;
         }
 
-        private void DayviewPopupDismiss_Click_1(object sender, RoutedEventArgs e)
+        
+        private void PersonalEventClick(object sender, RoutedEventArgs e)
         {
-            //item.HighlightBorder(false);
+            AddPrivateEvent(PeTextBox.Text, true);
+            PeTextBox.Text = String.Empty;
+        }
+
+        private async void AddPrivateEvent(String eventText, bool newEvent)
+        {
+            if (newEvent && _privateEvents._privateEventList.Contains(eventText))
+            {
+                Windows.UI.Popups.MessageDialog md = new Windows.UI.Popups.MessageDialog("Event  name already exists");
+                await md.ShowAsync();
+                return;
+            }
+
+            App app = (App)Application.Current;
+            ListBoxItem item = new ListBoxItem();
+            TextBlock textBlock = new TextBlock();
+            textBlock.Text = eventText;
+            item.Content = textBlock;
+            item.Tag = eventText;
+            PersonalEventList.Items.Add(item);
+            PersonalEventListScroller.Visibility = Visibility.Visible;
+            Separator.BorderThickness = new Thickness(0, 5, 0, 0);
+            _personalEventList.Add(item);
+            if (newEvent)
+            {
+                _privateEvents._privateEventList.Add(eventText);
+            }
+        }
+
+        private void RemoveEventClick(object sender, RoutedEventArgs e)
+        {
+            if (_currentEventItem != null)
+            {
+                _privateEvents._privateEventList.Remove(_currentEventItem.Tag as String);
+                _personalEventList.Remove(_currentEventItem);
+                PersonalEventList.Items.Remove(_currentEventItem);
+                _currentEventItem = null;
+                RemoveEventButton.IsEnabled = false;
+            }
+        }
+
+        private void PersonalEventList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ListBox lb = sender as ListBox;
+            _currentEventItem = lb.SelectedItem as ListBoxItem;
+            RemoveEventButton.IsEnabled = true;
         }
     }
 }

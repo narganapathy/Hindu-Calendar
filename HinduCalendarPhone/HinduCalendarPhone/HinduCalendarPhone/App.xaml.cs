@@ -10,6 +10,9 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.IO.IsolatedStorage;
+using System.Runtime.Serialization;
+using System.Diagnostics;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 
@@ -23,7 +26,8 @@ namespace HinduCalendarPhone
         /// <returns>The root frame of the Phone Application.</returns>
         public PhoneApplicationFrame RootFrame { get; private set; }
         public CalendarData Calendar { get {return _calendardata;}}
-        public MainPage MainPage { get {return _mainPage;} set { _mainPage = value;}}
+        public DateTime CurrentDate { get { return _currentDate; } set { _currentDate = value; } }
+        public bool FirstLaunch { get { return _firstTimeLaunch; } set { _firstTimeLaunch = value; } }
         
         /// <summary>
         /// Constructor for the Application object.
@@ -67,6 +71,21 @@ namespace HinduCalendarPhone
         {
             _calendardata = new CalendarData();
             _calendardata.GetCalendarData();
+            var store = IsolatedStorageFile.GetUserStoreForApplication();
+            if (store.FileExists("PersistedFile.xml"))
+            {
+                IsolatedStorageFileStream stream = store.OpenFile("PersistedFile.xml", System.IO.FileMode.OpenOrCreate);
+                DataContractSerializer ser = new DataContractSerializer(typeof(PersistedData));
+                _firstTimeLaunch = false;
+                PersistedData data;
+                data = ser.ReadObject(stream) as PersistedData;
+                _currentDate = new DateTime(data.Year, data.Month, data.Day);
+                _calendardata.UpdateCityToken(data.CityToken, data.CityName);
+            }
+            else
+            {
+                _firstTimeLaunch = true;
+            }
         }
 
         // Code to execute when the application is activated (brought to foreground)
@@ -85,6 +104,25 @@ namespace HinduCalendarPhone
         // This code will not execute when the application is deactivated
         private void Application_Closing(object sender, ClosingEventArgs e)
         {
+            PersistedData data = new PersistedData(_currentDate.Year, 
+                                                    _currentDate.Month, 
+                                                    _currentDate.Day, 
+                                                    _calendardata.CityToken, 
+                                                    _calendardata.CityName);
+            try
+            {
+                using (var store = IsolatedStorageFile.GetUserStoreForApplication())
+                {
+                    IsolatedStorageFileStream stream = store.OpenFile("PersistedFile.xml", System.IO.FileMode.Create);
+                    DataContractSerializer ser = new DataContractSerializer(typeof(PersistedData));
+                    ser.WriteObject(stream, data);
+                    stream.Close();
+                }
+            }
+            catch (Exception excep)
+            {
+                Debug.WriteLine("Isolated Storage exception " + excep.Message);
+            }
         }
 
         // Code to execute if a navigation fails
@@ -112,7 +150,8 @@ namespace HinduCalendarPhone
         // Avoid double-initialization
         private bool phoneApplicationInitialized = false;
         private  CalendarData _calendardata;
-        private MainPage _mainPage;
+        private DateTime _currentDate;
+        private bool _firstTimeLaunch = false;
 
         // Do not add any additional code to this method
         private void InitializePhoneApplication()
@@ -130,6 +169,7 @@ namespace HinduCalendarPhone
 
             // Ensure we don't initialize again
             phoneApplicationInitialized = true;
+            _currentDate = DateTime.Today;
         }
 
         // Do not add any additional code to this method

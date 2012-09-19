@@ -21,36 +21,34 @@ namespace HinduCalendarPhone
             InitializeComponent();
         }
 
-        DateTime _dt;
-
         protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
 
             string dateString = "";
+            HinduCalendarPhone.App app = Application.Current as HinduCalendarPhone.App;
 
             if (NavigationContext.QueryString.TryGetValue("date", out dateString))
             {
                 Debug.WriteLine("Date to be shown is " + dateString);
                 PageTitle.Text = dateString;
-                _dt = DateTime.Parse(dateString);
+                app.CurrentDate = DateTime.Parse(dateString);
             } 
-            else 
-            {
-                throw new ArgumentException();
-            }
-            
             ShowDetail();
-            App app = Application.Current as App; ;
-            app.MainPage.DayViewLoaded();
+            if (app.FirstLaunch)
+            {
+                MessageBox.Show("Please set your city using the settings menu");
+                app.FirstLaunch = false;
+            }
         }
 
         public void ShowDetail()
         {
             HinduCalendarPhone.App app = Application.Current as HinduCalendarPhone.App;
-            PageTitle.Text = app.Calendar.CityToken;
-            PanchangData pdata = app.Calendar.GetPanchangDataForDay(_dt.Year, _dt.Month, _dt.Day);
-            DateTextBlock.Text = _dt.ToString("d");
+            EventDate.Value = app.CurrentDate;
+            PageTitle.Text = app.Calendar.CityName;
+            PanchangData pdata = app.Calendar.GetPanchangDataForDay(app.CurrentDate.Year, app.CurrentDate.Month, app.CurrentDate.Day);
+            DateTextBlock.Text = app.CurrentDate.ToString("d");
             SunriseTextBlock.Text = pdata._fieldValues[(int)FieldType.Sunrise];
             SunsetTextBlock.Text = pdata._fieldValues[(int)FieldType.Sunset];
             MoonRiseTextBlock.Text = pdata._fieldValues[(int)FieldType.Moonrise];
@@ -81,14 +79,33 @@ namespace HinduCalendarPhone
             FestivalTextBlock.Text = festival;
         }
 
-        private void ApplicationBarIconButton_Click(object sender, EventArgs e)
-        {
-            NavigationService.GoBack();
-        }
 
         private void ApplicationBarChangeCityButton_Click(object sender, EventArgs e)
         {
             NavigationService.Navigate(new Uri("/ChangeCity.xaml", UriKind.Relative));
+        }
+
+        private void ApplicationBarHelpButton_Click(object sender, EventArgs e)
+        {
+            NavigationService.Navigate(new Uri("/Help.xaml", UriKind.Relative));
+        }
+
+        private void EventDate_ValueChanged(object sender, DateTimeValueChangedEventArgs e)
+        {
+            HinduCalendarPhone.App app = Application.Current as HinduCalendarPhone.App;
+            if (e.NewDateTime.HasValue)
+            {
+                DateTime dt = e.NewDateTime.Value;
+                if (dt.Year == 2012)
+                {
+                    app.CurrentDate = e.NewDateTime.Value;
+                }
+                else
+                {
+                    MessageBox.Show("Year should be equal to 2012");
+                    EventDate.Value = DateTime.Today;
+                }
+            } 
         }
     }
 }

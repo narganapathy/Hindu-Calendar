@@ -24,7 +24,10 @@
         <AppBar Padding="10,0,10,0">
             <Grid>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                    <!--<Button Click="GoHome" HorizontalAlignment="Left" IsEnabled="{Binding Frame.CanGoBack, ElementName=pageRoot}" Style="{StaticResource HomeAppBarButtonStyle}"/>-->
+                    <TextBlock  VerticalAlignment="Center"  x:Name="PeTextBlock" Style="{StaticResource PanchangKeyStyle}"> Add Personal Event : </TextBlock>
+                    <TextBox  x:Name="PeTextBox" Height="30" Width="300"></TextBox>
+                    <Button Click="PersonalEventClick" HorizontalAlignment="Left" IsEnabled="{Binding Frame.CanGoBack, ElementName=pageRoot}" Style="{StaticResource AddAppBarButtonStyle}"/>
+                    <Button x:Name="RemoveEventButton" Click="RemoveEventClick" HorizontalAlignment="Left" IsEnabled="false" Style="{StaticResource RemoveAppBarButtonStyle}"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                     <Button IsEnabled="{Binding CanFlipPrevious}" Click="PreviousButton_Click" Style="{StaticResource PreviousAppBarButtonStyle}"/>
@@ -154,84 +157,104 @@
                 </FlipView.ItemTemplate>
             </FlipView>
             <Border Name="DayViewGridBorder" BorderThickness="5" BorderBrush="{StaticResource DateItemBorderColor}" Grid.Column="1">
-            <Grid Name="DayViewGrid" Background="{StaticResource DayItemBackGroundColor}" >
-                <Grid.RowDefinitions>
-                    <RowDefinition ></RowDefinition>
-                    <RowDefinition ></RowDefinition>
-                    <RowDefinition ></RowDefinition>
-                    <RowDefinition ></RowDefinition>
-                    <RowDefinition ></RowDefinition>
-                    <RowDefinition ></RowDefinition>
-                    <RowDefinition ></RowDefinition>
-                    <RowDefinition ></RowDefinition>
-                    <RowDefinition ></RowDefinition>
-                    <RowDefinition ></RowDefinition>
-                    <RowDefinition ></RowDefinition>
-                    <RowDefinition ></RowDefinition>
-                    <RowDefinition ></RowDefinition>
-                    <RowDefinition ></RowDefinition>
-                    <RowDefinition ></RowDefinition>
-                    <RowDefinition ></RowDefinition>
-                    <RowDefinition ></RowDefinition>
-                    <RowDefinition ></RowDefinition>
-                    <RowDefinition ></RowDefinition>
-                    <RowDefinition ></RowDefinition>
-                    <RowDefinition ></RowDefinition>
-                    <RowDefinition ></RowDefinition>
-                    <RowDefinition ></RowDefinition>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"></ColumnDefinition>
-                    <ColumnDefinition Width="5"></ColumnDefinition>
-                    <ColumnDefinition Width="Auto"></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-                <TextBlock Grid.Row="0" Grid.Column="0"  Style="{StaticResource PanchangKeyStyle}">Date</TextBlock>
-                <TextBlock Grid.Row="0" Grid.Column="2"  Style="{StaticResource PanchangValueStyle}" Name="DateTextBlock"></TextBlock>
-                <TextBlock Grid.Row="1" Grid.Column="0"  Style="{StaticResource PanchangKeyStyle}">Sunrise</TextBlock>
-                <TextBlock Grid.Row="1" Grid.Column="2"  Style="{StaticResource PanchangValueStyle}" Name="SunriseTextBlock"></TextBlock>
-                <TextBlock Grid.Row="2" Grid.Column="0"  Style="{StaticResource PanchangKeyStyle}">Sunset</TextBlock>
-                <TextBlock Grid.Row="2" Grid.Column="2"  Style="{StaticResource PanchangValueStyle}" Name="SunsetTextBlock"></TextBlock>
-                <TextBlock Grid.Row="3" Grid.Column="0"  Style="{StaticResource PanchangKeyStyle}">Moonrise</TextBlock>
-                <TextBlock Grid.Row="3" Grid.Column="2"  Style="{StaticResource PanchangValueStyle}" Name="MoonRiseTextBlock"></TextBlock>
-                <TextBlock Grid.Row="4" Grid.Column="0"  Style="{StaticResource PanchangKeyStyle}">Tamil Year</TextBlock>
-                <TextBlock Grid.Row="4" Grid.Column="2"  Style="{StaticResource PanchangValueStyle}" Name="TamilYearTextBlock"></TextBlock>
-                <TextBlock Grid.Row="5" Grid.Column="0"  Style="{StaticResource PanchangKeyStyle}">North Year</TextBlock>
-                <TextBlock Grid.Row="5" Grid.Column="2"  Style="{StaticResource PanchangValueStyle}" Name="NorthYearTextBlock"></TextBlock>
-                <TextBlock Grid.Row="6" Grid.Column="0"  Style="{StaticResource PanchangKeyStyle}">Gujarat Year</TextBlock>
-                <TextBlock Grid.Row="6" Grid.Column="2"  Style="{StaticResource PanchangValueStyle}" Name="GujaratYearTextBlock"></TextBlock>
-                <TextBlock Grid.Row="7" Grid.Column="0"  Style="{StaticResource PanchangKeyStyle}">Ayana</TextBlock>
-                <TextBlock Grid.Row="7" Grid.Column="2"  Style="{StaticResource PanchangValueStyle}" Name="AyanaTextBlock"></TextBlock>
-                <TextBlock Grid.Row="8" Grid.Column="0"  Style="{StaticResource PanchangKeyStyle}">Ritu</TextBlock>
-                <TextBlock Grid.Row="8" Grid.Column="2"  Style="{StaticResource PanchangValueStyle}" Name="RituTextBlock"></TextBlock>
-                <TextBlock Grid.Row="9" Grid.Column="0"  Style="{StaticResource PanchangKeyStyle}">VedicRitu</TextBlock>
-                <TextBlock Grid.Row="9" Grid.Column="2"  Style="{StaticResource PanchangValueStyle}" Name="VedicRituTextBlock"></TextBlock>
-                <TextBlock Grid.Row="10" Grid.Column="0"  Style="{StaticResource PanchangKeyStyle}">Tamil Month</TextBlock>
-                <TextBlock Grid.Row="10" Grid.Column="2"  Style="{StaticResource PanchangValueStyle}" Name="TamilMonthTextBlock"></TextBlock>
-                <TextBlock Grid.Row="11" Grid.Column="0"  Style="{StaticResource PanchangKeyStyle}">Festival</TextBlock>
-                <TextBlock Grid.Row="11" Grid.Column="2"  Style="{StaticResource PanchangValueStyle}" Name="FestivalTextBlock"></TextBlock>
-                <TextBlock Grid.Row="12" Grid.Column="0"  Style="{StaticResource PanchangKeyStyle}">Sanskrit Month</TextBlock>
-                <TextBlock Grid.Row="12" Grid.Column="2"  Style="{StaticResource PanchangValueStyle}" Name="SanskritMonthTextBlock"></TextBlock>
-                <TextBlock Grid.Row="13" Grid.Column="0"  Style="{StaticResource PanchangKeyStyle}">Paksha</TextBlock>
-                <TextBlock Grid.Row="13" Grid.Column="2"  Style="{StaticResource PanchangValueStyle}" Name="PakshaTextBlock"></TextBlock>
-                <TextBlock Grid.Row="14" Grid.Column="0"  Style="{StaticResource PanchangKeyStyle}">Tithi</TextBlock>
-                <TextBlock Grid.Row="14" Grid.Column="2"  Style="{StaticResource PanchangValueStyle}" Name="TithiTextBlock"></TextBlock>
-                <TextBlock Grid.Row="15" Grid.Column="0"  Style="{StaticResource PanchangKeyStyle}">Nakshatra</TextBlock>
-                <TextBlock Grid.Row="15" Grid.Column="2"  Style="{StaticResource PanchangValueStyle}" Name="NakshatraTextBlock"></TextBlock>
-                <TextBlock Grid.Row="16" Grid.Column="0"  Style="{StaticResource PanchangKeyStyle}">Yoga</TextBlock>
-                <TextBlock Grid.Row="16" Grid.Column="2"  Style="{StaticResource PanchangValueStyle}" Name="YogaTextBlock"></TextBlock>
-                <TextBlock Grid.Row="17" Grid.Column="0"  Style="{StaticResource PanchangKeyStyle}">Karana</TextBlock>
-                <TextBlock Grid.Row="17" Grid.Column="2"  Style="{StaticResource PanchangValueStyle}" Name="KaranaTextBlock"></TextBlock>
-                <TextBlock Grid.Row="18" Grid.Column="0"  Style="{StaticResource PanchangKeyStyle}">Sun Rasi</TextBlock>
-                <TextBlock Grid.Row="18" Grid.Column="2"  Style="{StaticResource PanchangValueStyle}" Name="SunRasiTextBlock"></TextBlock>
-                <TextBlock Grid.Row="19" Grid.Column="0"  Style="{StaticResource PanchangKeyStyle}">Moon Rasi</TextBlock>
-                <TextBlock Grid.Row="19" Grid.Column="2"  Style="{StaticResource PanchangValueStyle}" Name="MoonRasiTextBlock"></TextBlock>
-                <TextBlock Grid.Row="20" Grid.Column="0"  Style="{StaticResource PanchangKeyStyle}">Rahu Kalam</TextBlock>
-                <TextBlock Grid.Row="20" Grid.Column="2"  Style="{StaticResource PanchangValueStyle}" Name="RahuKalamTextBlock"></TextBlock>
-                <TextBlock Grid.Row="21" Grid.Column="0"  Style="{StaticResource PanchangKeyStyle}">Yama Kandam</TextBlock>
-                <TextBlock Grid.Row="21" Grid.Column="2"  Style="{StaticResource PanchangValueStyle}" Name="YamaKandamTextBlock"></TextBlock>
-                <TextBlock Grid.Row="22" Grid.Column="0"  Style="{StaticResource PanchangKeyStyle}">Gulikai</TextBlock>
-                <TextBlock Grid.Row="22" Grid.Column="2"  Style="{StaticResource PanchangValueStyle}" Name="GulikaiTextBlock"></TextBlock>
-            </Grid>
+                <Grid Background="{StaticResource DayItemBackGroundColor}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <ScrollViewer MaxHeight="200"  Visibility="Collapsed"  x:Name="PersonalEventListScroller"  Grid.Row="0">
+                        <ListBox Background="{StaticResource DayItemBackGroundColor}" SelectionChanged="PersonalEventList_SelectionChanged"  x:Name="PersonalEventList">
+                        </ListBox>
+                    </ScrollViewer>
+                    <ScrollViewer Grid.Row="1">
+                        <Border x:Name="Separator"  BorderThickness="0,0,0,0" BorderBrush="White">
+                            <Grid Name="DayViewGrid">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition ></RowDefinition>
+                                    <RowDefinition ></RowDefinition>
+                                    <RowDefinition ></RowDefinition>
+                                    <RowDefinition ></RowDefinition>
+                                    <RowDefinition ></RowDefinition>
+                                    <RowDefinition ></RowDefinition>
+                                    <RowDefinition ></RowDefinition>
+                                    <RowDefinition ></RowDefinition>
+                                    <RowDefinition ></RowDefinition>
+                                    <RowDefinition ></RowDefinition>
+                                    <RowDefinition ></RowDefinition>
+                                    <RowDefinition ></RowDefinition>
+                                    <RowDefinition ></RowDefinition>
+                                    <RowDefinition ></RowDefinition>
+                                    <RowDefinition ></RowDefinition>
+                                    <RowDefinition ></RowDefinition>
+                                    <RowDefinition ></RowDefinition>
+                                    <RowDefinition ></RowDefinition>
+                                    <RowDefinition ></RowDefinition>
+                                    <RowDefinition ></RowDefinition>
+                                    <RowDefinition ></RowDefinition>
+                                    <RowDefinition ></RowDefinition>
+                                    <RowDefinition ></RowDefinition>
+                                    <RowDefinition ></RowDefinition>
+                                    <RowDefinition ></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                    <ColumnDefinition Width="5"></ColumnDefinition>
+                                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Row="0" Grid.Column="0"  Style="{StaticResource PanchangKeyStyle}">Date</TextBlock>
+                                <TextBlock Grid.Row="0" Grid.Column="2"  Style="{StaticResource PanchangValueStyle}" Name="DateTextBlock"></TextBlock>
+                                <TextBlock Grid.Row="1" Grid.Column="0"  Style="{StaticResource PanchangKeyStyle}">Sunrise</TextBlock>
+                                <TextBlock Grid.Row="1" Grid.Column="2"  Style="{StaticResource PanchangValueStyle}" Name="SunriseTextBlock"></TextBlock>
+                                <TextBlock Grid.Row="2" Grid.Column="0"  Style="{StaticResource PanchangKeyStyle}">Sunset</TextBlock>
+                                <TextBlock Grid.Row="2" Grid.Column="2"  Style="{StaticResource PanchangValueStyle}" Name="SunsetTextBlock"></TextBlock>
+                                <TextBlock Grid.Row="3" Grid.Column="0"  Style="{StaticResource PanchangKeyStyle}">Moonrise</TextBlock>
+                                <TextBlock Grid.Row="3" Grid.Column="2"  Style="{StaticResource PanchangValueStyle}" Name="MoonRiseTextBlock"></TextBlock>
+                                <TextBlock Grid.Row="4" Grid.Column="0"  Style="{StaticResource PanchangKeyStyle}">Tamil Year</TextBlock>
+                                <TextBlock Grid.Row="4" Grid.Column="2"  Style="{StaticResource PanchangValueStyle}" Name="TamilYearTextBlock"></TextBlock>
+                                <TextBlock Grid.Row="5" Grid.Column="0"  Style="{StaticResource PanchangKeyStyle}">North Year</TextBlock>
+                                <TextBlock Grid.Row="5" Grid.Column="2"  Style="{StaticResource PanchangValueStyle}" Name="NorthYearTextBlock"></TextBlock>
+                                <TextBlock Grid.Row="6" Grid.Column="0"  Style="{StaticResource PanchangKeyStyle}">Gujarat Year</TextBlock>
+                                <TextBlock Grid.Row="6" Grid.Column="2"  Style="{StaticResource PanchangValueStyle}" Name="GujaratYearTextBlock"></TextBlock>
+                                <TextBlock Grid.Row="7" Grid.Column="0"  Style="{StaticResource PanchangKeyStyle}">Ayana</TextBlock>
+                                <TextBlock Grid.Row="7" Grid.Column="2"  Style="{StaticResource PanchangValueStyle}" Name="AyanaTextBlock"></TextBlock>
+                                <TextBlock Grid.Row="8" Grid.Column="0"  Style="{StaticResource PanchangKeyStyle}">Ritu</TextBlock>
+                                <TextBlock Grid.Row="8" Grid.Column="2"  Style="{StaticResource PanchangValueStyle}" Name="RituTextBlock"></TextBlock>
+                                <TextBlock Grid.Row="9" Grid.Column="0"  Style="{StaticResource PanchangKeyStyle}">VedicRitu</TextBlock>
+                                <TextBlock Grid.Row="9" Grid.Column="2"  Style="{StaticResource PanchangValueStyle}" Name="VedicRituTextBlock"></TextBlock>
+                                <TextBlock Grid.Row="10" Grid.Column="0"  Style="{StaticResource PanchangKeyStyle}">Tamil Month</TextBlock>
+                                <TextBlock Grid.Row="10" Grid.Column="2"  Style="{StaticResource PanchangValueStyle}" Name="TamilMonthTextBlock"></TextBlock>
+                                <TextBlock Grid.Row="11" Grid.Column="0"  Style="{StaticResource PanchangKeyStyle}">Festival</TextBlock>
+                                <TextBlock Grid.Row="11" Grid.Column="2"  Style="{StaticResource PanchangValueStyle}" Name="FestivalTextBlock"></TextBlock>
+                                <TextBlock Grid.Row="12" Grid.Column="0"  Style="{StaticResource PanchangKeyStyle}">Sanskrit Month</TextBlock>
+                                <TextBlock Grid.Row="12" Grid.Column="2"  Style="{StaticResource PanchangValueStyle}" Name="SanskritMonthTextBlock"></TextBlock>
+                                <TextBlock Grid.Row="13" Grid.Column="0"  Style="{StaticResource PanchangKeyStyle}">Paksha</TextBlock>
+                                <TextBlock Grid.Row="13" Grid.Column="2"  Style="{StaticResource PanchangValueStyle}" Name="PakshaTextBlock"></TextBlock>
+                                <TextBlock Grid.Row="14" Grid.Column="0"  Style="{StaticResource PanchangKeyStyle}">Tithi</TextBlock>
+                                <TextBlock Grid.Row="14" Grid.Column="2"  Style="{StaticResource PanchangValueStyle}" Name="TithiTextBlock"></TextBlock>
+                                <TextBlock Grid.Row="15" Grid.Column="0"  Style="{StaticResource PanchangKeyStyle}">Nakshatra</TextBlock>
+                                <TextBlock Grid.Row="15" Grid.Column="2"  Style="{StaticResource PanchangValueStyle}" Name="NakshatraTextBlock"></TextBlock>
+                                <TextBlock Grid.Row="16" Grid.Column="0"  Style="{StaticResource PanchangKeyStyle}">Yoga</TextBlock>
+                                <TextBlock Grid.Row="16" Grid.Column="2"  Style="{StaticResource PanchangValueStyle}" Name="YogaTextBlock"></TextBlock>
+                                <TextBlock Grid.Row="17" Grid.Column="0"  Style="{StaticResource PanchangKeyStyle}">Karana</TextBlock>
+                                <TextBlock Grid.Row="17" Grid.Column="2"  Style="{StaticResource PanchangValueStyle}" Name="KaranaTextBlock"></TextBlock>
+                                <TextBlock Grid.Row="18" Grid.Column="0"  Style="{StaticResource PanchangKeyStyle}">Sun Rasi</TextBlock>
+                                <TextBlock Grid.Row="18" Grid.Column="2"  Style="{StaticResource PanchangValueStyle}" Name="SunRasiTextBlock"></TextBlock>
+                                <TextBlock Grid.Row="19" Grid.Column="0"  Style="{StaticResource PanchangKeyStyle}">Moon Rasi</TextBlock>
+                                <TextBlock Grid.Row="19" Grid.Column="2"  Style="{StaticResource PanchangValueStyle}" Name="MoonRasiTextBlock"></TextBlock>
+                                <TextBlock Grid.Row="20" Grid.Column="0"  Style="{StaticResource PanchangKeyStyle}">Rahu Kalam</TextBlock>
+                                <TextBlock Grid.Row="20" Grid.Column="2"  Style="{StaticResource PanchangValueStyle}" Name="RahuKalamTextBlock"></TextBlock>
+                                <TextBlock Grid.Row="21" Grid.Column="0"  Style="{StaticResource PanchangKeyStyle}">Yama Kandam</TextBlock>
+                                <TextBlock Grid.Row="21" Grid.Column="2"  Style="{StaticResource PanchangValueStyle}" Name="YamaKandamTextBlock"></TextBlock>
+                                <TextBlock Grid.Row="22" Grid.Column="0"  Style="{StaticResource PanchangKeyStyle}">Gulikai</TextBlock>
+                                <TextBlock Grid.Row="22" Grid.Column="2"  Style="{StaticResource PanchangValueStyle}" Name="GulikaiTextBlock"></TextBlock>
+                                <TextBlock Grid.Row="23" Grid.Column="0"  Visibility="Collapsed" Style="{StaticResource PanchangKeyStyle}">Personal Item 1</TextBlock>
+                                <TextBlock Grid.Row="23" Grid.Column="2"  Visibility="Collapsed" Style="{StaticResource PanchangValueStyle}" Name="PersonalTextBlock1"></TextBlock>
+                                <TextBlock Grid.Row="24" Grid.Column="0"  Visibility="Collapsed" Style="{StaticResource PanchangKeyStyle}">Personal Item 2</TextBlock>
+                                <TextBlock Grid.Row="24" Grid.Column="2"  Visibility="Collapsed" Style="{StaticResource PanchangValueStyle}" Name="PersonalTextBlock2"></TextBlock>
+                            </Grid>
+                        </Border>
+                    </ScrollViewer>
+                </Grid>
             </Border>
         </Grid>
 

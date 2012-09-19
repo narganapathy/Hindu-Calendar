@@ -39,6 +39,7 @@ namespace HinduCalendarPhone
                 TextBlock textBlock = new TextBlock();
                 item.Content = textBlock;
                 textBlock.Text = stateOrCity._Name;
+                textBlock.Style = Application.Current.Resources["CityStateListText"] as Style;
                 CityStateListBox.Items.Add(item);
                 item.Tag = i;
             }

@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:toolbox="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
@@ -17,19 +18,23 @@
     <Grid x:Name="LayoutRoot" Background="Transparent">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <!--TitlePanel contains the name of the application and page title-->
         <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,10">
-            <TextBlock x:Name="ApplicationTitle" Text="Hindu Calendar 2012" Style="{StaticResource PhoneTextNormalStyle}"/>
+            <TextBlock x:Name="ApplicationTitle" Text="{StaticResource AppName}" Style="{StaticResource PhoneTextNormalStyle}"/>
             <TextBlock x:Name="PageTitle" Text="page name" Margin="9,-7,0,0" Style="{StaticResource PhoneTextExtraLargeStyle}"/>
         </StackPanel>
 
 
         <!--ContentPanel - place additional content here-->
+        <toolbox:DatePicker Grid.Row="1" x:Name="EventDate" ValueChanged="EventDate_ValueChanged" />
 
-        <Grid Name="DayViewGrid" Grid.Row="1" Margin="12,0,12,0" Background="{StaticResource PhoneBackgroundBrush}" >
+
+        <ScrollViewer Grid.Row="2" HorizontalScrollBarVisibility="Auto">
+        <Grid Name="DayViewGrid" Margin="12,0,12,0" Background="{StaticResource PhoneBackgroundBrush}" >
             <Grid.RowDefinitions>
                 <RowDefinition ></RowDefinition>
                 <RowDefinition ></RowDefinition>
@@ -107,13 +112,15 @@
             <TextBlock Grid.Row="22" Grid.Column="0"  Style="{StaticResource PanchangKeyStyle}">Gulikai</TextBlock>
             <TextBlock Grid.Row="22" Grid.Column="2"  Style="{StaticResource PanchangValueStyle}" Name="GulikaiTextBlock"></TextBlock>
         </Grid>
+        </ScrollViewer>
     </Grid>
+
 
     <!--Sample code showing usage of ApplicationBar-->
     <phone:PhoneApplicationPage.ApplicationBar>
-        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
-            <shell:ApplicationBarIconButton Click="ApplicationBarIconButton_Click"  IconUri="/Images/appbar_calenderview.png" Text="Change day"/>
+        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="False">
             <shell:ApplicationBarIconButton Click="ApplicationBarChangeCityButton_Click"  IconUri="/Images/appbar_changecity.png" Text="Change City"/>
+            <shell:ApplicationBarIconButton Click="ApplicationBarHelpButton_Click"  IconUri="/Images/appbar_help.png" Text="Help"/>
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>
     <!--Sample code showing usage of ApplicationBar-->

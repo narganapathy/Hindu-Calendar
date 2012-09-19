@@ -1,3 +1,4 @@
 
 1. Make sure that the view shows up correctly for snapped 
 2. Make sure that view works correctly for portrait.
+3. Directory path is c:\users\narg\appdata\local\packages\<appid>\

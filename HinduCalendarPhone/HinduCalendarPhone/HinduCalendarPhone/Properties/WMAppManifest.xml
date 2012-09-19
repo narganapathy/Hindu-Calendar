@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 
 <Deployment xmlns="http://schemas.microsoft.com/windowsphone/2009/deployment" AppPlatformVersion="7.1">
-  <App xmlns="" ProductID="{3516443c-6681-4a63-87e2-47c92bcc26dd}" Title="HinduCalendarPhone" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal"  Author="HinduCalendarPhone author" Description="Sample description" Publisher="HinduCalendarPhone">
+  <App xmlns="" ProductID="{3516443c-6681-4a63-87e2-47c92bcc26dd}" Title="Hindu World Calendar 2012" RuntimeType="Silverlight" Version="1.0.0.1" Genre="apps.normal"  Author="N.K.Studios" Description="Hindu Calendar for cities around the world" Publisher="N.K.Studios">
     <IconPath IsRelative="true" IsResource="false">ApplicationIcon.png</IconPath>
     <Capabilities>
       <Capability Name="ID_CAP_GAMERSERVICES"/>
@@ -20,7 +20,7 @@
       <Capability Name="ID_CAP_APPOINTMENTS"/>
     </Capabilities>
     <Tasks>
-      <DefaultTask  Name ="_default" NavigationPage="MainPage.xaml"/>
+      <DefaultTask  Name ="_default" NavigationPage="DayView.xaml"/>
     </Tasks>
     <Tokens>
       <PrimaryToken TokenID="HinduCalendarPhoneToken" TaskName="_default">
