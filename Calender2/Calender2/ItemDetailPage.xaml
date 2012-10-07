@@ -167,7 +167,7 @@
                         </ListBox>
                     </ScrollViewer>
                     <ScrollViewer Grid.Row="1">
-                        <Border x:Name="Separator"  BorderThickness="0,0,0,0" BorderBrush="White">
+                        <Border x:Name="Separator" BorderThickness="0,0,0,0" BorderBrush="White">
                             <Grid Name="DayViewGrid">
                                 <Grid.RowDefinitions>
                                     <RowDefinition ></RowDefinition>

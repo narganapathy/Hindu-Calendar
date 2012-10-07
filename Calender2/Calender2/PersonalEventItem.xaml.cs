@@ -26,9 +26,5 @@ namespace Calender2
             EventText.Text = text;
             _page = page;
         }
-
-        private void EventText_PointerReleased(object sender, PointerRoutedEventArgs e)
-        {
-        }
     }
 }

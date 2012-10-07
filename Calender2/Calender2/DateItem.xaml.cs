@@ -87,6 +87,20 @@ namespace Calender2
             }
         }
 
+        public void SetPrivateEvent(String text)
+        {
+            if (text == String.Empty)
+            {
+                festival.Text = text;
+                festival.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                festival.Text = text;
+                festival.Visibility = Visibility.Visible;
+            }
+        }
+
         public void SetDay(String text)
         {
             day.Text = text;

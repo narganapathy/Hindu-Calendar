@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest">
-  <Identity Name="10139JyotishGuy.IndianCalendar-2012" Publisher="CN=8E74BF70-7F39-4BE9-8382-205E6DAE839D" Version="1.0.0.28" />
+  <Identity Name="35529NarGanapathy.HinduWorldCalendar" Publisher="CN=D8508DA0-9CA6-4324-B88A-F3A66BA6E2E2" Version="1.0.0.32" />
   <Properties>
-    <DisplayName>Hindu Calendar - 2012</DisplayName>
-    <PublisherDisplayName>Jyotish Guy</PublisherDisplayName>
+    <DisplayName>Hindu World Calendar</DisplayName>
+    <PublisherDisplayName>Nar Ganapathy</PublisherDisplayName>
     <Logo>OhmSymbol-StoreLogo.png</Logo>
     <Description>Calender2</Description>
   </Properties>

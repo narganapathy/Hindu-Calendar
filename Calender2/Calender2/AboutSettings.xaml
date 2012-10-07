@@ -51,6 +51,7 @@
                     <TextBlock Margin="10,0,0,0" FontFamily="Segoe UI" FontWeight="SemiLight" Foreground="Black" FontSize="24.6667" Text="By Nar Ganapathy" HorizontalAlignment="Left" />
                     <TextBlock Margin="10,0,0,0" FontFamily="Segoe UI" FontWeight="SemiLight" Foreground="Black" FontSize="20" Text="Data courtesy of" HorizontalAlignment="Left" />
                     <TextBlock Margin="10,0,0,0" FontFamily="Segoe UI" FontWeight="SemiLight" Foreground="Black" FontSize="20" Text="mypanchang.com" HorizontalAlignment="Left" />
+                    <HyperlinkButton Padding="-5,0,0,0" Margin="0, 25, 0, 0" Content="View privacy statement" NavigateUri="http://hinduworldcalendar1.azurewebsites.net/" HorizontalAlignment="Left"/>
                 </StackPanel>
             </Grid>
 

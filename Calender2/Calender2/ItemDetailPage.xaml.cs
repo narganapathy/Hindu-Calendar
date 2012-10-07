@@ -23,15 +23,67 @@ using System.Runtime.Serialization;
 
 namespace Calender2
 {
+    [DataContract(Name = "PrivateEvent", Namespace = "http://www.jyotishcalendar.com")]
+    [KnownType(typeof(PrivateEvent))]
+    public class PrivateEvent
+    {
+        [DataMember(Name = "Date")]
+        public String _date;
+        [DataMember(Name = "EventName")]
+        public String _eventText;
+        public PrivateEvent(String date, String text)
+        {
+            _date = date;
+            _eventText = text;
+        }
+    }
+
     [DataContract(Name = "PrivateEvents", Namespace = "http://www.jyotishcalendar.com")]
     [KnownType(typeof(PrivateEvents))]
     public class PrivateEvents
     {
         [DataMember(Name = "PrivateEventList")]
-        public List<String> _privateEventList;
+        public List<PrivateEvent> _privateEventList;
         public PrivateEvents()
         {
-            _privateEventList = new List<String>();
+            _privateEventList = new List<PrivateEvent>();
+        }
+
+        public bool Contains(DateTime date, String eventText)
+        {
+            foreach (PrivateEvent evt in _privateEventList)
+            {
+                if (evt._date.Equals(date.ToString("d")) && evt._eventText.Equals(eventText))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public List<PrivateEvent> GetEventsForDate(DateTime date)
+        {
+            List<PrivateEvent> privateEventList = new List<PrivateEvent>();
+            foreach (PrivateEvent evt in _privateEventList)
+            {
+                if (evt._date.Equals(date.ToString("d"))) 
+                {
+                    privateEventList.Add(evt);
+                }
+            }
+            return privateEventList;
+        }
+
+        public PrivateEvent GetFirstEventForDate(DateTime date)
+        {
+            foreach (PrivateEvent evt in _privateEventList)
+            {
+                if (evt._date.Equals(date.ToString("d"))) 
+                {
+                    return evt;
+                }
+            }
+            return null;
         }
     }
 
@@ -182,13 +234,6 @@ namespace Calender2
                 DataContractSerializer ser = new DataContractSerializer(typeof(PrivateEvents));
                 _privateEvents = (PrivateEvents)ser.ReadObject(stream);
                 // If we have a zero size file or no events, we can get this too
-                if (_privateEvents != null)
-                {
-                    foreach (String str in _privateEvents._privateEventList)
-                    {
-                        AddPrivateEvent(str, false);
-                    }
-                }
                 stream.Dispose();
             }
 
@@ -227,19 +272,27 @@ namespace Calender2
         void FlipView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             // Enable the previous and next buttons as appropriate
-            this.DefaultViewModel["CanFlipNext"] = this.flipView.Items != null && this.flipView.SelectedIndex < (this.flipView.Items.Count - 1);
-            this.DefaultViewModel["CanFlipPrevious"] = this.flipView.SelectedIndex > 0;
-            SampleDataItem item = this.flipView.Items[this.flipView.SelectedIndex] as SampleDataItem;
-            this.pageTitle.Text = "Hindu Calendar - " + item.Title + " " + item.Year.ToString();
-            this.cityTitle.Text = item.Group.city._Name;
-            FlipViewItem selectedFlipViewItem = (FlipViewItem)this.flipView.ItemContainerGenerator.ContainerFromIndex(flipView.SelectedIndex);
-            if (selectedFlipViewItem != null)
+            try
             {
-                _currentHighlightedDateItem.HighlightBorder(false);
-                _currentHighlightedDateItem = null;
-                Grid monthView = (Grid)FindNamedElement(selectedFlipViewItem, "monthView");
-                BuildCalendar(monthView, flipView.SelectedIndex + 1, item);
-                DayViewGridStoryboard.Begin();
+                this.DefaultViewModel["CanFlipNext"] = this.flipView.Items != null && this.flipView.SelectedIndex < (this.flipView.Items.Count - 1);
+                this.DefaultViewModel["CanFlipPrevious"] = this.flipView.SelectedIndex > 0;
+                SampleDataItem item = this.flipView.Items[this.flipView.SelectedIndex] as SampleDataItem;
+                this.pageTitle.Text = "Hindu Calendar - " + item.Title + " " + item.Year.ToString();
+                this.cityTitle.Text = item.Group.city._Name;
+                FlipViewItem selectedFlipViewItem = (FlipViewItem)this.flipView.ItemContainerGenerator.ContainerFromIndex(flipView.SelectedIndex);
+                if (selectedFlipViewItem != null)
+                {
+                    _currentHighlightedDateItem.HighlightBorder(false);
+                    _currentHighlightedDateItem = null;
+                    Grid monthView = (Grid)FindNamedElement(selectedFlipViewItem, "monthView");
+                    BuildCalendar(monthView, flipView.SelectedIndex + 1, item);
+                    DayViewGridStoryboard.Begin();
+                }
+            }
+            catch (Exception exc)
+            {
+                Debug.WriteLine("Exception is " + exc.Message);
+                Debug.Assert(false);
             }
         }
 
@@ -345,8 +398,22 @@ namespace Calender2
                     previousPaksha = paksha;
 
                     currentDateItem = dateItems[row, col];
-                    currentDateItem.SetDay(day, 
-                        isNewMoonDay, isFullMoonDay, festival, null, nakshatra);
+                    PrivateEvent evt = null;
+                    if (_privateEvents != null)
+                    {
+                        evt = _privateEvents.GetFirstEventForDate(dateTime);
+                    }
+
+                    if (evt != null)
+                    {
+                        currentDateItem.SetDay(day,
+                            isNewMoonDay, isFullMoonDay, evt._eventText, null, nakshatra);
+                    }
+                    else
+                    {
+                        currentDateItem.SetDay(day,
+                            isNewMoonDay, isFullMoonDay, festival, null, nakshatra);
+                    }
                         
                     currentDateItem.Visibility = Visibility.Visible;
                     if (String.Equals(previousTamilMonth, tamilMonth, StringComparison.OrdinalIgnoreCase) == false)
@@ -506,6 +573,17 @@ namespace Calender2
                 festival = "No festival";
             }
             FestivalTextBlock.Text = festival;
+            PersonalEventListScroller.Visibility = Visibility.Collapsed;
+            Separator.BorderThickness = new Thickness(0, 0, 0, 0);
+            PersonalEventList.Items.Clear();
+            if (_privateEvents != null)
+            {
+                List<PrivateEvent> privateEventList = _privateEvents.GetEventsForDate(dateTime);
+                foreach (PrivateEvent evt in privateEventList)
+                {
+                    AddPrivateEvent(dateTime, evt._eventText, false, evt);
+                }
+            }
         }
 
         public DependencyObject FindNamedElement(DependencyObject element, string name)
@@ -561,13 +639,18 @@ namespace Calender2
         
         private void PersonalEventClick(object sender, RoutedEventArgs e)
         {
-            AddPrivateEvent(PeTextBox.Text, true);
+            int day = _currentHighlightedDateItem.GetDay();
+            int month = flipView.SelectedIndex + 1;
+            int year = ((SampleDataItem)flipView.SelectedItem).Year;
+            DateTime date = new DateTime(year, month, day);
+            AddPrivateEvent(date, PeTextBox.Text, true, null);
             PeTextBox.Text = String.Empty;
         }
 
-        private async void AddPrivateEvent(String eventText, bool newEvent)
+        private async void AddPrivateEvent(DateTime date, String eventText, bool newEvent, PrivateEvent pEvent)
         {
-            if (newEvent && _privateEvents._privateEventList.Contains(eventText))
+
+            if (newEvent && _privateEvents.Contains(date, eventText))
             {
                 Windows.UI.Popups.MessageDialog md = new Windows.UI.Popups.MessageDialog("Event  name already exists");
                 await md.ShowAsync();
@@ -579,26 +662,30 @@ namespace Calender2
             TextBlock textBlock = new TextBlock();
             textBlock.Text = eventText;
             item.Content = textBlock;
-            item.Tag = eventText;
             PersonalEventList.Items.Add(item);
             PersonalEventListScroller.Visibility = Visibility.Visible;
             Separator.BorderThickness = new Thickness(0, 5, 0, 0);
             _personalEventList.Add(item);
             if (newEvent)
             {
-                _privateEvents._privateEventList.Add(eventText);
+                Debug.Assert(pEvent == null);
+                pEvent = new PrivateEvent(date.ToString("d"), eventText);
+                _privateEvents._privateEventList.Add(pEvent);
+                _currentHighlightedDateItem.SetPrivateEvent(pEvent._eventText);
             }
+            item.Tag = pEvent;
         }
 
         private void RemoveEventClick(object sender, RoutedEventArgs e)
         {
             if (_currentEventItem != null)
             {
-                _privateEvents._privateEventList.Remove(_currentEventItem.Tag as String);
+                _privateEvents._privateEventList.Remove(_currentEventItem.Tag as PrivateEvent);
                 _personalEventList.Remove(_currentEventItem);
                 PersonalEventList.Items.Remove(_currentEventItem);
                 _currentEventItem = null;
                 RemoveEventButton.IsEnabled = false;
+                _currentHighlightedDateItem.SetPrivateEvent(String.Empty);
             }
         }
 

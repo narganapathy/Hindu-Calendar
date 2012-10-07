@@ -10,6 +10,6 @@
     d:DesignWidth="400">
     
     <Grid>
-        <TextBlock Grid.Column="0" x:Name="EventText" PointerReleased="EventText_PointerReleased" Style="{StaticResource PanchangValueStyle}">Hello </TextBlock>
+        <TextBlock Grid.Column="0" x:Name="EventText" Style="{StaticResource PanchangValueStyle}">Hello </TextBlock>
     </Grid>
 </UserControl>
