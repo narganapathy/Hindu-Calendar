@@ -63,9 +63,10 @@ namespace CalendarData
                 _timeZone = timeZone;
             }
         };
+
+
     class CityData
     {
-
         public static SubContinent[] GetCityData()
         {
             City[] AL ={
@@ -107,7 +108,7 @@ namespace CalendarData
                 new City ("Mountain View, CA", "MountainView-CA"),
                 new City ("Napa, CA", "Napa-CA-USA"),
                 new City ("Riverside, California", "Riverside-California"),
-                new City ("Roseville(PlacerCounty), CA", "Roseville(PlacerCounty)-CA"),
+                new City ("Roseville, CA", "Roseville(PlacerCounty)-CA"),
                 new City ("Sacramento, CA", "Sacramento-CA(US)"),
                 new City ("San Diego, CA", "SanDiego-CA"),
                 new City ("San Francisco, CA", "SanFrancisco-CA"),
@@ -448,7 +449,7 @@ namespace CalendarData
             };
 
             City[] Europe = {
-                new City("Aberdeen, Scotland (UK)", "Aberdeen-Scotland-UK"),
+                new City("Aberdeen, Scotland", "Aberdeen-Scotland-UK"),
                 new City("Amsterdam, Netherlands", "Amsterdam-Netherlands"),
                 new City("Berlin, Germany", "Berlin-Germany"),
                 new City("Birmingham, England, UK", "Birmingham-England-UK"),
@@ -459,7 +460,7 @@ namespace CalendarData
                 new City("Czarnow, Poland", "Czarnow-Poland"),
                 new City("Dublin, Ireland", "Dublin-Ireland"),
                 new City("Edinburgh, Scotland, UK", "Edinburgh-Scotland-UK"),
-                new City("Fort-de-France Martinique", "Fort-de-France-Martinique"),
+                new City("Fort-de-France, Martinique", "Fort-de-France-Martinique"),
                 new City("Frankfurt, Germany", "FrankfurtamMain-Germany"),
                 new City("Geneva, Switzerland", "Geneva-Switzerland"),
                 new City("Glasgow, Scotland, UK", "Glasgow-Scotland-UK"),
@@ -657,14 +658,14 @@ namespace CalendarData
                 new City( "HongKong, China",  "HongKong-China" ),
                 new City( "Jakarta, Indonesia",  "Jakarta-Indonesia" ),
                 new City( "Kuala Lumpur, Malaysia",  "KualaLumpur-Malaysia" ),
-                new City( "Singapore",  "Singapore" )
+                new City( "Singapore, Singapore",  "Singapore" )
             };
 
             City[] ChinaJapan = {
                 new City( "Shanghai, China",  "Shanghai-China" ),
                 new City( "Tokyo, Japan",  "Tokyo-Japan" ),
                 new City( "Ulaanbaatar, Mongolia",  "Ulaanbaatar-Mongolia" ),
-                new City( "Yiwu(Zhejiang), China",  "Yiwu(Zhejiang)-China" )
+                new City( "Yiwu Zhejiang, China",  "Yiwu(Zhejiang)-China" )
             };
 
             State[] Americas = {

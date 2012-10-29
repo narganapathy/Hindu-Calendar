@@ -312,8 +312,8 @@ namespace Calender2.Data
         static String[] _monthStrings = { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
         YearlyPanchangData _calendarYearData;
         SampleDataGroup _group;
-        String _cityToken = "Seattle-WA-USA";
-        int _year = 2012;
+        String _cityToken = "Zurich-Switzerland";
+        int _year = 2013;
         public static SampleDataSource _sampleDataSource;
 
         public static async Task InitializeCalendarData()

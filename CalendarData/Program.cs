@@ -106,58 +106,75 @@ namespace CalendarData
                 return;
             }
 
-            FileStream fs = new FileStream(fileName, FileMode.Create);
-            DataContractSerializer ser = new DataContractSerializer(typeof(YearlyPanchangData));
-
-            // Get the calendar data for every month
-            for (int month = 1; month <= 12; month++)
+            try
             {
-                String url = String.Format("http://www.mypanchang.com/vcalformat.php?cityname={2}&yr={0}&mn={1}&monthtype=0", Year, month, UrlToken);
-                Console.WriteLine("Url to look at is {0}", url);
-                HtmlDocument document = web.Load(url);
-                day = 0;
-                foreach (HtmlNode node in document.DocumentNode.SelectNodes("//script"))
+                FileStream fs = new FileStream(fileName, FileMode.Create);
+                DataContractSerializer ser = new DataContractSerializer(typeof(YearlyPanchangData));
+
+                // Get the calendar data for every month
+                for (int month = 1; month <= 12; month++)
                 {
-                    HtmlNodeCollection coll = node.ChildNodes;
-                    foreach (HtmlNode data in coll)
+                    String url = String.Format("http://www.mypanchang.com/vcalformat.php?cityname={2}&yr={0}&mn={1}&monthtype=0", Year, month, UrlToken);
+
+                    HtmlDocument document = null;
+                    try
                     {
-                        //Console.WriteLine(data.InnerText.Trim());
-                        String input = data.InnerText;
-                        String pattern = @"panData\[(\d\d)\] = ""([^""]+)"";";
-                        foreach (Match match in Regex.Matches(input, pattern, RegexOptions.IgnoreCase))
+                        document = web.Load(url);
+                    }
+                    catch (Exception exp)
+                    {
+                        Console.WriteLine("Load Failed "  + url + "\n" + exp.Message);
+                        return;
+                    }
+
+                    day = 0;
+                    foreach (HtmlNode node in document.DocumentNode.SelectNodes("//script"))
+                    {
+                        HtmlNodeCollection coll = node.ChildNodes;
+                        foreach (HtmlNode data in coll)
                         {
-                            //Console.WriteLine("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-                            //Console.WriteLine(match.Groups[0].Value);
-                            //Console.WriteLine(match.Groups[1].Value);
-                            HtmlDocument doc = new HtmlDocument();
-                            String dayData = match.Groups[2].Value;
-                            // remove the bold elements to make it easier to parse
-                            String dayData1 = Regex.Replace(dayData, "<b>", " ");
-                            String dayData2 = Regex.Replace(dayData1, "</b>", " ");
-                            //Console.WriteLine(dayData2);
-                            doc.LoadHtml(dayData2);
-                            PanchangData pData = new PanchangData(Year, month, day + 1);
-                            currentIndex = 0;
-                            CollectData(doc.DocumentNode, pData, scanPatterns);
-                            panchangData[(month - 1)*31 + day] = pData;
-                            day++;
-                            pData._fieldValues[(int)FieldType.Festival] = GetFestivalData(Year, month, day, timeZone);
+                            //Console.WriteLine(data.InnerText.Trim());
+                            String input = data.InnerText;
+                            String pattern = @"panData\[(\d\d)\] = ""([^""]+)"";";
+                            foreach (Match match in Regex.Matches(input, pattern, RegexOptions.IgnoreCase))
+                            {
+                                //Console.WriteLine("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+                                //Console.WriteLine(match.Groups[0].Value);
+                                //Console.WriteLine(match.Groups[1].Value);
+                                HtmlDocument doc = new HtmlDocument();
+                                String dayData = match.Groups[2].Value;
+                                // remove the bold elements to make it easier to parse
+                                String dayData1 = Regex.Replace(dayData, "<b>", " ");
+                                String dayData2 = Regex.Replace(dayData1, "</b>", " ");
+                                //Console.WriteLine(dayData2);
+                                doc.LoadHtml(dayData2);
+                                PanchangData pData = new PanchangData(Year, month, day + 1);
+                                currentIndex = 0;
+                                CollectData(doc.DocumentNode, pData, scanPatterns);
+                                panchangData[(month - 1) * 31 + day] = pData;
+                                day++;
+                                pData._fieldValues[(int)FieldType.Festival] = GetFestivalData(Year, month, day, timeZone);
+                                if (day > 30) break;
+                            }
                             if (day > 30) break;
                         }
                         if (day > 30) break;
                     }
-                    if (day > 30) break;
                 }
-            }
-            ser.WriteObject(fs, yearPanchangData);
-            //writer.Close();
-            fs.Close();
+                ser.WriteObject(fs, yearPanchangData);
+                //writer.Close();
+                fs.Close();
 
-            FileStream fs1 = new FileStream(fileName, FileMode.Open);
-            DataContractSerializer ser1 = new DataContractSerializer(typeof(YearlyPanchangData));
-            YearlyPanchangData yearPanchangDataCopy;
-            yearPanchangDataCopy = (YearlyPanchangData)ser1.ReadObject(fs1);
-            Console.WriteLine("Done");
+                FileStream fs1 = new FileStream(fileName, FileMode.Open);
+                DataContractSerializer ser1 = new DataContractSerializer(typeof(YearlyPanchangData));
+                YearlyPanchangData yearPanchangDataCopy;
+                yearPanchangDataCopy = (YearlyPanchangData)ser1.ReadObject(fs1);
+                Console.WriteLine("Done");
+            }
+            catch (Exception e)
+            {
+                Console.Write("Web load problem " + e.Message);
+            }
             // PrintPanchangData(panchangData);
         }
 
@@ -314,6 +331,8 @@ namespace CalendarData
             SubContinent[] subContinents = CityData.GetCityData();
             festivalData = FestivalDataGetter.GetFestivalData();
 
+            //CalculateLatLong(subContinents);
+
             foreach (SubContinent subcontinent in subContinents)
             {
                 TimeZoneValues timeZone;
@@ -331,13 +350,13 @@ namespace CalendarData
                             else if (state._timeZone != TimeZoneValues.Unknown)
                             {
                                 timeZone = state._timeZone;
-                            } 
+                            }
                             else
                             {
                                 timeZone = city._timeZone;
                             }
 
-                            GetCalendarDataPerCityAndYear(2012, city._Name, city._UrlToken, timeZone);
+                            GetCalendarDataPerCityAndYear(2013, city._Name, city._UrlToken, timeZone);
                         }
                     }
                 }
@@ -349,15 +368,189 @@ namespace CalendarData
                         if (subcontinent._timeZone != TimeZoneValues.Unknown)
                         {
                             timeZone = subcontinent._timeZone;
-                        } 
-                        else 
+                        }
+                        else
                         {
                             timeZone = city._timeZone;
                         }
-                        GetCalendarDataPerCityAndYear(2012, city._Name, city._UrlToken, timeZone);
+                        GetCalendarDataPerCityAndYear(2013, city._Name, city._UrlToken, timeZone);
                     }
                 }
             }
+        }
+
+        class CountryCode
+        {
+            public String _countryName;
+            public String _countryCode;
+            public CountryCode(String countryName, String countryCode)
+            {
+                _countryCode = countryCode;
+                _countryName = countryName;
+            }
+        }
+
+        static void CalculateLatLong(SubContinent[] subContinents)
+        {
+
+        CountryCode[] countryCodes = {
+                                new CountryCode("Canada", "CA"),
+                                new CountryCode("Columbia", "CO"),
+                                new CountryCode("Argentina","AR"),
+                                new CountryCode("Surinam","SR"),
+                                new CountryCode("Congo/Zaire", "CG"),
+                                new CountryCode("Egypt", "EG"),
+                                new CountryCode("Tanzania", "TZ"),
+                                new CountryCode("Kenya", "KE"),
+                                new CountryCode("South Africa", "ZA"),
+                                new CountryCode("Zambia", "ZM"),
+                                new CountryCode("Mauritius","MU"),
+                                new CountryCode("Mahe", "SC"),
+                                new CountryCode("Barbados","BB"),
+                                new CountryCode("Guyana","GY"),
+                                new CountryCode("Jamaica","JM"),
+                                new CountryCode("Bahamas","BS"),
+                                new CountryCode("Trinidad and Tobago","TT"),
+                                new CountryCode("Australia","AU"),
+                                new CountryCode("India","IN"),
+                                new CountryCode("Pakistan","PK"),
+                                new CountryCode("New Zealand","NZ"),
+                                new CountryCode("Fiji","FJ"),
+                                new CountryCode("Scotland (UK)","B"),
+                                new CountryCode("Germany","DE"),
+                                new CountryCode("Poland","PL"),
+                                new CountryCode("Netherlands","NL"),
+                                new CountryCode("Ireland","IE"),
+                                new CountryCode("UK", "GB"),
+                                new CountryCode("Ukraine","UA"),
+                                new CountryCode("Finland","FI"),
+                                new CountryCode("Italy", "IT"),
+                                new CountryCode("Spain","ES"),
+                                new CountryCode("Norway","NO"),
+                                new CountryCode("Sweden", "SE"),
+                                new CountryCode("Switzerland","CH"),
+                                new CountryCode("Denmark","DK"),
+                                new CountryCode("Qatar","QA"),
+                                new CountryCode("UAE","AE"),
+                                new CountryCode("Bahrain", "BH"),
+                                new CountryCode("Oman","OM"),
+                                new CountryCode("Yemen", "YE"),
+                                new CountryCode("Iran","IR"),
+                                new CountryCode("Kuwait","KW"),
+                                new CountryCode("Saudi Arabia","SA"),
+                                new CountryCode("SriLanka","LK"),
+                                new CountryCode("Philippines","PH"),
+                                new CountryCode("Indonesia","ID"),
+                                new CountryCode("Bangladesh","BD"),
+                                new CountryCode("Vietnam", "VN"),
+                                new CountryCode("China", "CN"),
+                                new CountryCode("Malaysia","MY"),
+                                new CountryCode("Singapore", "SG"),
+                                new CountryCode("Japan", "JP"),
+                                new CountryCode("Mongolia","MN"),
+                                new CountryCode("Martinique","MQ"),
+            };
+
+                                        
+            String patternToMatch = @"([\w\s]+),([\w\s]+)";
+            foreach (SubContinent subcontinent in subContinents)
+            {
+                if (subcontinent._stateOrCityList[0] is State)
+                {
+                    State[] stateList = subcontinent._stateOrCityList as State[];
+                    foreach (State state in stateList)
+                    {
+                        foreach (City city in state._cities)
+                        {
+                            Match match = Regex.Match(city._Name, patternToMatch);
+                            if (match.Success)
+                            {
+                                GetLatLong("US", match.Groups[2].ToString().Trim(), match.Groups[1].ToString().Trim());
+                            }
+                            else
+                            {
+                                Console.WriteLine("No match for " + city._Name);
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    City[] cityList = subcontinent._stateOrCityList as City[];
+                    foreach (City city in cityList)
+                    {
+                            Match match = Regex.Match(city._Name, patternToMatch);
+                            if (match.Success)
+                            {
+                                if (String.Equals(subcontinent._Name, "India", StringComparison.CurrentCultureIgnoreCase))
+                                {
+                                    GetLatLong("IN", String.Empty, match.Groups[1].ToString());
+                                }
+                                else
+                                {
+                                    foreach (CountryCode code in countryCodes)
+                                    {
+                                        if (String.Equals(code._countryName, match.Groups[2].ToString().Trim(), StringComparison.CurrentCultureIgnoreCase) == true)
+                                        {
+                                            GetLatLong(code._countryCode, String.Empty, match.Groups[1].ToString());
+                                        }
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                String secondPattern = @"([\w]+)";
+                                Match match1 = Regex.Match(city._Name, secondPattern);
+                                if (match1.Success)
+                                {
+                                    if (String.Equals(subcontinent._Name, "India", StringComparison.CurrentCultureIgnoreCase))
+                                    {
+                                        GetLatLong("IN", String.Empty, match.Groups[1].ToString());
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("No match" + city._Name);
+                                    }
+                                }
+                                else
+                                {
+                                    Console.WriteLine("No match" + city._Name);
+                                }
+                            }
+                    }
+                }
+            }
+
+        }
+
+        static void GetLatLong(String country, String state, String city)
+        {
+            Console.WriteLine("{0} {1} {2}", country, state, city);
+
+            //String bingMapsKey = "As4YEtofwNVwMPinIlG_LQlwb-rYVVvrnqZ25ZRivjdb8rEMPyBToNFVhRlHuABZ";
+            //String url;
+            //if (String.Empty != state)
+            //{
+            //    url = String.Format("http://dev.virtualearth.net/REST/v1/Locations?countryRegion={0}&adminDistrict={1}&locality={2}&o=xml&key={3}",
+            //                    country, state, city, bingMapsKey);
+            //}
+            //else
+            //{
+            //    url = String.Format("http://dev.virtualearth.net/REST/v1/Locations?countryRegion={0}&locality={1}&o=xml&key={2}",
+            //                    country, city, bingMapsKey);
+            //}
+            //HttpWebRequest wr = (HttpWebRequest)WebRequest.Create(url);
+            //Stream respStream = wr.GetResponse().GetResponseStream();
+            //StreamReader r = new StreamReader(respStream);
+            //String xmlString = r.ReadToEnd();
+            ////Console.WriteLine(xmlString);
+            //XmlDocument xmlDoc = new XmlDocument();
+            //xmlDoc.LoadXml(xmlString);
+            //XmlNodeList list = xmlDoc.GetElementsByTagName("Latitude");
+            //String latitude = list[0].InnerXml;
+            //list = xmlDoc.GetElementsByTagName("Longitude");
+            //String longtitude =  list[1].InnerXml;
+            //Console.WriteLine("{0} {1} {2}", city, latitude, longtitude);
         }
     }
 }
