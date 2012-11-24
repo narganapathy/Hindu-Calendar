@@ -16,7 +16,7 @@
   </Resources>
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="Calender2.App">
-      <VisualElements DisplayName="Hindu Calendar-2012" Logo="OhmSymbol-Logo.png" SmallLogo="OhmSymbol-SmallLogo.png" Description="This application shows the Hindu Calendar for 2012." ForegroundText="light" BackgroundColor="#222222">
+      <VisualElements DisplayName="Hindu Calendar-2012" Logo="OhmSymbol-Logo.png" SmallLogo="OhmSymbol-SmallLogo.png" Description="This application shows the Hindu Calendar for 2012." ForegroundText="light" BackgroundColor="#222222" ToastCapable="false">
         <DefaultTile ShowName="allLogos" WideLogo="OhmSymbol-widelogo.png" />
         <SplashScreen Image="ohm sign - splash screen.png" />
         <InitialRotationPreference>
@@ -24,9 +24,17 @@
           <Rotation Preference="landscapeFlipped" />
         </InitialRotationPreference>
       </VisualElements>
+      <Extensions>
+        <Extension Category="windows.backgroundTasks" EntryPoint="Tasks.TimerTriggerTask">
+          <BackgroundTasks>
+            <Task Type="systemEvent" />
+          </BackgroundTasks>
+        </Extension>
+      </Extensions>
     </Application>
   </Applications>
   <Capabilities>
     <Capability Name="internetClient" />
+    <DeviceCapability Name="location" />
   </Capabilities>
 </Package>

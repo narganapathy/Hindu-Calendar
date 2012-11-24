@@ -18,8 +18,8 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.Web.Syndication;
-using Windows.Storage;
-using Windows.Storage.Streams;
+using Windows.Devices.Geolocation;
+using CalendarData;
 
 
 // The data model defined by this file serves as a representative example of a strongly-typed
@@ -109,6 +109,8 @@ namespace Calender2.Data
     /// </summary>
     public class SampleDataItem : SampleDataCommon
     {
+        int _year;
+
         public SampleDataItem(String uniqueId, String title, String subtitle, String imagePath, String description, String content, SampleDataGroup group)
             : base(uniqueId, title, subtitle, imagePath, description)
         {
@@ -140,10 +142,11 @@ namespace Calender2.Data
                 out String nakshatra,
                 out String tamilMonth)
         {
-            YearlyPanchangData data = _group.PanchangDataForYear;
+            YearlyPanchangData data = _group.PanchangDataForYear[_year];
             isNewMoonDay = false;
             isFullMoonDay = false;
            
+            Debug.Assert(data._panchangData[(month - 1) * 31 + day - 1] != null);
             Debug.Assert(data._panchangData[(month - 1) * 31 + day - 1].Day == day);
             Debug.Assert(data._panchangData[(month - 1) * 31 + day - 1].Month == month);
             if (data._panchangData[(month - 1) * 31 + day - 1]._fieldValues[(int)FieldType.Tithi] == "Amavasya")
@@ -162,7 +165,7 @@ namespace Calender2.Data
 
         public bool IsNewMoonDay(int month, int day)
         {
-            YearlyPanchangData data = _group.PanchangDataForYear;
+            YearlyPanchangData data = _group.PanchangDataForYear[_year];
             Debug.Assert(data._panchangData[(month - 1) * 31 + day - 1].Day == day);
             Debug.Assert(data._panchangData[(month - 1) * 31 + day - 1].Month == month);
             if (data._panchangData[(month-1)*31 + day -1]._fieldValues[(int)FieldType.Tithi] == "Amavasya")
@@ -174,7 +177,7 @@ namespace Calender2.Data
         
         public bool IsFullMoonDay(int month, int day)
         {
-            YearlyPanchangData data = _group.PanchangDataForYear;
+            YearlyPanchangData data = _group.PanchangDataForYear[_year];
             if (data._panchangData[(month-1)*31 + day -1]._fieldValues[(int)FieldType.Tithi] == "Purnima")
             {
                 return true;
@@ -184,20 +187,21 @@ namespace Calender2.Data
 
         public String GetFestival(int month, int day)
         {
-            YearlyPanchangData data = _group.PanchangDataForYear;
+            YearlyPanchangData data = _group.PanchangDataForYear[_year];
             String festival = data._panchangData[(month - 1) * 31 + day - 1]._fieldValues[(int)FieldType.Festival];
             return festival;
         }
 
         public PanchangData GetPanchangData(int month, int day)
         {
-            YearlyPanchangData data = _group.PanchangDataForYear;
+            YearlyPanchangData data = _group.PanchangDataForYear[_year];
             return data._panchangData[(month - 1) * 31 + day - 1];
         }
         
         public int Year
         {
-            get { return _group.Year; }
+            get { return _year; }
+            set { _year = value; }
         }
 
         public int Month
@@ -222,11 +226,11 @@ namespace Calender2.Data
         {
             get { return this._items; }
         }
-        private YearlyPanchangData _yearlyPanchangData;
-        private int _year;
+        private Dictionary<int, YearlyPanchangData> _yearlyPanchangData;
+        private int _year = 2012;
         private City _city;
 
-        public YearlyPanchangData PanchangDataForYear
+        public Dictionary<int, YearlyPanchangData> PanchangDataForYear
         {
             get {return _yearlyPanchangData;}
             set {_yearlyPanchangData = value;}
@@ -243,61 +247,6 @@ namespace Calender2.Data
         }
     }
 
-    enum FieldType
-    {
-        None,
-        Sunrise,
-        Sunset,
-        Moonrise,
-        TamilYear,
-        NorthYear,
-        GujaratYear,
-        Ayana,
-        Ritu,
-        VedicRitu,
-        TamilMonth,
-        SanskritMonth,
-        Paksha,
-        Tithi,
-        Nakshatra,
-        Yoga,
-        Karana,
-        SunRasi,
-        MoonRasi,
-        RahuKalam,
-        YamaGandam,
-        Gulikai,
-        Festival,
-        MaxFields
-    };
-
-    [DataContract(Name = "PanchangData", Namespace = "http://www.jyotishcalendar.com")]
-    public class PanchangData
-    {
-        [DataMember(Name = "Year")]
-        public int Year;
-        [DataMember(Name = "Month")]
-        public int Month;
-        [DataMember(Name = "Day")]
-        public int Day;
-        [DataMember(Name = "FieldValues")]
-        public String[] _fieldValues;
-        public PanchangData(int year, int month, int day)
-        {
-            _fieldValues = new String[(int)FieldType.MaxFields];
-            Year = year;
-            Day = day;
-            Month = month;
-        }
-    };
-
-    [DataContract(Name = "YearlyPanchangData", Namespace = "http://www.jyotishcalendar.com")]
-    [KnownType(typeof(PanchangData))]
-    public class YearlyPanchangData
-    {
-        [DataMember(Name = "PanchangDataArray")]
-        public PanchangData[] _panchangData;
-    }
 
     /// <summary>
     /// Creates a collection of groups and items with hard-coded content.
@@ -310,10 +259,10 @@ namespace Calender2.Data
             get { return this._itemGroups; }
         }
         static String[] _monthStrings = { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
-        YearlyPanchangData _calendarYearData;
+        Dictionary<int, YearlyPanchangData> _calendarYearData;
         SampleDataGroup _group;
         String _cityToken = "Zurich-Switzerland";
-        int _year = 2013;
+        int _year = 2012;
         public static SampleDataSource _sampleDataSource;
 
         public static async Task InitializeCalendarData()
@@ -391,49 +340,28 @@ namespace Calender2.Data
         }
 
 
+        public static async Task GetClosestCity()
+        {
+            Geolocator geoLocator = new Geolocator();
+            var pos = await geoLocator.GetGeopositionAsync();
+            String cityToken = Calender2.Data.CityData.FindClosestCity(pos.Coordinate.Latitude, pos.Coordinate.Longitude); 
+            await SampleDataSource.ChangeCity(cityToken);
+        }
+
         // Find and load the calendar data into memory.
         public async Task GetCalendarYearData()
         {
             try
             {
-                StorageFolder folder = Windows.ApplicationModel.Package.Current.InstalledLocation;
-                var folderList = await folder.GetFoldersAsync();
-                
-                StorageFolder assetFolder = null;
-                foreach (StorageFolder fo in folderList)
-                {
-                    if (fo.Name == "Assets")
-                    {
-                        assetFolder = fo;
-                        break;
-                    }
-                }
-
-                if (assetFolder == null)
-                {
-                    throw new InvalidOperationException();
-                }
-
-                String fileName = String.Format("IndianCalendar-{0}-{1}.dat", _cityToken, _year);
-
-                // Debug code
-                //var fileList = await assetFolder.GetFilesAsync();
-                //foreach (StorageFile fi in fileList)
-                //{
-                //    Debug.WriteLine("File found is {0}", fi.Name);
-                //}
-
-                StorageFile file = await assetFolder.GetFileAsync(fileName);
-
-                IRandomAccessStream readStream = await file.OpenAsync(FileAccessMode.Read);
-                
-                Stream stream = readStream.AsStreamForRead();
-                
-                DataContractSerializer ser = new DataContractSerializer(typeof(YearlyPanchangData));
-                _calendarYearData = (YearlyPanchangData)ser.ReadObject(stream);
-                Debug.Assert(_calendarYearData != null);
-                
+                _cityToken = "Seattle-WA-USA";
+                CalendarDataReader calendarReader;
+                calendarReader = new CalendarDataReader();
+                await calendarReader.ReadCalendarYearData(_cityToken, 2012);
+                _calendarYearData.Add(2012, calendarReader.CalendarYearData);
+                await calendarReader.ReadCalendarYearData(_cityToken, 2013);
+                _calendarYearData.Add(2013, calendarReader.CalendarYearData);
                 _group.PanchangDataForYear = _calendarYearData;
+                _group.city = GetCityInformation(_cityToken);
             }
             catch (Exception e)
             {
@@ -450,6 +378,7 @@ namespace Calender2.Data
 
         public SampleDataSource()
         {
+            _calendarYearData = new Dictionary<int, YearlyPanchangData>();
             var group = new SampleDataGroup("Group-1",
                     "Group Title: 1",
                     "Group Subtitle: 1",
@@ -459,16 +388,20 @@ namespace Calender2.Data
             group.Year = _year;
             
             group.city = GetCityInformation(_cityToken); ;
-            for (int month = 0; month < 12; month++)
+            for (int year = 2012; year < 2014; year++)
             {
-                var item = new SampleDataItem(_monthStrings[month],
-                    _monthStrings[month],
-                    _monthStrings[month],
-                    "Assets/DarkGray.png",
-                    "Group Description: {0} " + _monthStrings[month], 
-                    (month+1).ToString(),
-                    group);
-                group.Items.Add(item);
+                for (int month = 0; month < 12; month++)
+                {
+                    var item = new SampleDataItem(_monthStrings[month] + year,
+                        _monthStrings[month],
+                        _monthStrings[month],
+                        "Assets/DarkGray.png",
+                        "Group Description: {0} " + _monthStrings[month],
+                        (month + 1).ToString(),
+                        group);
+                    group.Items.Add(item);
+                    item.Year = year;
+                }
             }
             this.ItemGroups.Add(group);
             _group = group;

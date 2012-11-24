@@ -97,8 +97,17 @@ namespace Calender2.Common
             _sessionState = new Dictionary<String, Object>();
 
             // Get the input stream for the SessionState file
-            StorageFile file = await ApplicationData.Current.LocalFolder.GetFileAsync(sessionStateFilename);
-            if (file == null) return;
+            StorageFile file = null;
+            try
+            {
+                file = await ApplicationData.Current.LocalFolder.GetFileAsync(sessionStateFilename);
+                if (file == null) return;
+            }
+            catch (Exception)
+            {
+                return;
+                // If the file is not found or cannot be opened we start like a new session.
+            }
 
             using (IInputStream inStream = await file.OpenSequentialReadAsync())
             {

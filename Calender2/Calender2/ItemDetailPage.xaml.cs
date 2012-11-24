@@ -18,8 +18,10 @@ using Windows.UI.Xaml.Navigation;
 using Windows.UI.ApplicationSettings;
 using Windows.Storage;
 using System.Runtime.Serialization;
+using Windows.ApplicationModel.Background;
+using CalendarData;
 
-// The Item Detail Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234232
+// The Item Detail Page ite template is documented at http://go.microsoft.com/fwlink/?LinkId=234232
 
 namespace Calender2
 {
@@ -241,6 +243,9 @@ namespace Calender2
             {
                     _privateEvents = new PrivateEvents();
             }
+            StartTimerTrigger();
+            await SampleDataSource.GetClosestCity();
+            UpdateTitle();
         }
 
         /// <summary>
@@ -271,6 +276,7 @@ namespace Calender2
         /// <param name="e">Event data that describes how the current item was changed.</param>
         void FlipView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            const int monthsInYear = 13;
             // Enable the previous and next buttons as appropriate
             try
             {
@@ -285,7 +291,8 @@ namespace Calender2
                     _currentHighlightedDateItem.HighlightBorder(false);
                     _currentHighlightedDateItem = null;
                     Grid monthView = (Grid)FindNamedElement(selectedFlipViewItem, "monthView");
-                    BuildCalendar(monthView, flipView.SelectedIndex + 1, item);
+                    int month = ((flipView.SelectedIndex) % 12) + 1;
+                    BuildCalendar(monthView, month, item);
                     DayViewGridStoryboard.Begin();
                 }
             }
@@ -469,9 +476,9 @@ namespace Calender2
         // Update tile for today
         private void UpdateTile( SampleDataItem item)
         {
-            int month = item.Month;
-            TileUpdateManager.CreateTileUpdaterForApplication().Clear();
             DateTime date = DateTime.Today;
+            int month = date.Month;
+            TileUpdateManager.CreateTileUpdaterForApplication().Clear();
             int day = date.Day;
             PanchangData pdata = item.GetPanchangData(month, day);
             // create the wide template
@@ -548,7 +555,7 @@ namespace Calender2
             SunriseTextBlock.Text= pdata._fieldValues[(int)FieldType.Sunrise];
             SunsetTextBlock.Text = pdata._fieldValues[(int)FieldType.Sunset];
             MoonRiseTextBlock.Text = pdata._fieldValues[(int)FieldType.Moonrise];
-            TamilYearTextBlock.Text = pdata._fieldValues[(int)FieldType.TamilYear];
+            TamilYearTextBlock.Text = (pdata._fieldValues[(int)FieldType.TamilYear] == null) ? "None" : pdata._fieldValues[(int)FieldType.TamilYear];
             NorthYearTextBlock.Text = pdata._fieldValues[(int)FieldType.NorthYear];
             GujaratYearTextBlock.Text = pdata._fieldValues[(int)FieldType.GujaratYear];
             AyanaTextBlock.Text = pdata._fieldValues[(int)FieldType.Ayana];
@@ -694,6 +701,26 @@ namespace Calender2
             ListBox lb = sender as ListBox;
             _currentEventItem = lb.SelectedItem as ListBoxItem;
             RemoveEventButton.IsEnabled = true;
+        }
+
+        public void StartTimerTrigger()
+        {
+            // This check is an insurance check.
+            if (BackgroundTaskRegistration.AllTasks.Count == 1)
+            {
+                Debug.WriteLine("Task already started");
+                return;
+            }
+
+            var builder = new BackgroundTaskBuilder();
+            const uint dayInMinutes = 24*60;
+            var trigger = new MaintenanceTrigger(dayInMinutes, false);
+
+            builder.Name = "TimeTriggeredTask";
+            builder.TaskEntryPoint = "Tasks.TimerTriggerTask";
+            builder.SetTrigger(trigger);
+
+            BackgroundTaskRegistration task = builder.Register();
         }
     }
 }

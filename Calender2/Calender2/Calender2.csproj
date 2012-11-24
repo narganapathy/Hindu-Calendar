@@ -2513,6 +2513,7 @@
     <Content Include="Common\ReadMe.txt" />
     <Content Include="ohm sign - splash screen.png" />
     <Content Include="ohm sign.jpg" />
+    <Content Include="OhmSymbol-BadgeLogo.png" />
     <Content Include="OhmSymbol-Logo.png" />
     <Content Include="OhmSymbol-SmallLogo.png" />
     <Content Include="OhmSymbol-StoreLogo.png" />
@@ -2576,6 +2577,14 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CalendarData\CalendarData.csproj">
+      <Project>{22a0b6ba-b00e-4d5b-80d0-47982fbbf26d}</Project>
+      <Name>CalendarData</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Tasks\Tasks.csproj">
+      <Project>{1523c9ca-7b82-499d-8fbc-f2c4664c2ea0}</Project>
+      <Name>Tasks</Name>
+    </ProjectReference>
     <ProjectReference Include="NotificationsExtensions\NotificationsExtensions.csproj">
       <Project>{6e87464b-b064-40ca-8161-7c18c337adff}</Project>
       <Name>NotificationsExtensions</Name>
