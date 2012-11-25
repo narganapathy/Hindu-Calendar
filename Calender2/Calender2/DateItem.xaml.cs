@@ -76,7 +76,11 @@ namespace Calender2
                 //tithi.Visibility = Visibility.Collapsed;
             }
 
-            if (String.IsNullOrEmpty(nakshatraString) == false)
+            if (nakshatraString == "KeepExisting")
+            {
+                // do nothing
+            }
+            else if (String.IsNullOrEmpty(nakshatraString) == false)
             {
                 nakshatra.Text = nakshatraString;
                 nakshatra.Visibility = Visibility.Visible;
@@ -113,13 +117,22 @@ namespace Calender2
             SolidColorBrush brush;
             if (highlight)
             {
-                brush = (SolidColorBrush)app.Resources["DateItemBorderHighlightColor"];
+                //brush = (SolidColorBrush)app.Resources["DateItemBorderHighlightColor"];
+                brush = (SolidColorBrush)app.Resources["DayItemHighlightBackGroundColor"];
             }
             else
             {
-                brush = (SolidColorBrush)app.Resources["DateItemBorderColor"];
+                //brush = (SolidColorBrush)app.Resources["DateItemBorderColor"];
+                if (festival.Visibility == Visibility.Visible)
+                {
+                    brush = (SolidColorBrush)app.Resources["DateItemFestivalBackgroundColor"];
+                }
+                else
+                {
+                    brush = (SolidColorBrush)app.Resources["DayItemBackGroundColor"];
+                }
             }
-            dayBorder.BorderBrush = brush;
+            mainStackPanel.Background = brush;
         }
 
         public int GetDay()

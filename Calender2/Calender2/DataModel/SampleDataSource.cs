@@ -153,7 +153,18 @@ namespace Calender2.Data
             {
                 isNewMoonDay =  true;
             }
+
+            if (data._panchangData[(month - 1) * 31 + day - 1]._fieldValues[(int)FieldType.Tithi].Trim() == "Krishna Amavasya")
+            {
+                isNewMoonDay =  true;
+            }
+
             if (data._panchangData[(month - 1) * 31 + day - 1]._fieldValues[(int)FieldType.Tithi] == "Purnima")
+            {
+                isFullMoonDay = true;
+            }
+            
+            if (data._panchangData[(month - 1) * 31 + day - 1]._fieldValues[(int)FieldType.Tithi].Trim() == "Shukla Purnima")
             {
                 isFullMoonDay = true;
             }

@@ -20,6 +20,7 @@
 
             <x:String x:Key="AppName">Calender2</x:String>
             <SolidColorBrush x:Key="MonthBackgroundColor" Color="#FFE6C7AE"/>
+            <SolidColorBrush x:Key="DayItemHighlightBackGroundColor" Color="DarkRed"></SolidColorBrush>
             <SolidColorBrush x:Key="DayItemBackGroundColor" Color="#FF917F64"></SolidColorBrush>
             <SolidColorBrush x:Key="DateItemBorderColor" Color="#FFE6C7AE" />
             <SolidColorBrush x:Key="DateItemFestivalBackgroundColor" Color="#FF7A7144"></SolidColorBrush>

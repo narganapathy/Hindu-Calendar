@@ -392,14 +392,14 @@ namespace Calender2
                     if ((previousPaksha.Contains("Shukla") == true) && (paksha.Contains("Krishna") == true) && (fullMoonDayFound == false))
                     {
                         // Set the previous item to full moon day
-                        currentDateItem.SetDay(currentDateItem.GetDay(), false, true, null, null, null);
+                        currentDateItem.SetDay(currentDateItem.GetDay(), false, true, null, null, "KeepExisting");
                     }
 
                     // Sometimes the tithi changes in the middle of the day and is not captured. Lets fix it here
                     if ((previousPaksha.Contains("Krishna") == true) && (paksha.Contains("Shukla") == true) && (newMoonDayFound == false))
                     {
                         // Set the previous item to new moon day
-                        currentDateItem.SetDay(currentDateItem.GetDay(), true, false, null, null, null);
+                        currentDateItem.SetDay(currentDateItem.GetDay(), true, false, null, null, "KeepExisting");
                     }
 
                     previousPaksha = paksha;
@@ -529,7 +529,8 @@ namespace Calender2
                 try
                 {
                     SampleDataItem item = this.flipView.Items[this.flipView.SelectedIndex] as SampleDataItem;
-                    ShowDetail(this.flipView.SelectedIndex + 1, dateItem.GetDay(), item);
+                    int month = ((flipView.SelectedIndex) % 12) + 1;
+                    ShowDetail(month, dateItem.GetDay(), item);
                     dateItem.HighlightBorder(true);
 
                     DateItem oldItem = _currentHighlightedDateItem;
@@ -713,7 +714,7 @@ namespace Calender2
             }
 
             var builder = new BackgroundTaskBuilder();
-            const uint dayInMinutes = 24*60;
+            const uint dayInMinutes = 8*60; // Run every 8 hours to update the tile
             var trigger = new MaintenanceTrigger(dayInMinutes, false);
 
             builder.Name = "TimeTriggeredTask";
