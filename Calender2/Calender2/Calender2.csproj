@@ -1108,6 +1108,7 @@
     </Content>
     <Content Include="Assets\IndianCalendar-Seattle-WA-USA-2013.dat">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Assets\IndianCalendar-Secunderabad-AndraPradesh-India-2013.dat">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
