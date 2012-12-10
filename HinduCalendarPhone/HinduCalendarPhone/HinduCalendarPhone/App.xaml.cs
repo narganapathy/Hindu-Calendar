@@ -70,7 +70,6 @@ namespace HinduCalendarPhone
         private void Application_Launching(object sender, LaunchingEventArgs e)
         {
             _calendardata = new CalendarData();
-            _calendardata.GetCalendarData();
             var store = IsolatedStorageFile.GetUserStoreForApplication();
             if (store.FileExists("PersistedFile.xml"))
             {
@@ -86,6 +85,7 @@ namespace HinduCalendarPhone
             {
                 _firstTimeLaunch = true;
             }
+            _calendardata.GetCalendarData(true);
         }
 
         // Code to execute when the application is activated (brought to foreground)
@@ -98,6 +98,25 @@ namespace HinduCalendarPhone
         // This code will not execute when the application is closing
         private void Application_Deactivated(object sender, DeactivatedEventArgs e)
         {
+            PersistedData data = new PersistedData(_currentDate.Year, 
+                                                    _currentDate.Month, 
+                                                    _currentDate.Day, 
+                                                    _calendardata.CityToken, 
+                                                    _calendardata.CityName);
+            try
+            {
+                using (var store = IsolatedStorageFile.GetUserStoreForApplication())
+                {
+                    IsolatedStorageFileStream stream = store.OpenFile("PersistedFile.xml", System.IO.FileMode.Create);
+                    DataContractSerializer ser = new DataContractSerializer(typeof(PersistedData));
+                    ser.WriteObject(stream, data);
+                    stream.Close();
+                }
+            }
+            catch (Exception excep)
+            {
+                Debug.WriteLine("Isolated Storage exception " + excep.Message);
+            }
         }
 
         // Code to execute when the application is closing (eg, user hit Back)

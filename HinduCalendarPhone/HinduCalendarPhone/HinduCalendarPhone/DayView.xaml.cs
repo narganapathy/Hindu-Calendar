@@ -35,11 +35,6 @@ namespace HinduCalendarPhone
                 app.CurrentDate = DateTime.Parse(dateString);
             } 
             ShowDetail();
-            if (app.FirstLaunch)
-            {
-                MessageBox.Show("Please set your city using the settings menu");
-                app.FirstLaunch = false;
-            }
         }
 
         public void ShowDetail()
@@ -96,13 +91,13 @@ namespace HinduCalendarPhone
             if (e.NewDateTime.HasValue)
             {
                 DateTime dt = e.NewDateTime.Value;
-                if (dt.Year == 2012)
+                if ((dt.Year >= 2012) && (dt.Year <= 2013))
                 {
                     app.CurrentDate = e.NewDateTime.Value;
                 }
                 else
                 {
-                    MessageBox.Show("Year should be equal to 2012");
+                    MessageBox.Show("Year should be either 2012 or 2013");
                     EventDate.Value = DateTime.Today;
                 }
             } 

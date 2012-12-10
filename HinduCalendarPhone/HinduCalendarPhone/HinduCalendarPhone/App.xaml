@@ -9,7 +9,7 @@
     <!--Application Resources-->
     <Application.Resources>
 
-        <clr:String x:Key="AppName">Hindu World Calendar 2012</clr:String>
+        <clr:String x:Key="AppName">Hindu World Calendar</clr:String>
         <GridLength x:Key="ItemPixelWidth">80</GridLength>
         <GridLength x:Key="DayPixelHeight">50</GridLength>
         <GridLength x:Key="ItemPixelHeight">100</GridLength>

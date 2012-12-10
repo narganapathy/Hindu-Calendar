@@ -12,7 +12,10 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 using System.IO.IsolatedStorage;
 using System.Diagnostics;
+using System.Device.Location;
 using System.IO;
+using System.Collections.Generic;
+using Calender2.Data;
 
 namespace HinduCalendarPhone
 {
@@ -76,34 +79,68 @@ namespace HinduCalendarPhone
     {
         public CalendarData()
         {
+            _calendarYearData = new Dictionary<int, YearlyPanchangData>();
         }
 
-        String _cityToken = "Seattle-WA-USA";
-        String _cityName = "Seattle, WA";
-        int _year = 2012;
-        YearlyPanchangData _calendarYearData;
+        String _cityToken = "CapeTown-SouthAfrica";
+        String _cityName = "CapeTown, South Africa";
+        Dictionary<int, YearlyPanchangData> _calendarYearData;
         
-        public void GetCalendarData()
+        public void GetCalendarDataForYear(int year)
         {
-            String fileName = String.Format("Assets\\IndianCalendar-{0}-{1}.dat", _cityToken, _year);
+            String fileName = String.Format("Assets\\IndianCalendar-{0}-{1}.dat", _cityToken, year);
             var streamResourceInfo = App.GetResourceStream(new Uri(fileName, UriKind.Relative));
             using (var stream = streamResourceInfo.Stream)
             {
                 using (var streamReader = new StreamReader(stream))
                 {
                     DataContractSerializer ser = new DataContractSerializer(typeof(YearlyPanchangData));
-                    _calendarYearData = (YearlyPanchangData)ser.ReadObject(stream);
-
+                    _calendarYearData.Remove(year);
+                    _calendarYearData.Add(year, (YearlyPanchangData)ser.ReadObject(stream));
                 }
             }
+        }
+
+        public void GetCalendarData(bool getLocation)
+        {
+            if (getLocation == true)
+            {
+                //MessageBoxResult result = MessageBox.Show("Please allow Hindu World Calendar to use your location to customize the calendar for your city",
+                //                "Hindu World Calendar",
+                //                MessageBoxButton.OKCancel);
+                //if (result == MessageBoxResult.OK)
+                {
+                    GeoCoordinateWatcher watcher = new GeoCoordinateWatcher();
+                    watcher.Start();
+                    if (watcher.Permission == GeoPositionPermission.Granted)
+                    {
+                        System.Diagnostics.Debug.WriteLine("Location services status" + watcher.Status.ToString());
+                        GeoCoordinate coord = watcher.Position.Location;
+                        _cityToken = Calender2.Data.CityData.FindClosestCity(coord.Latitude, coord.Longitude);
+                        City city = Calender2.Data.CityData.GetCityInformation(_cityToken);
+                        UpdateCityToken(_cityToken, city._Name);
+                    }
+                    else
+                    {
+                        System.Diagnostics.Debug.WriteLine("Location services not initilaized or permission not granted");
+                    }
+                }
+            }
+            GetCalendarDataForYear(2012);
+            GetCalendarDataForYear(2013);
         }
 
         public void UpdateCityToken(String token, String name)
         {
             _cityToken = token;
             _cityName = name;
-            GetCalendarData();
-            App app = Application.Current as App;
+        }
+
+        public void UpdateCityTokenAndGetData(String token, String name)
+        {
+            _cityToken = token;
+            _cityName = name;
+            GetCalendarData(false);
         }
 
         public String CityToken
@@ -118,9 +155,9 @@ namespace HinduCalendarPhone
 
         public PanchangData GetPanchangDataForDay(int year, int month, int day)
         {
-             return _calendarYearData._panchangData[(month - 1) * 31 + day - 1];
+             return _calendarYearData[year]._panchangData[(month - 1) * 31 + day - 1];
         }
-    
+
     }
 
     [DataContract(Name = "PersistedData", Namespace = "http://www.jyotishcalendar.com")]

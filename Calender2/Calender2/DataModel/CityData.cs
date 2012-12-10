@@ -102,6 +102,41 @@ namespace Calender2.Data
     public class CityData
     {
 
+        static public City GetCityInformation(String cityToken)
+        {
+            SubContinent[] subContinents = CityData.GetCityData();
+            foreach (SubContinent subContinent in subContinents)
+            {
+                StateOrCity[] stateOrCityList = subContinent._stateOrCityList;
+                for (int i = 0; i < stateOrCityList.Length; i++)
+                {
+                    StateOrCity stateOrCity = stateOrCityList[i];
+                    bool isState = stateOrCity is State;
+
+                    if (isState)
+                    {
+                        State state = stateOrCity as State;
+                        foreach (City city in state._cities)
+                        {
+                            if (city._UrlToken == cityToken)
+                            {
+                                return city;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        City city = stateOrCity as City;
+                        if (city._UrlToken == cityToken)
+                        {
+                            return city;
+                        }
+                    }
+                }
+            }
+            return null;
+        } 
+
         public static String FindClosestCity( double myLat, double myLong)
         {
             LatLong[] latLongData = {
