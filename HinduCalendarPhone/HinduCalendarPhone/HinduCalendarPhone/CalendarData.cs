@@ -105,29 +105,74 @@ namespace HinduCalendarPhone
         {
             if (getLocation == true)
             {
-                //MessageBoxResult result = MessageBox.Show("Please allow Hindu World Calendar to use your location to customize the calendar for your city",
-                //                "Hindu World Calendar",
-                //                MessageBoxButton.OKCancel);
-                //if (result == MessageBoxResult.OK)
+                // Start the watcher and wire for events.
                 {
                     GeoCoordinateWatcher watcher = new GeoCoordinateWatcher();
+                    watcher.StatusChanged += watcher_StatusChanged;
+                    watcher.PositionChanged += watcher_PositionChanged;
                     watcher.Start();
-                    if (watcher.Permission == GeoPositionPermission.Granted)
-                    {
-                        System.Diagnostics.Debug.WriteLine("Location services status" + watcher.Status.ToString());
-                        GeoCoordinate coord = watcher.Position.Location;
-                        _cityToken = Calender2.Data.CityData.FindClosestCity(coord.Latitude, coord.Longitude);
-                        City city = Calender2.Data.CityData.GetCityInformation(_cityToken);
-                        UpdateCityToken(_cityToken, city._Name);
-                    }
-                    else
-                    {
-                        System.Diagnostics.Debug.WriteLine("Location services not initilaized or permission not granted");
-                    }
+                    //if (watcher.Permission == GeoPositionPermission.Granted)
+                    //{
+                    //    System.Diagnostics.Debug.WriteLine("Location services status" + watcher.Status.ToString());
+                    //    GeoCoordinate coord = watcher.Position.Location;
+                    //    if (coord.IsUnknown != true)
+                    //    {
+                    //        _cityToken = Calender2.Data.CityData.FindClosestCity(coord.Latitude, coord.Longitude);
+                    //        City city = Calender2.Data.CityData.GetCityInformation(_cityToken);
+                    //        UpdateCityToken(_cityToken, city._Name);
+                    //    }
+                    //    else
+                    //    {
+                    //        System.Diagnostics.Debug.WriteLine("Location services not initilaized");
+                    //    }
+
+                    //}
+                    //else
+                    //{
+                    //    System.Diagnostics.Debug.WriteLine("permission not granted");
+                    //}
                 }
             }
             GetCalendarDataForYear(2012);
             GetCalendarDataForYear(2013);
+        }
+
+        private void watcher_PositionChanged(object sender, GeoPositionChangedEventArgs<GeoCoordinate> e)
+        {
+            System.Diagnostics.Debug.WriteLine("Location position changed {0} {1}", e.Position.Location.Latitude, e.Position.Location.Longitude);
+            GeoCoordinate coord = e.Position.Location;
+            if (coord.IsUnknown != true)
+            {
+                String cityToken = Calender2.Data.CityData.FindClosestCity(coord.Latitude, coord.Longitude);
+                City city = Calender2.Data.CityData.GetCityInformation(cityToken);
+                UpdateCityTokenAndGetData(cityToken, city._Name);
+                DayView.UpdateDayViewPageForNewCity();
+            }
+            else
+            {
+                System.Diagnostics.Debug.WriteLine("Location services not initilaized");
+            }
+        }
+
+        private void watcher_StatusChanged(object sender, GeoPositionStatusChangedEventArgs e)
+        {
+            GeoCoordinateWatcher watcher = sender as GeoCoordinateWatcher;
+            System.Diagnostics.Debug.WriteLine("Location services status" + watcher.Status.ToString());
+            if (e.Status == GeoPositionStatus.Ready)
+            {
+                GeoCoordinate coord = watcher.Position.Location;
+                if (coord.IsUnknown != true)
+                {
+                    String cityToken = Calender2.Data.CityData.FindClosestCity(coord.Latitude, coord.Longitude);
+                    City city = Calender2.Data.CityData.GetCityInformation(cityToken);
+                    UpdateCityTokenAndGetData(cityToken, city._Name);
+                    DayView.UpdateDayViewPageForNewCity();
+                }
+                else
+                {
+                    System.Diagnostics.Debug.WriteLine("Location services not initilaized");
+                }
+            }
         }
 
         public void UpdateCityToken(String token, String name)
@@ -138,9 +183,14 @@ namespace HinduCalendarPhone
 
         public void UpdateCityTokenAndGetData(String token, String name)
         {
-            _cityToken = token;
-            _cityName = name;
-            GetCalendarData(false);
+            // If the string is different update the data
+            if (_cityToken.Equals(token) != true)
+            {
+                Debug.WriteLine("Updating city token and getting data");
+                _cityToken = token;
+                _cityName = name;
+                GetCalendarData(false);
+            }
         }
 
         public String CityToken

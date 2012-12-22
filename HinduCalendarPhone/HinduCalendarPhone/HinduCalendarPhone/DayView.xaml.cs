@@ -16,6 +16,8 @@ namespace HinduCalendarPhone
 {
     public partial class DayView : PhoneApplicationPage
     {
+        static DayView _currentDayView = null;
+
         public DayView()
         {
             InitializeComponent();
@@ -26,6 +28,7 @@ namespace HinduCalendarPhone
             base.OnNavigatedTo(e);
 
             string dateString = "";
+            _currentDayView = this;
             HinduCalendarPhone.App app = Application.Current as HinduCalendarPhone.App;
 
             if (NavigationContext.QueryString.TryGetValue("date", out dateString))
@@ -35,6 +38,16 @@ namespace HinduCalendarPhone
                 app.CurrentDate = DateTime.Parse(dateString);
             } 
             ShowDetail();
+        }
+
+        public static void UpdateDayViewPageForNewCity()
+        {
+            Debug.WriteLine("trying to Update city view");
+            if (_currentDayView != null)
+            {
+                Debug.WriteLine("Updating city view");
+                _currentDayView.ShowDetail();
+            }
         }
 
         public void ShowDetail()
