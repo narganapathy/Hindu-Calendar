@@ -1313,6 +1313,7 @@
     <Compile Include="DateItem.xaml.cs">
       <DependentUpon>DateItem.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DataModel\FestivalData.cs" />
     <Compile Include="ItemDetailPage.xaml.cs">
       <DependentUpon>ItemDetailPage.xaml</DependentUpon>
     </Compile>

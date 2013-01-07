@@ -190,7 +190,7 @@ namespace Calender2
             if (selectedFlipViewItem != null)
             {
                 Grid monthView = (Grid)FindNamedElement(selectedFlipViewItem, "monthView");
-                BuildCalendar(monthView, flipView.SelectedIndex + 1, item);
+                BuildCalendar(monthView, ((flipView.SelectedIndex) % 12) + 1, item);
             }
             else
             {
@@ -276,7 +276,6 @@ namespace Calender2
         /// <param name="e">Event data that describes how the current item was changed.</param>
         void FlipView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            const int monthsInYear = 13;
             // Enable the previous and next buttons as appropriate
             try
             {
@@ -634,14 +633,12 @@ namespace Calender2
 
         #endregion
 
-        private void ChangeCity(object sender, RoutedEventArgs e)
-        {
-        }
-
         public void UpdateTitle()
         {
             var item = (SampleDataItem)this.flipView.SelectedItem;
             this.cityTitle.Text = item.Group.city._Name;
+            // update the data for the new city
+            FlipView_SelectionChanged(null, null);
         }
 
         

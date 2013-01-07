@@ -300,8 +300,9 @@ namespace Calender2.Data
             if (uniqueId.Equals("AllGroups"))
             {
                 DateTime date = DateTime.Now;
-                return _sampleDataSource.ItemGroups[0].Items[date.Month-1];
-                //return _sampleDataSource.ItemGroups[0].Items[0];
+                int itemIndex = date.Month - 1;
+                if (date.Year == 2013) itemIndex += 12;
+                return _sampleDataSource.ItemGroups[0].Items[itemIndex];
             }
 
             // Simple linear search is acceptable for small data sets
@@ -371,7 +372,7 @@ namespace Calender2.Data
         {
             try
             {
-                _cityToken = "Seattle-WA-USA";
+                _calendarYearData.Clear();
                 CalendarDataReader calendarReader;
                 calendarReader = new CalendarDataReader();
                 await calendarReader.ReadCalendarYearData(_cityToken, 2012);
@@ -423,69 +424,6 @@ namespace Calender2.Data
             }
             this.ItemGroups.Add(group);
             _group = group;
-        }
-    }
-
-    public sealed class MonthDataSource
-    {
-        private ObservableCollection<SampleDataGroup> _itemGroups = new ObservableCollection<SampleDataGroup>();
-        public ObservableCollection<SampleDataGroup> ItemGroups
-        {
-            get { return this._itemGroups; }
-        }
-
-        public IEnumerable<SampleDataGroup> GetGroups(string uniqueId)
-        {
-            if (!uniqueId.Equals("AllGroups")) throw new ArgumentException("Only 'AllGroups' is supported as a collection of groups");
-            
-            return this.AllGroups;
-        }
-
-        public SampleDataGroup GetGroup(string uniqueId)
-        {
-            // Simple linear search is acceptable for small data sets
-            var matches = this.AllGroups.Where((group) => group.UniqueId.Equals(uniqueId));
-            if (matches.Count() == 1) return matches.First();
-            return null;
-        }
-
-        public SampleDataItem GetItem(string uniqueId)
-        {
-            // Simple linear search is acceptable for small data sets
-            var matches = this.AllGroups.SelectMany(group => group.Items).Where((item) => item.UniqueId.Equals(uniqueId));
-            if (matches.Count() == 1) return matches.First();
-            return null;
-        }
-
-        public ObservableCollection<SampleDataGroup> AllGroups
-        {
-            get { return this._itemGroups; }
-        }
-         
-        public MonthDataSource()
-        {
-            String ITEM_CONTENT = String.Format("Item Content: {0}\n",
-                        "Item description");
-
-            var group = new SampleDataGroup("Group-1",
-                    "Group Title: 1",
-                    "Group Subtitle: 1",
-                    "Assets/DarkGray.png",
-                    "Group Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus tempor scelerisque lorem in vehicula. Aliquam tincidunt, lacus ut sagittis tristique, turpis massa volutpat augue, eu rutrum ligula ante a ante");
-
-            for (int day = 0; day< 31; day++)
-            {
-                var item = new SampleDataItem(day.ToString(),
-                    day.ToString(),
-                    day.ToString(),
-                    "Assets/DarkGray.png",
-                    "Group Description:",
-                    ITEM_CONTENT,
-                    group);
-                group.Items.Add(item);
-            }
-            this.ItemGroups.Add(group);
-            
         }
     }
 }
