@@ -168,7 +168,15 @@ namespace Calender2.Data
             {
                 isFullMoonDay = true;
             }
-            festival = data._panchangData[(month - 1) * 31 + day - 1]._fieldValues[(int)FieldType.Festival];
+            if (_year == 2012)
+            {
+                festival = data._panchangData[(month - 1) * 31 + day - 1]._fieldValues[(int)FieldType.Festival];
+            }
+            else
+            {
+                festival = FestivalDataGetter.GetFestivalData(_year, month, day, this._group.city._timeZone);
+            }
+
             paksha = data._panchangData[(month-1)*31 + day -1]._fieldValues[(int)FieldType.Paksha];
             nakshatra = data._panchangData[(month - 1) * 31 + day - 1]._fieldValues[(int)FieldType.Nakshatra];
             tamilMonth = data._panchangData[(month - 1) * 31 + day - 1]._fieldValues[(int)FieldType.TamilMonth];
@@ -199,7 +207,15 @@ namespace Calender2.Data
         public String GetFestival(int month, int day)
         {
             YearlyPanchangData data = _group.PanchangDataForYear[_year];
-            String festival = data._panchangData[(month - 1) * 31 + day - 1]._fieldValues[(int)FieldType.Festival];
+            String festival;
+            if (_year == 2012)
+            {
+                festival = data._panchangData[(month - 1) * 31 + day - 1]._fieldValues[(int)FieldType.Festival];
+            }
+            else
+            {
+                festival = FestivalDataGetter.GetFestivalData(_year, month, day, this._group.city._timeZone);
+            }
             return festival;
         }
 
@@ -334,6 +350,10 @@ namespace Calender2.Data
                         {
                             if (city._UrlToken == cityToken)
                             {
+                                if (city._timeZone == TimeZoneValues.Unknown)
+                                {
+                                    city._timeZone = state._timeZone;
+                                }
                                 return city;
                             }
                         }
@@ -343,6 +363,10 @@ namespace Calender2.Data
                         City city = stateOrCity as City;
                         if (city._UrlToken == cityToken)
                         {
+                            if (city._timeZone == TimeZoneValues.Unknown)
+                            {
+                                city._timeZone = subContinent._timeZone;
+                            }
                             return city;
                         }
                     }

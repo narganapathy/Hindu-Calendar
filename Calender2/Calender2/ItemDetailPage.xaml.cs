@@ -289,13 +289,15 @@ namespace Calender2
                 {
                     _currentHighlightedDateItem.HighlightBorder(false);
                     _currentHighlightedDateItem = null;
+                    Debug.WriteLine("Selection changed index {0}", flipView.SelectedIndex);
                     Grid monthView = (Grid)FindNamedElement(selectedFlipViewItem, "monthView");
                     int month = ((flipView.SelectedIndex) % 12) + 1;
                     BuildCalendar(monthView, month, item);
+                    Debug.Assert(_currentHighlightedDateItem != null);
                     DayViewGridStoryboard.Begin();
                 }
             }
-            catch (Exception exc)
+            catch (ArgumentException exc)
             {
                 Debug.WriteLine("Exception is " + exc.Message);
                 Debug.Assert(false);
@@ -574,7 +576,7 @@ namespace Calender2
             RahuKalamTextBlock.Text = pdata._fieldValues[(int)FieldType.RahuKalam];
             YamaKandamTextBlock.Text = pdata._fieldValues[(int)FieldType.YamaGandam];
             GulikaiTextBlock.Text = pdata._fieldValues[(int)FieldType.Gulikai];
-            String festival = pdata._fieldValues[(int)FieldType.Festival];
+            String festival = item.GetFestival(currentMonth, day);
             if (String.IsNullOrEmpty(festival))
             {
                 festival = "No festival";
