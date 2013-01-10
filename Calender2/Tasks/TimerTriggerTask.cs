@@ -22,7 +22,6 @@ namespace Tasks
         //
         public async void Run(IBackgroundTaskInstance taskInstance)
         {
-            Debug.WriteLine("Background " + taskInstance.Task.Name + " Starting...");
 
             //
             // Associate a cancellation handler with the background task.
@@ -49,7 +48,6 @@ namespace Tasks
             // Indicate that the background task is canceled.
             //
 
-            Debug.WriteLine("Background " + sender.Task.Name + " Cancel Requested...");
         }
 
          //Update tile for today

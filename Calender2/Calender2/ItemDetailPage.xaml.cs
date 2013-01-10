@@ -287,9 +287,11 @@ namespace Calender2
                 FlipViewItem selectedFlipViewItem = (FlipViewItem)this.flipView.ItemContainerGenerator.ContainerFromIndex(flipView.SelectedIndex);
                 if (selectedFlipViewItem != null)
                 {
-                    _currentHighlightedDateItem.HighlightBorder(false);
+                    if (_currentHighlightedDateItem != null)
+                    {
+                        _currentHighlightedDateItem.HighlightBorder(false);
+                    }
                     _currentHighlightedDateItem = null;
-                    Debug.WriteLine("Selection changed index {0}", flipView.SelectedIndex);
                     Grid monthView = (Grid)FindNamedElement(selectedFlipViewItem, "monthView");
                     int month = ((flipView.SelectedIndex) % 12) + 1;
                     BuildCalendar(monthView, month, item);
@@ -647,7 +649,7 @@ namespace Calender2
         private void PersonalEventClick(object sender, RoutedEventArgs e)
         {
             int day = _currentHighlightedDateItem.GetDay();
-            int month = flipView.SelectedIndex + 1;
+            int month = (flipView.SelectedIndex % 12) + 1;
             int year = ((SampleDataItem)flipView.SelectedItem).Year;
             DateTime date = new DateTime(year, month, day);
             AddPrivateEvent(date, PeTextBox.Text, true, null);
@@ -708,7 +710,6 @@ namespace Calender2
             // This check is an insurance check.
             if (BackgroundTaskRegistration.AllTasks.Count == 1)
             {
-                Debug.WriteLine("Task already started");
                 return;
             }
 

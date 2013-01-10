@@ -533,7 +533,6 @@ namespace Calender2.Data
                     nearestCity = latlong._UrlToken;
                 }
             }
-            Debug.WriteLine("Nearest city is" + nearestCity);
             return nearestCity;
         }
 
