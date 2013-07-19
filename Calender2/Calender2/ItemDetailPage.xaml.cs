@@ -226,7 +226,6 @@ namespace Calender2
             this.pageTitle.Text = "Hindu Calendar - " + currentItem.Title + " " + currentItem.Year.ToString();
             this.cityTitle.Text = currentItem.Group.city._Name;
             this.flipView.SelectedItem = currentItem;
-            UpdateTile(currentItem);
 
             StorageFile privateEventFile = await ApplicationData.Current.RoamingFolder.CreateFileAsync("PrivateEvents.txt", CreationCollisionOption.OpenIfExists);
             Windows.Storage.FileProperties.BasicProperties prop = await privateEventFile.GetBasicPropertiesAsync();
@@ -243,9 +242,10 @@ namespace Calender2
             {
                     _privateEvents = new PrivateEvents();
             }
-            StartTimerTrigger();
             await SampleDataSource.GetClosestCity();
+            CancelTimerTrigger();
             UpdateTitle();
+            ScheduleTiles(currentItem);
         }
 
         /// <summary>
@@ -477,38 +477,46 @@ namespace Calender2
         }
 
         // Update tile for today
-        private void UpdateTile( SampleDataItem item)
+        private void UpdateTile( SampleDataItem item, DateTime dueTime, DateTime expiryTime)
         {
-            DateTime date = DateTime.Today;
+            DateTime date = dueTime;
             int month = date.Month;
-            TileUpdateManager.CreateTileUpdaterForApplication().Clear();
             int day = date.Day;
+            String festival;
+            var notifier = TileUpdateManager.CreateTileUpdaterForApplication();
+
+            Debug.WriteLine("Update tile {0} {1}", dueTime, expiryTime);
+            festival = item.GetFestival(month, day);
             PanchangData pdata = item.GetPanchangData(month, day);
             // create the wide template
             ITileWideText01 tileContent = TileContentFactory.CreateTileWideText01();
             tileContent.TextHeading.Text = date.ToString("d");
             tileContent.TextBody1.Text = pdata._fieldValues[(int)FieldType.SanskritMonth];
             tileContent.TextBody2.Text = pdata._fieldValues[(int)FieldType.TamilMonth];
-            tileContent.TextBody3.Text = pdata._fieldValues[(int)FieldType.Festival];
+            tileContent.TextBody3.Text = festival;
 
             // create the square template and attach it to the wide template
             ITileSquareText01 squareContent = TileContentFactory.CreateTileSquareText01();
             squareContent.TextHeading.Text = date.ToString("d");
             squareContent.TextBody1.Text = pdata._fieldValues[(int)FieldType.SanskritMonth];
             squareContent.TextBody2.Text = pdata._fieldValues[(int)FieldType.TamilMonth];
-            squareContent.TextBody3.Text = pdata._fieldValues[(int)FieldType.Festival];
+            squareContent.TextBody3.Text = festival;
             tileContent.SquareContent = squareContent;
 
-            TileUpdateManager.CreateTileUpdaterForApplication().EnableNotificationQueue(true); 
-
             // send the notification
-            TileUpdateManager.CreateTileUpdaterForApplication().Update(tileContent.CreateNotification());
+            ScheduledTileNotification futureTile = new ScheduledTileNotification(tileContent.GetXml(), dueTime);
+            futureTile.ExpirationTime = expiryTime;
+            notifier.AddToSchedule(futureTile);
+
 
             // Send another notification. this gives a nice animation in mogo
             tileContent.TextBody1.Text = pdata._fieldValues[(int)FieldType.Paksha];
             tileContent.TextBody2.Text = pdata._fieldValues[(int)FieldType.Tithi];
             tileContent.TextBody3.Text = pdata._fieldValues[(int)FieldType.Nakshatra];
-            TileUpdateManager.CreateTileUpdaterForApplication().Update(tileContent.CreateNotification());
+            futureTile = new ScheduledTileNotification(tileContent.GetXml(), dueTime);
+            futureTile.ExpirationTime = expiryTime;
+            notifier.AddToSchedule(futureTile);
+            Debug.WriteLine("Count of scheduled notifications {0}", notifier.GetScheduledTileNotifications().Count);
         }
         
         private void dateItem_PointerReleased(object sender, PointerRoutedEventArgs e)
@@ -705,23 +713,62 @@ namespace Calender2
             RemoveEventButton.IsEnabled = true;
         }
 
-        public void StartTimerTrigger()
+        public void CancelTimerTrigger()
         {
-            // This check is an insurance check.
-            if (BackgroundTaskRegistration.AllTasks.Count == 1)
+            // If there is a pending timer from an older install unregister it
+            if (BackgroundTaskRegistration.AllTasks.Count > 0)
             {
+                foreach (var task in BackgroundTaskRegistration.AllTasks)
+                {
+                    if (task.Value.Name == "TimeTriggeredTask")
+                    {
+                        task.Value.Unregister(true);
+                    }
+                }
+                return;
+            }
+        }
+
+        public void ScheduleTiles(SampleDataItem currentItem)
+        {
+            var notifier = Windows.UI.Notifications.TileUpdateManager.CreateTileUpdaterForApplication();
+            var scheduled = notifier.GetScheduledTileNotifications();
+
+            if (scheduled.Count > 0)
+            {
+                for (int i = 0; i < scheduled.Count; i++)
+                {
+                    Debug.WriteLine("Notification due time {0} delivery time {1}", scheduled[i].DeliveryTime, scheduled[i].ExpirationTime);
+                }
                 return;
             }
 
-            var builder = new BackgroundTaskBuilder();
-            const uint dayInMinutes = 8*60; // Run every 8 hours to update the tile
-            var trigger = new MaintenanceTrigger(dayInMinutes, false);
-
-            builder.Name = "TimeTriggeredTask";
-            builder.TaskEntryPoint = "Tasks.TimerTriggerTask";
-            builder.SetTrigger(trigger);
-
-            BackgroundTaskRegistration task = builder.Register();
+            notifier.Clear();
+            notifier.EnableNotificationQueue(true); 
+            // Schedule for the rest of the year
+            DateTime today = DateTime.Today;
+            int currentYear = currentItem.Year;
+            for (int i = 0; i < 365; i++)
+            {
+                if (i == 0)
+                {
+                    // to get an immediate update add a tile 3 minutes from now
+                    UpdateTile(currentItem, DateTime.Now.AddMinutes(1), DateTime.Today.AddDays(1));
+                }
+                else
+                {
+                    DateTime dueDate = today.AddDays(i);
+                    if (dueDate.Year == currentYear)
+                    {
+                        UpdateTile(currentItem, DateTime.Today.AddDays(i), DateTime.Today.AddDays(i+1));
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+            }
+            Debug.WriteLine("Count of scheduled notifications {0}", notifier.GetScheduledTileNotifications().Count);
         }
     }
 }

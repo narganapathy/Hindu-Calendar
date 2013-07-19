@@ -78,8 +78,9 @@ namespace HinduCalendarPhone
             }
             String token = _state._cities[index]._UrlToken;
             String name  = _state._cities[index]._Name;
+            TimeZoneValues tz = _state._cities[index]._timeZone;
             App app = Application.Current as App;
-            app.Calendar.UpdateCityToken(token, name);
+            app.Calendar.UpdateCityTokenAndGetData(token, name, tz);
             this.NavigationService.RemoveBackEntry();
             this.NavigationService.GoBack();
         }

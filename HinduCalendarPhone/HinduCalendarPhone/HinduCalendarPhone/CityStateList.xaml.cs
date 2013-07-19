@@ -68,7 +68,7 @@ namespace HinduCalendarPhone
                 city = _stateOrCityList[index] as City;
                 String token = city._UrlToken;
                 App app = Application.Current as App;
-                app.Calendar.UpdateCityToken(token, city._Name);
+                app.Calendar.UpdateCityTokenAndGetData(token, city._Name, city._timeZone);
                 _changeCityPage.NavigationService.GoBack();
             }
         }

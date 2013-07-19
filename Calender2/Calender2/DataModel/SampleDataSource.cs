@@ -385,8 +385,9 @@ namespace Calender2.Data
                 String cityToken = Calender2.Data.CityData.FindClosestCity(pos.Coordinate.Latitude, pos.Coordinate.Longitude);
                 await SampleDataSource.ChangeCity(cityToken);
             }
-            catch (UnauthorizedAccessException ex)
+            catch (Exception ex)
             {
+                // catch all exceptions as getgeopositionasync seems to throw exceptions if it cannot get location
                 Debug.WriteLine("Access not given to use location" + ex.Message);
             }
         }
@@ -417,6 +418,8 @@ namespace Calender2.Data
             _sampleDataSource._cityToken = cityToken;
             await _sampleDataSource.GetCalendarYearData();
             _sampleDataSource._group.city = _sampleDataSource.GetCityInformation(cityToken);
+            var settings = Windows.Storage.ApplicationData.Current.LocalSettings;
+            settings.Values["CityName"] = cityToken;
         }
 
         public SampleDataSource()

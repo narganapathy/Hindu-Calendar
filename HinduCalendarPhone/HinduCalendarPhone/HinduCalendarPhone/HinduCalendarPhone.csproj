@@ -80,6 +80,7 @@
     <Compile Include="DayView.xaml.cs">
       <DependentUpon>DayView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="FestivalData.cs" />
     <Compile Include="Help.xaml.cs">
       <DependentUpon>Help.xaml</DependentUpon>
     </Compile>

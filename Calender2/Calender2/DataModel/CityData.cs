@@ -120,6 +120,10 @@ namespace Calender2.Data
                         {
                             if (city._UrlToken == cityToken)
                             {
+                                if (city._timeZone == TimeZoneValues.Unknown)
+                                {
+                                    city._timeZone = state._timeZone;
+                                }
                                 return city;
                             }
                         }
@@ -129,6 +133,10 @@ namespace Calender2.Data
                         City city = stateOrCity as City;
                         if (city._UrlToken == cityToken)
                         {
+                            if (city._timeZone == TimeZoneValues.Unknown)
+                            {
+                                city._timeZone = subContinent._timeZone;
+                            }
                             return city;
                         }
                     }

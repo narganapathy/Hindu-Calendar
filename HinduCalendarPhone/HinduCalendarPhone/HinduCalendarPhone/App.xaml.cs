@@ -78,8 +78,15 @@ namespace HinduCalendarPhone
                 _firstTimeLaunch = false;
                 PersistedData data;
                 data = ser.ReadObject(stream) as PersistedData;
-                _currentDate = new DateTime(data.Year, data.Month, data.Day);
-                _calendardata.UpdateCityToken(data.CityToken, data.CityName);
+                DateTime persistedDate = data.PersistenceDate;
+                DateTime storedDate = new DateTime(data.Year, data.Month, data.Day);
+                // If the last time we persisted was within a day we use the persisted date. Otherwise use the current date
+                if ((persistedDate.Day == _currentDate.Day) && (persistedDate.Month == _currentDate.Month) && (persistedDate.Year == _currentDate.Year))
+                {
+                    _currentDate = storedDate;
+                }
+                _calendardata.UseLocation = data.UseLocation;
+                _calendardata.UpdateCityToken(data.CityToken, data.CityName, data.TimeZoneValue);
             }
             else
             {
@@ -102,7 +109,9 @@ namespace HinduCalendarPhone
                                                     _currentDate.Month, 
                                                     _currentDate.Day, 
                                                     _calendardata.CityToken, 
-                                                    _calendardata.CityName);
+                                                    _calendardata.CityName,
+                                                    _calendardata.CityTimeZone,
+                                                    _calendardata.UseLocation);
             try
             {
                 using (var store = IsolatedStorageFile.GetUserStoreForApplication())
@@ -127,7 +136,9 @@ namespace HinduCalendarPhone
                                                     _currentDate.Month, 
                                                     _currentDate.Day, 
                                                     _calendardata.CityToken, 
-                                                    _calendardata.CityName);
+                                                    _calendardata.CityName,
+                                                    _calendardata.CityTimeZone,
+                                                    _calendardata.UseLocation);
             try
             {
                 using (var store = IsolatedStorageFile.GetUserStoreForApplication())

@@ -79,7 +79,16 @@ namespace HinduCalendarPhone
             RahuKalamTextBlock.Text = pdata._fieldValues[(int)FieldType.RahuKalam];
             YamaKandamTextBlock.Text = pdata._fieldValues[(int)FieldType.YamaGandam];
             GulikaiTextBlock.Text = pdata._fieldValues[(int)FieldType.Gulikai];
-            String festival = pdata._fieldValues[(int)FieldType.Festival];
+            String festival;
+            if (app.CurrentDate.Year == 2013)
+            {
+                festival = Calender2.Data.FestivalDataGetter.GetFestivalData(app.CurrentDate.Year, app.CurrentDate.Month, app.CurrentDate.Day, app.Calendar.CityTimeZone);
+            }
+            else
+            {
+                festival = pdata._fieldValues[(int)FieldType.Festival];
+            }
+
             if (String.IsNullOrEmpty(festival))
             {
                 festival = "No festival";
