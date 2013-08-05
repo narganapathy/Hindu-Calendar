@@ -254,7 +254,7 @@ namespace Calender2.Data
             get { return this._items; }
         }
         private Dictionary<int, YearlyPanchangData> _yearlyPanchangData;
-        private int _year = 2012;
+        private int _year;
         private City _city;
 
         public Dictionary<int, YearlyPanchangData> PanchangDataForYear
@@ -289,7 +289,8 @@ namespace Calender2.Data
         Dictionary<int, YearlyPanchangData> _calendarYearData;
         SampleDataGroup _group;
         String _cityToken = "Zurich-Switzerland";
-        int _year = 2012;
+        int _year = 2013;
+        static int _startYear = 2013;
         public static SampleDataSource _sampleDataSource;
 
         public static async Task InitializeCalendarData()
@@ -317,7 +318,7 @@ namespace Calender2.Data
             {
                 DateTime date = DateTime.Now;
                 int itemIndex = date.Month - 1;
-                if (date.Year == 2013) itemIndex += 12;
+                if (date.Year == (_startYear + 1)) itemIndex += 12;
                 return _sampleDataSource.ItemGroups[0].Items[itemIndex];
             }
 
@@ -400,10 +401,10 @@ namespace Calender2.Data
                 _calendarYearData.Clear();
                 CalendarDataReader calendarReader;
                 calendarReader = new CalendarDataReader();
-                await calendarReader.ReadCalendarYearData(_cityToken, 2012);
-                _calendarYearData.Add(2012, calendarReader.CalendarYearData);
-                await calendarReader.ReadCalendarYearData(_cityToken, 2013);
-                _calendarYearData.Add(2013, calendarReader.CalendarYearData);
+                await calendarReader.ReadCalendarYearData(_cityToken, _startYear);
+                _calendarYearData.Add(_startYear, calendarReader.CalendarYearData);
+                await calendarReader.ReadCalendarYearData(_cityToken, _startYear + 1);
+                _calendarYearData.Add(_startYear + 1, calendarReader.CalendarYearData);
                 _group.PanchangDataForYear = _calendarYearData;
                 _group.city = GetCityInformation(_cityToken);
             }
@@ -434,7 +435,8 @@ namespace Calender2.Data
             group.Year = _year;
             
             group.city = GetCityInformation(_cityToken); ;
-            for (int year = 2012; year < 2014; year++)
+            // get two years worth of entries
+            for (int year = _startYear; year <= (_startYear+1); year++)
             {
                 for (int month = 0; month < 12; month++)
                 {

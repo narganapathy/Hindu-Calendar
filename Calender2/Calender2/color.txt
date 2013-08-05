@@ -1,0 +1,19 @@
+
+RGB
+R 255
+G 200
+B 63 
+
+Hex FFC83F
+
+HSV
+
+H 42
+S 75
+V 100
+
+Transparency - Alpha - 255
+
+Font Arial 18
+
+

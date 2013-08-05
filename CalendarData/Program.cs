@@ -533,7 +533,10 @@ namespace CalendarData
 
             SubContinent[] subContinents = CityData.GetCityData();
             festivalData = FestivalDataGetter.GetFestivalData();
-            	
+
+            //GetCalendarDataPerCityAndYear(2013, "Aberdeen, Scotland", "Aberdeen-Scotland-UK", TimeZoneValues.Unknown);
+            // GetCalendarDataPerCityAndYear(2013, "AbuDhabi, UAE", "AbuDhabi-UAE", TimeZoneValues.Unknown);
+            // Uncomment this line to test out for a new year
             //GetCalendarDataPerCityAndYear(2013, "Seattle, WA", "Seattle-WA-USA", TimeZoneValues.PST);
 
             // Uncomment to generate latlong data
