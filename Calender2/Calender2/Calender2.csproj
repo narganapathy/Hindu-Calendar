@@ -13,7 +13,7 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{BC8A1FFA-BEE3-4634-8014-F334798102B3};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
-    <AppxPackageDir>C:\Users\narg\Documents\GitHub\Hindu-Calendar\Calender2\Project\</AppxPackageDir>
+    <AppxPackageDir>e:\Documents\GitHub\Hindu-Calendar\Calender2\Project\</AppxPackageDir>
     <PackageCertificateThumbprint>4626A66102C00EC77665FED0B5069DA1DD8A7737</PackageCertificateThumbprint>
     <PackageCertificateKeyFile>Calender2_StoreKey.pfx</PackageCertificateKeyFile>
   </PropertyGroup>

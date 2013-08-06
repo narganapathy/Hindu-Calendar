@@ -243,7 +243,7 @@ namespace CalendarData
                             {
                                 pData._fieldValues[(int)FieldType.RahuKalam] = match.Groups[1].Value;
                                 pData._fieldValues[(int)FieldType.YamaGandam] = match.Groups[2].Value;
-                                pData._fieldValues[(int)FieldType.Gulikai] = match.Groups[2].Value;
+                                pData._fieldValues[(int)FieldType.Gulikai] = match.Groups[3].Value;
                             }
 
                             pattern1 = @"Yoga:(\w+)End";
@@ -566,7 +566,7 @@ namespace CalendarData
                                 timeZone = city._timeZone;
                             }
 
-                            GetCalendarDataPerCityAndYear(2013, city._Name, city._UrlToken, timeZone);
+                            GetCalendarDataPerCityAndYear(2014, city._Name, city._UrlToken, timeZone);
                         }
                     }
                 }
@@ -583,7 +583,7 @@ namespace CalendarData
                         {
                             timeZone = city._timeZone;
                         }
-                        GetCalendarDataPerCityAndYear(2013, city._Name, city._UrlToken, timeZone);
+                        GetCalendarDataPerCityAndYear(2014, city._Name, city._UrlToken, timeZone);
                     }
                 }
             }

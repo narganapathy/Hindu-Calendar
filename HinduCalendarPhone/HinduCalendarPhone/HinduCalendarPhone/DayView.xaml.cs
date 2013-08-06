@@ -113,13 +113,13 @@ namespace HinduCalendarPhone
             if (e.NewDateTime.HasValue)
             {
                 DateTime dt = e.NewDateTime.Value;
-                if ((dt.Year >= 2012) && (dt.Year <= 2013))
+                if ((dt.Year >= 2013) && (dt.Year <= 2014))
                 {
                     app.CurrentDate = e.NewDateTime.Value;
                 }
                 else
                 {
-                    MessageBox.Show("Year should be either 2012 or 2013");
+                    MessageBox.Show("Year should be either 2013 or 2014");
                     EventDate.Value = DateTime.Today;
                 }
             } 
