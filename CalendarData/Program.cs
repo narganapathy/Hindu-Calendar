@@ -172,8 +172,30 @@ namespace CalendarData
                                 //if (day > 30) break;
                             }
 
-                            pattern1 = @"Shalivahan Shaka: (\d\d\d\d) \((\w+) Samvatsara\),\&nbsp;(\w+) Year \(North India\) (\d\d\d\d),\&nbsp;(\w+ \w+) \(Gujarat\) (\d\d\d\d),\&nbsp; Ayana:(\w+) \&nbsp;Ritu:(\w+),  Vedic Ritu:(\w+), Amavasyant   (\w+) (\w+) Paksha,\&nbsp;Tamil Month: (\w+)";
+                            pattern1 = @"Shalivahan Shaka: (\d\d\d\d) \((\w+) Samvatsara\),\&nbsp;(\w+) Year \(North India\) (\d\d\d\d),\&nbsp;(\w+ \w+) \(Gujarat\) (\d\d\d\d),\&nbsp; Ayana:(\w+) \&nbsp;Ritu:(\w+),  Vedic Ritu:(\w+), Amavasyant\s+(\w+) (\w+) Paksha,\&nbsp;Tamil Month: (\w+)";
+                                      // Shalivahan Shaka: 1937 (Manmatha Samvatsara),&nbsp;Vikrami Year (North India) 2072,&nbsp;Vikram Samvat (Gujarat) 2071,&nbsp; Ayana:Uttarayana &nbsp;Ritu:Grishma,  Vedic Ritu:Grishma, Amavasyant Adhika Ashaadha Shukla Paksha,&nbsp;Tamil Month: Aani
+
                             match = Regex.Match(input, pattern1);
+                            currentIndex = 0;
+                            if (match.Success)
+                            {
+                                pData._fieldValues[(int)FieldType.TamilYear] = match.Groups[2].Value + " " + match.Groups[1].Value;
+                                pData._fieldValues[(int)FieldType.NorthYear] = match.Groups[3].Value + " " + match.Groups[4].Value;
+                                pData._fieldValues[(int)FieldType.GujaratYear] = match.Groups[5].Value + " " + match.Groups[6].Value;
+                                pData._fieldValues[(int)FieldType.Ayana] = match.Groups[7].Value;
+                                pData._fieldValues[(int)FieldType.Ritu] = match.Groups[8].Value;
+                                pData._fieldValues[(int)FieldType.VedicRitu] = match.Groups[9].Value;
+                                pData._fieldValues[(int)FieldType.SanskritMonth] = match.Groups[10].Value;
+                                pData._fieldValues[(int)FieldType.Paksha] = match.Groups[11].Value;
+                                pData._fieldValues[(int)FieldType.TamilMonth] = match.Groups[12].Value;
+                                pData._fieldValues[(int)FieldType.Festival] = null;
+                            }
+
+                            // For some cases there is an extra word after Amavasyant
+                            String pattern1_5 = @"Shalivahan Shaka: (\d\d\d\d) \((\w+) Samvatsara\),\&nbsp;(\w+) Year \(North India\) (\d\d\d\d),\&nbsp;(\w+ \w+) \(Gujarat\) (\d\d\d\d),\&nbsp; Ayana:(\w+) \&nbsp;Ritu:(\w+),  Vedic Ritu:(\w+), Amavasyant\s+\w+ (\w+) (\w+) Paksha,\&nbsp;Tamil Month: (\w+)";
+                                      // Shalivahan Shaka: 1937 (Manmatha Samvatsara),&nbsp;Vikrami Year (North India) 2072,&nbsp;Vikram Samvat (Gujarat) 2071,&nbsp; Ayana:Uttarayana &nbsp;Ritu:Grishma,  Vedic Ritu:Grishma, Amavasyant Adhika Ashaadha Shukla Paksha,&nbsp;Tamil Month: Aani
+
+                            match = Regex.Match(input, pattern1_5);
                             currentIndex = 0;
                             if (match.Success)
                             {
@@ -534,7 +556,7 @@ namespace CalendarData
             SubContinent[] subContinents = CityData.GetCityData();
             festivalData = FestivalDataGetter.GetFestivalData();
 
-            //GetCalendarDataPerCityAndYear(2013, "Aberdeen, Scotland", "Aberdeen-Scotland-UK", TimeZoneValues.Unknown);
+            //GetCalendarDataPerCityAndYear(2015, "Aberdeen, Scotland", "Aberdeen-Scotland-UK", TimeZoneValues.Unknown);
             // GetCalendarDataPerCityAndYear(2013, "AbuDhabi, UAE", "AbuDhabi-UAE", TimeZoneValues.Unknown);
             // Uncomment this line to test out for a new year
             //GetCalendarDataPerCityAndYear(2013, "Seattle, WA", "Seattle-WA-USA", TimeZoneValues.PST);
@@ -566,7 +588,7 @@ namespace CalendarData
                                 timeZone = city._timeZone;
                             }
 
-                            GetCalendarDataPerCityAndYear(2014, city._Name, city._UrlToken, timeZone);
+                            GetCalendarDataPerCityAndYear(2015, city._Name, city._UrlToken, timeZone);
                         }
                     }
                 }
@@ -583,7 +605,7 @@ namespace CalendarData
                         {
                             timeZone = city._timeZone;
                         }
-                        GetCalendarDataPerCityAndYear(2014, city._Name, city._UrlToken, timeZone);
+                        GetCalendarDataPerCityAndYear(2015, city._Name, city._UrlToken, timeZone);
                     }
                 }
             }

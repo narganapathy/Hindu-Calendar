@@ -589,7 +589,7 @@ namespace Calender2
             String festival = item.GetFestival(currentMonth, day);
             if (String.IsNullOrEmpty(festival))
             {
-                festival = "No festival";
+                festival = "No data";
             }
             FestivalTextBlock.Text = festival;
             PersonalEventListScroller.Visibility = Visibility.Collapsed;
