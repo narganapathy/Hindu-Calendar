@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest">
-  <Identity Name="35529NarGanapathy.HinduWorldCalendar" Publisher="CN=D8508DA0-9CA6-4324-B88A-F3A66BA6E2E2" Version="1.0.0.53" />
+  <Identity Name="35529NarGanapathy.HinduWorldCalendar" Publisher="CN=D8508DA0-9CA6-4324-B88A-F3A66BA6E2E2" Version="1.0.0.55" />
   <Properties>
     <DisplayName>Hindu World Calendar</DisplayName>
     <PublisherDisplayName>Nar Ganapathy</PublisherDisplayName>

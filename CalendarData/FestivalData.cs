@@ -23,7 +23,11 @@ namespace CalendarData
             PST,
             MST,
             CST,
+            CST,
+            CST,
             EST,
+            EST,
+            Trinidad,
             UK,
             India,
             Malaysia,
@@ -55,6 +59,7 @@ namespace CalendarData
     {
         public static FestivalData[] GetFestivalData()
         {
+            #region 2012 data
             FestivalData[] festivalData = {
                           new FestivalData( "Smartha Putrada Ekadasi", new String[] {
          "1/4/2012",
@@ -2722,6 +2727,7 @@ namespace CalendarData
          "12/28/2012",
         })
         };
+            #endregion 2012
             return festivalData;
         }
     }

@@ -80,7 +80,7 @@ namespace HinduCalendarPhone
             YamaKandamTextBlock.Text = pdata._fieldValues[(int)FieldType.YamaGandam];
             GulikaiTextBlock.Text = pdata._fieldValues[(int)FieldType.Gulikai];
             String festival;
-            if (app.CurrentDate.Year == 2013)
+            if (app.CurrentDate.Year == 2014)
             {
                 festival = Calender2.Data.FestivalDataGetter.GetFestivalData(app.CurrentDate.Year, app.CurrentDate.Month, app.CurrentDate.Day, app.Calendar.CityTimeZone);
             }
@@ -113,13 +113,13 @@ namespace HinduCalendarPhone
             if (e.NewDateTime.HasValue)
             {
                 DateTime dt = e.NewDateTime.Value;
-                if ((dt.Year >= 2013) && (dt.Year <= 2014))
+                if ((dt.Year >= 2014) && (dt.Year <= 2015))
                 {
                     app.CurrentDate = e.NewDateTime.Value;
                 }
                 else
                 {
-                    MessageBox.Show("Year should be either 2013 or 2014");
+                    MessageBox.Show("Year should be either 2014 or 2015");
                     EventDate.Value = DateTime.Today;
                 }
             } 
