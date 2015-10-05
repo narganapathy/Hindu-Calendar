@@ -289,8 +289,8 @@ namespace Calender2.Data
         Dictionary<int, YearlyPanchangData> _calendarYearData;
         SampleDataGroup _group;
         String _cityToken = "Zurich-Switzerland";
-        int _year = 2014;
-        static int _startYear = 2014;
+        int _year = 2015;
+        static int _startYear = 2015;
         public static SampleDataSource _sampleDataSource;
 
         public static async Task InitializeCalendarData()

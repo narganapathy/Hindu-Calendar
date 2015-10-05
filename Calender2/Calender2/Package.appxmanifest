@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Package xmlns="http://schemas.microsoft.com/appx/2010/manifest">
-  <Identity Name="35529NarGanapathy.HinduWorldCalendar" Publisher="CN=D8508DA0-9CA6-4324-B88A-F3A66BA6E2E2" Version="1.0.0.55" />
+<Package xmlns="http://schemas.microsoft.com/appx/2010/manifest" xmlns:m2="http://schemas.microsoft.com/appx/2013/manifest">
+  <Identity Name="35529NarGanapathy.HinduWorldCalendar" Publisher="CN=D8508DA0-9CA6-4324-B88A-F3A66BA6E2E2" Version="1.1.0.57" />
   <Properties>
     <DisplayName>Hindu World Calendar</DisplayName>
     <PublisherDisplayName>Nar Ganapathy</PublisherDisplayName>
@@ -8,22 +8,27 @@
     <Description>Calender2</Description>
   </Properties>
   <Prerequisites>
-    <OSMinVersion>6.2.1</OSMinVersion>
-    <OSMaxVersionTested>6.2.1</OSMaxVersionTested>
+    <OSMinVersion>6.3.0</OSMinVersion>
+    <OSMaxVersionTested>6.3.0</OSMaxVersionTested>
   </Prerequisites>
   <Resources>
     <Resource Language="x-generate" />
   </Resources>
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="Calender2.App">
-      <VisualElements DisplayName="Hindu World Calendar" Logo="OhmSymbol-Logo.png" SmallLogo="OhmSymbol-SmallLogo.png" Description="This application shows the Hindu World Calendar for various cities." ForegroundText="light" BackgroundColor="#222222" ToastCapable="false">
-        <DefaultTile ShowName="allLogos" WideLogo="OhmSymbol-widelogo.png" />
-        <SplashScreen Image="ohm sign - splash screen.png" />
-        <InitialRotationPreference>
-          <Rotation Preference="landscape" />
-          <Rotation Preference="landscapeFlipped" />
-        </InitialRotationPreference>
-      </VisualElements>
+      <m2:VisualElements DisplayName="Hindu World Calendar" Description="This application shows the Hindu World Calendar for various cities." BackgroundColor="#222222" ToastCapable="false" ForegroundText="light" Square150x150Logo="OhmSymbol-Logo.png" Square30x30Logo="OhmSymbol-SmallLogo.png">
+        <m2:DefaultTile Wide310x150Logo="OhmSymbol-widelogo.png">
+          <m2:ShowNameOnTiles>
+            <m2:ShowOn Tile="square150x150Logo" />
+            <m2:ShowOn Tile="wide310x150Logo" />
+          </m2:ShowNameOnTiles>
+        </m2:DefaultTile>
+        <m2:InitialRotationPreference>
+          <m2:Rotation Preference="landscape" />
+          <m2:Rotation Preference="landscapeFlipped" />
+        </m2:InitialRotationPreference>
+        <m2:SplashScreen Image="ohm sign - splash screen.png" />
+      </m2:VisualElements>
     </Application>
   </Applications>
   <Capabilities>

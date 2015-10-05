@@ -91,7 +91,7 @@ namespace HinduCalendarPhone
 
             if (String.IsNullOrEmpty(festival))
             {
-                festival = "No festival";
+                festival = "Not available";
             }
             FestivalTextBlock.Text = festival;
         }
@@ -113,13 +113,13 @@ namespace HinduCalendarPhone
             if (e.NewDateTime.HasValue)
             {
                 DateTime dt = e.NewDateTime.Value;
-                if ((dt.Year >= 2014) && (dt.Year <= 2015))
+                if ((dt.Year >= 2015) && (dt.Year <= 2016))
                 {
                     app.CurrentDate = e.NewDateTime.Value;
                 }
                 else
                 {
-                    MessageBox.Show("Year should be either 2014 or 2015");
+                    MessageBox.Show("Year should be either 2015 or 2016");
                     EventDate.Value = DateTime.Today;
                 }
             } 
