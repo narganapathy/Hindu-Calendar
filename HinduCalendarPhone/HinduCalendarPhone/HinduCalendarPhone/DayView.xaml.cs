@@ -113,7 +113,7 @@ namespace HinduCalendarPhone
             if (e.NewDateTime.HasValue)
             {
                 DateTime dt = e.NewDateTime.Value;
-                if ((dt.Year >= 2015) && (dt.Year <= 2016))
+                if ((dt.Year >= 2016) && (dt.Year <= 2017))
                 {
                     app.CurrentDate = e.NewDateTime.Value;
                 }

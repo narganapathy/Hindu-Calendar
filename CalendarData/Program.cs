@@ -559,7 +559,7 @@ namespace CalendarData
             //GetCalendarDataPerCityAndYear(2015, "Aberdeen, Scotland", "Aberdeen-Scotland-UK", TimeZoneValues.Unknown);
             // GetCalendarDataPerCityAndYear(2013, "AbuDhabi, UAE", "AbuDhabi-UAE", TimeZoneValues.Unknown);
             // Uncomment this line to test out for a new year
-            // GetCalendarDataPerCityAndYear(2016, "Seattle, WA", "Seattle-WA-USA", TimeZoneValues.PST);
+            // GetCalendarDataPerCityAndYear(2017, "Seattle, WA", "Seattle-WA-USA", TimeZoneValues.PST);
 
             // Uncomment to generate latlong data
             //CalendarData.CityData.FindClosestCity(0, 0);
@@ -588,7 +588,7 @@ namespace CalendarData
                                 timeZone = city._timeZone;
                             }
 
-                            GetCalendarDataPerCityAndYear(2016, city._Name, city._UrlToken, timeZone);
+                            GetCalendarDataPerCityAndYear(2017, city._Name, city._UrlToken, timeZone);
                         }
                     }
                 }
@@ -605,7 +605,7 @@ namespace CalendarData
                         {
                             timeZone = city._timeZone;
                         }
-                        GetCalendarDataPerCityAndYear(2016, city._Name, city._UrlToken, timeZone);
+                        GetCalendarDataPerCityAndYear(2017, city._Name, city._UrlToken, timeZone);
                     }
                 }
             }

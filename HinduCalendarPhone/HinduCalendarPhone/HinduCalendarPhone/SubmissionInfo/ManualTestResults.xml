@@ -47,7 +47,6 @@
     <ManualTestCase Name="6.9.3">Pending</ManualTestCase>
     <ManualTestCase Name="6.9.4">Pending</ManualTestCase>
     <ManualTestCase Name="6.9.5">Pending</ManualTestCase>
-    <ManualTestCase Name="6.10.1">Pending</ManualTestCase>
     <ManualTestCase Name="6.10.2">Pending</ManualTestCase>
     <ManualTestCase Name="6.10.3">Pending</ManualTestCase>
   </ManualTestCases>

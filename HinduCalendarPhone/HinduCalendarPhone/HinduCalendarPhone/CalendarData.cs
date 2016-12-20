@@ -121,8 +121,8 @@ namespace HinduCalendarPhone
                     watcher.Start();
                 }
             }
-            GetCalendarDataForYear(2015);
             GetCalendarDataForYear(2016);
+            GetCalendarDataForYear(2017);
         }
 
         private void watcher_PositionChanged(object sender, GeoPositionChangedEventArgs<GeoCoordinate> e)

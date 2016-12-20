@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Deployment xmlns="http://schemas.microsoft.com/windowsphone/2012/deployment" AppPlatformVersion="8.0">
   <DefaultLanguage xmlns="" code="" />
-  <App xmlns="" ProductID="{3516443c-6681-4a63-87e2-47c92bcc26dd}" Title="Hindu World Calendar" RuntimeType="Silverlight" Version="1.0.0.1" Genre="apps.normal" Author="N.K.Studios" Description="Hindu Calendar for cities around the world" Publisher="N.K.Studios" PublisherID="{276e1d94-c494-402b-973b-4b0911b27097}">
+  <App xmlns="" ProductID="{3516443c-6681-4a63-87e2-47c92bcc26dd}" Title="Hindu World Calendar" RuntimeType="Silverlight" Version="1.0.0.2" Genre="apps.normal" Author="N.K.Studios" Description="Hindu Calendar for cities around the world" Publisher="N.K.Studios" PublisherID="{276e1d94-c494-402b-973b-4b0911b27097}">
     <IconPath IsRelative="true" IsResource="false">ApplicationIcon.png</IconPath>
     <Capabilities>
       <Capability Name="ID_CAP_LOCATION" />
